@@ -45,6 +45,7 @@ crashlytics-build.properties
 **/ExportedObj/
 .consulo/
 *.csproj
+*.csproj.lscache
 *.unityproj
 *.sln
 *.slnx

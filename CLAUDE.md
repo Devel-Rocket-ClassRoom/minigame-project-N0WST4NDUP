@@ -104,10 +104,12 @@ Closes #이슈번호
 | 항목 | 값 / 규칙 |
 | --- | --- |
 | **Title** | `[영역] 동사형 작업명` 예: `[Combat] 어뢰 컴포넌트 자동 사격 구현` |
-| **Labels** | 영역 + 종류 (아래 라벨 가이드 참조) — 최소 2개 |
+| **Type** | GitHub Issue Type — `Feature` / `Bug` / `Task` 중 하나 (네이티브 필드, 라벨 아님) |
+| **Labels** | 영역(area) 라벨 (아래 라벨 가이드 참조) — 최소 1개 |
 | **Milestone** | `W1` / `W2` / `W3` 중 하나 (GDD §10 마일스톤과 1:1 매칭) |
-| **Priority** | `P0` / `P1` / `P2` 라벨 (GDD 우선순위 표기와 동일) |
-| **Projects** | `ShipSurivor` 보드에 추가 — 상태 컬럼 자동 분류 |
+| **Priority** | Projects 보드 `Priority` 필드 — `P0` / `P1` / `P2` (라벨 아님) |
+| **Size** | Projects 보드 `Size` 필드 — `XS` / `S` / `M` / `L` / `XL` (작업량 추정) |
+| **Projects** | `N0WST4NDUP's Mini Game` 보드(#40)에 추가 — `Status` 컬럼 자동 분류 |
 | **Assignee** | 본인 (1인 개발이므로 항상) |
 
 ### 라벨 가이드
@@ -123,22 +125,33 @@ Closes #이슈번호
 - `area:build` — 빌드/배포/CI
 - `area:docs` — 문서
 
-**종류 라벨** (택 1):
-- `type:feature` — 새 기능
-- `type:bug` — 버그
-- `type:chore` — 잡일/설정
-- `type:refactor` — 리팩터링
-- `type:research` — 조사/스파이크 (시간 박스 명시)
-
-**우선순위 라벨** (택 1):
-- `priority:P0` — 즉시 필수 (코어 루프/마일스톤 게이트)
-- `priority:P1` — 콘텐츠/마감 단계
-- `priority:P2` — 가용 시간 내 추가
-
 **상태/특수 라벨** (필요 시):
 - `blocked` — 다른 이슈/외부 요인 대기
 - `playtest-needed` — 플레이테스트로 수치 확정 필요
 - `out-of-scope-candidate` — 스코프 검토 필요
+
+> **종류·우선순위는 라벨이 아니다.** 종류는 GitHub 네이티브 Issue Type, 우선순위는 Projects 보드 필드로 관리한다 (아래 참조).
+
+### Issue Type (네이티브 필드)
+
+조직에 정의된 GitHub Issue Type 중 택 1 — 라벨이 아니라 이슈의 네이티브 `Type` 필드로 지정:
+- `Feature` — 새 기능
+- `Bug` — 버그
+- `Task` — 기능 외 작업 (잡일/설정/리팩터링/조사·스파이크). 조사·스파이크는 본문에 시간 박스 명시.
+
+### 우선순위 (Projects 보드 필드)
+
+Projects 보드의 `Priority` 단일선택 필드로 관리 — 라벨 아님. 택 1:
+- `P0` — 즉시 필수 (코어 루프/마일스톤 게이트)
+- `P1` — 콘텐츠/마감 단계
+- `P2` — 가용 시간 내 추가
+
+### 작업량 추정 (Projects 보드 필드)
+
+Projects 보드의 `Size` 단일선택 필드로 관리 — 라벨 아님. 택 1:
+- `XS` / `S` / `M` / `L` / `XL` — 체감 작업량. 0.5일 이하 `XS`, 3일 초과 예상이면 `XL` 대신 이슈 분할 검토.
+
+> 보드에는 `Team`(자동·고정값 `1인 개발자`), `Iteration`, `Estimate`, `Start date`, `Target date` 필드도 있으나 필수는 아니다 — 필요 시에만 사용.
 
 ### 이슈 본문 템플릿
 
@@ -158,12 +171,10 @@ Closes #이슈번호
 (스코프 경계 / 미정 사항 / 의존 이슈)
 ```
 
-### Projects 보드 컬럼
+### Projects 보드 컬럼 (`Status` 필드)
 
-- `Backlog` — 등록만 된 상태
-- `Ready` — 다음 작업 후보 (오늘/이번 주)
-- `In Progress` — 진행 중 (동시 1~2개 권장)
-- `In Review` — PR 오픈, 셀프 리뷰 중
+- `Todo` — 등록·대기 중 (백로그 + 다음 작업 후보)
+- `In progress` — 진행 중 (동시 1~2개 권장, PR 오픈·셀프 리뷰 단계 포함)
 - `Done` — 머지 완료
 
 > 한눈에 백로그를 보려면 보드를 **Milestone(W1/W2/W3)** 또는 **Priority(P0/P1/P2)** 로 그룹핑한다.
