@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
   MaxSpeed: 10
   Acceleration: 2
+  BrakeStrength: 2
   TurnSpeed: 20
   LateralGrip: 0.5

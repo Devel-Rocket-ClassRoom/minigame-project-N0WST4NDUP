@@ -13,6 +13,9 @@ public class ShipMovementData : ScriptableObject
     [Tooltip("전진 가속도")]
     public float Acceleration = 2f;
 
+    [Tooltip("브레이크 강도")]
+    public float BrakeStrength = 1f;
+
     [Tooltip("최대 선회 각속도(초당 도)")]
     public float TurnSpeed = 20f;
 

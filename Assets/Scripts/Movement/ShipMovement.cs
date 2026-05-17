@@ -18,12 +18,20 @@ public class ShipMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        float forward = Mathf.Max(_throttle, 0f);
+        float brake = Mathf.Max(-_throttle, 0f);
         float forwardSpeed = Vector3.Dot(_rigidbody.linearVelocity, transform.forward);
         float speedFactor = Mathf.Clamp01(forwardSpeed / _data.MaxSpeed);
 
         // 1) 전진 추력 (감속·최대속도는 Rigidbody.linearDamping이 처리)
-        _rigidbody.AddForce(transform.forward * _throttle * _data.Acceleration,
+        _rigidbody.AddForce(transform.forward * forward * _data.Acceleration,
                             ForceMode.Acceleration);
+        if (brake > 0f)
+        {
+            float step = _data.BrakeStrength * brake * Time.fixedDeltaTime;
+            _rigidbody.linearVelocity =
+                Vector3.MoveTowards(_rigidbody.linearVelocity, Vector3.zero, step);
+        }
 
         // 2) 선회 — 속도에 비례. 토크 대신 회전 직접 적용이 튜닝하기 쉬움
         float turnRate = _turn * _data.TurnSpeed * speedFactor; // deg/s
@@ -39,7 +47,7 @@ public class ShipMovement : MonoBehaviour
 
     public void UpdateMove(float throttle, float turn)
     {
-        _throttle = Mathf.Clamp01(throttle);
+        _throttle = Mathf.Clamp(throttle, -1f, 1f);
         _turn = Mathf.Clamp(turn, -1f, 1f);
     }
 }
