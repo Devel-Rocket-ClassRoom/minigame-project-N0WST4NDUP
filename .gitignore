@@ -77,6 +77,7 @@ crashlytics-build.properties
 **/[Aa]ssets/Plugins/Editor/JetBrains*
 
 # 에셋 폴더
+GeneratedAssets/
 Assets/Imported/
 Assets/Imported.meta
 
