@@ -125,17 +125,16 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 소스: [Assets/Scripts/Data/Ship/ShipMovementData.cs](../Assets/Scripts/Data/Ship/ShipMovementData.cs),
 에셋 `Assets/ScriptableObjects/DefaultShip.asset`.
 
-| 수치 | 클래스 기본값 | 에셋(DefaultShip) 값 | 단위 | 설명 |
-|---|---|---|---|---|
-| `MaxSpeed` | 10 | 10 | m/s | 최대 전진 속도 |
-| `Acceleration` | 2 | 2 | m/s² | 전진 가속도 |
-| `BrakeStrength` | 1 | 2 | — | 브레이크 강도 — **클래스 기본값과 에셋 값 불일치** |
-| `TurnSpeed` | 20 | 20 | deg/s | 최대 선회 각속도 |
-| `LateralGrip` | 0.5 | 0.5 | 0–1 | 측면 미끄러짐 저항 |
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `MaxSpeed` | 10 | m/s | 최대 전진 속도 |
+| `Acceleration` | 2 | m/s² | 전진 가속도 |
+| `BrakeStrength` | 2 | — | 브레이크 강도 |
+| `TurnSpeed` | 60 | deg/s | 최대 선회 각속도 |
+| `LateralGrip` | 0.5 | 0–1 | 측면 미끄러짐 저항 |
 
 - **근거**: 현재 값은 PR #44에서 설정한 **구현 기본값**으로, 관성 이동·선회·브레이크 감각의 출발점이다.
   §0.3 목표의 "선박 조작감" 결합과 §0.2 타겟의 "정밀 회피가 아닌 궤적 예측으로 살아남는 감각"을 위한 초기
   셋업이다. 다만 GDD §5.1은 가속/감속 곡선·최대 속도·회전 반경·브레이크 강도를 모두 `❓`로 두고 있어,
   현재 값은 검증 전 출발점일 뿐이다.
 - **상태**: `구현 기본값` — W1 카메라/조작감 튜닝 게이트(GDD §10)에서 `확정`으로 승격 예정.
-  `BrakeStrength` 클래스 기본값(1)과 에셋 값(2)의 불일치는 W1 확정 시 단일 값으로 정리한다.
