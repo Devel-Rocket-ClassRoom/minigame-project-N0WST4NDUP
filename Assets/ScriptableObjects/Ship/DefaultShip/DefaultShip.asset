@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d34751ce29497249bc8bb2eba11604e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e84bc4a63bdb7c49b4dc450cfe2c706, type: 3}
   m_Name: DefaultShip
-  m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
-  MaxSpeed: 10
-  Acceleration: 2
-  BrakeStrength: 2
-  TurnSpeed: 60
-  LateralGrip: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::ShipData
+  Name: Default Ship
+  Description: A sturdy ship body.
+  Health: 100
