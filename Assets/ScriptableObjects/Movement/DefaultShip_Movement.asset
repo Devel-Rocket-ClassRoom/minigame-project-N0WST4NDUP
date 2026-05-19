@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d34751ce29497249bc8bb2eba11604e, type: 3}
-  m_Name: DefaultShip
+  m_Name: DefaultShip_Movement
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
   MaxSpeed: 10
   Acceleration: 2
