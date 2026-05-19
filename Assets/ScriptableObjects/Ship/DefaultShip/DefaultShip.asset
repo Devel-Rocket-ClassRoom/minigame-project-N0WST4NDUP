@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShipData
   Name: Default Ship
   Description: A sturdy ship body.
-  Health: 0
+  Health: 100
