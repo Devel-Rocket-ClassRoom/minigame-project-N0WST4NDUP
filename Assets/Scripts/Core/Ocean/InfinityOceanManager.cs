@@ -68,7 +68,6 @@ public class InfinityOceanManager : MonoBehaviour
                 int sz = ((cz % side) + side) % side;
                 _tiles[sx * side + sz].position = new Vector3(
                     cx * _tileSize, 0, cz * _tileSize) + TileOffset;
-                Debug.Log($"Tile {sx * side + sz} moved to ({cx}, {cz})");
             }
     }
 

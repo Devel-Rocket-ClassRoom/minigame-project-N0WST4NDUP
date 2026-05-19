@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 132658710}
   - component: {fileID: 132658712}
   - component: {fileID: 132658711}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,9 +222,9 @@ GameObject:
   - component: {fileID: 186825967}
   - component: {fileID: 186825968}
   - component: {fileID: 186825963}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TestShip
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -785,7 +785,7 @@ GameObject:
   - component: {fileID: 560091080}
   - component: {fileID: 560091079}
   - component: {fileID: 560091078}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -946,7 +946,7 @@ GameObject:
   - component: {fileID: 960683665}
   - component: {fileID: 960683664}
   - component: {fileID: 960683663}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 1720679910}
   - component: {fileID: 1720679912}
   - component: {fileID: 1720679911}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1201,7 @@ GameObject:
   - component: {fileID: 2118739131}
   - component: {fileID: 2118739133}
   - component: {fileID: 2118739132}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1292,6 +1292,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particles
       objectReference: {fileID: 0}
+    - target: {fileID: 1843494913957120277, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4349456370377215415, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1331,6 +1335,10 @@ PrefabInstance:
     - target: {fileID: 4349456370377215415, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8108069842247198324, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

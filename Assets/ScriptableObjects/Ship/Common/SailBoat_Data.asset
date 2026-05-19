@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e84bc4a63bdb7c49b4dc450cfe2c706, type: 3}
-  m_Name: DefaultShip
+  m_Name: SailBoat_Data
   m_EditorClassIdentifier: Assembly-CSharp::ShipData
-  Name: Default Ship
-  Description: A sturdy ship body.
-  Health: 100
+  Name: "\uB3DB\uB2E8\uBC30"
+  Description: "\uC5B4\uBD80\uC778\uAC00?"
+  Health: 10
+  InvincibleTime: 1
+  Damage: 0
