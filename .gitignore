@@ -65,6 +65,8 @@ crashlytics-build.properties
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+_Recovery/
+_Recovery.meta
 
 # IDE 캐시 디렉토리
 .vs/

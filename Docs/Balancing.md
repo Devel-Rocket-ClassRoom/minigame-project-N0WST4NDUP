@@ -120,6 +120,24 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 
 ## 3. 현재 밸런싱 수치
 
+### 3.0.1 인플레이 카메라 (`CinemachineCamera` + `CinemachineFollow`)
+
+소스: [Assets/Scenes/MovementTest.unity](../Assets/Scenes/MovementTest.unity) `InPlay Camera` 게임오브젝트
+(Cinemachine 컴포넌트 직배치). Main Camera에는 `CinemachineBrain` 부착.
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `FieldOfView` | 60 | deg | 시야각 |
+| `NearClipPlane` | 10 | m | 근거리 컬링 |
+| `FarClipPlane` | 70 | m | 원거리 가시 한계 — 화면뷰에서 네임드/드롭을 인지할 수 있는 거리의 상한 |
+| `FollowOffset` (월드) | (-10, 18, -10) | m | 선박 기준 카메라 위치 오프셋 |
+| Pitch (X) | 45 | deg | GDD §0·§8 "쿼터뷰 45°" 충족 |
+| Yaw (Y) | 45 | deg | 카메라 방위 (대각선 isometric) |
+| `PositionDamping` | (6, 2, 6) | — | 추적 응답 지연. Y는 빠르게(2), XZ는 부드럽게(6) |
+| `RotationDamping` | (1, 1, 1) | — | (BindingMode=WorldSpace라 실질 영향 없음) |
+| `BindingMode` | 4 (WorldSpace) | — | 선박 회전을 무시하고 월드축 기준 추적 → GDD §8 "회전 없음" 구조적 보장 |
+| `DefaultBlend` (Brain) | EaseInOut · 2s | — | 가상 카메라 간 블렌드 — 향후 줌·컷씬용 |
+
 ### 3.1 선박 이동 (`ShipMovementData`)
 
 소스: [Assets/Scripts/Data/Ship/ShipMovementData.cs](../Assets/Scripts/Data/Ship/ShipMovementData.cs),
