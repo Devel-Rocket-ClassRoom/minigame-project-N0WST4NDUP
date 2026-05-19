@@ -1,10 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ShipBody))]
 public class SailBoat : CommonEnemyBase
 {
     [Header("Config")]
-    [SerializeField] private LayerMask _shipLayerMask;
     [SerializeField] private float _detectRange = 20f;
     [SerializeField] private float _detectInterval = 3f;
     [SerializeField] private float _moveSpeed = 3f;
@@ -19,8 +17,8 @@ public class SailBoat : CommonEnemyBase
         if (_target == null) return;
 
         Vector3 dir = (_target.position - transform.position).normalized;
-        transform.position += dir * (_moveSpeed * Time.deltaTime);
         transform.forward = dir;
+        transform.position += transform.forward * (_moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
