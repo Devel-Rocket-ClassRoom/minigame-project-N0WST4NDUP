@@ -148,5 +148,9 @@ lightning_logs/
 # [Cc][Ll][Aa][Uu][Dd][Ee].md
 .claude/
 
+# Unity Assistant
+AI Toolkit/
+AI Toolkit.meta
+
 # MCP 설정
 **.mcp.**

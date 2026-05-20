@@ -20,5 +20,4 @@ public class ShipData : ScriptableObject
 
     [Tooltip("무적 시간(초)")]
     public float InvincibleTime = 1f;
-
 }

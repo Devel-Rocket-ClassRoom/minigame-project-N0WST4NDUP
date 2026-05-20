@@ -14,8 +14,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        float throttle = _input.actions["Throttle"].ReadValue<float>();
-        float turn = _input.actions["Turn"].ReadValue<float>();
+        float throttle = _input.actions["Throttle"].ReadValue<float>(); // Fix: _input.actions[Throttle] 캐싱해서 사용
+        float turn = _input.actions["Turn"].ReadValue<float>(); // Fix: _input.actions[Turn] 캐싱해서 사용
         _movement.UpdateMove(throttle, turn);
     }
 }
