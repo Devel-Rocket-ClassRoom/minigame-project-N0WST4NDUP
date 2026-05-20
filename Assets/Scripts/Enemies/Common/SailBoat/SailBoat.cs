@@ -2,23 +2,20 @@ using UnityEngine;
 
 public class SailBoat : CommonEnemyBase
 {
-    [Header("Config")]
-    [SerializeField] private float _detectRange = 20f;
-    [SerializeField] private float _detectInterval = 3f;
-    [SerializeField] private float _moveSpeed = 3f;
-    private float _detectTimer;
-
-    private Transform _target;
-    private readonly Collider[] _detectBuffer = new Collider[8];
+    public override void Reset()
+    {
+        Target = null;
+        _detectTimer = 0f;
+    }
 
     private void Update()
     {
         FindClosestShip();
-        if (_target == null) return;
+        if (Target == null) return;
 
-        Vector3 dir = (_target.position - transform.position).normalized;
+        var dir = (Target.position - transform.position).normalized;
         transform.forward = dir;
-        transform.position += transform.forward * (_moveSpeed * Time.deltaTime);
+        transform.position += transform.forward * (MoveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,31 +26,7 @@ public class SailBoat : CommonEnemyBase
             {
                 damageable?.OnDamaged(_body.CurrentHealth);
             }
-            Destroy(gameObject);
+            Destroy(gameObject); // TODO: pool로 반환
         }
-    }
-
-    private void FindClosestShip()
-    {
-        if (Time.time < _detectTimer) return;
-
-        int count = Physics.OverlapSphereNonAlloc(
-            transform.position, _detectRange, _detectBuffer, _shipLayerMask);
-
-        Transform bestTarget = null;
-        float bestSqr = float.PositiveInfinity;
-        for (int i = 0; i < count; i++)
-        {
-            var t = _detectBuffer[i].transform;
-            float sqr = (t.position - transform.position).sqrMagnitude;
-            if (sqr < bestSqr)
-            {
-                bestSqr = sqr;
-                bestTarget = t;
-            }
-        }
-        _target = bestTarget;
-
-        _detectTimer = Time.time + _detectInterval;
     }
 }

@@ -150,6 +150,7 @@ lightning_logs/
 
 # Unity Assistant
 AI Toolkit/
+AI Toolkit.meta
 
 # MCP 설정
 **.mcp.**

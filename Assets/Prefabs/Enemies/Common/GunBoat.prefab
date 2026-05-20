@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5035902066819788589}
   - component: {fileID: 1673948433633690252}
   m_Layer: 0
-  m_Name: Body
+  m_Name: GunBoat_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,13 +207,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _data: {fileID: 11400000, guid: 821775b5abae8be44a3aeb9e02a2e2ad, type: 2}
-  _combatData: {fileID: 11400000, guid: 36e8e5933252d8946925aaa40cb4ca1e, type: 2}
   _detectRange: 17
   _detectInterval: 2
   _moveSpeed: 3
+  _combatData: {fileID: 11400000, guid: 36e8e5933252d8946925aaa40cb4ca1e, type: 2}
   _idlingInterval: 3
-  _patrolPointCountMin: 3
-  _patrolPointCountMax: 7
+  _patrolPointCount: 7
   _patrolPointRadius: 20
   _head: {fileID: 8512060137703479484}
   _firePoint: {fileID: 1330955960018874512}
