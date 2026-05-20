@@ -5,8 +5,7 @@ using UnityEngine;
     menuName = "Combat/CombatData")]
 public class CombatData : ScriptableObject
 {
-    [Header("")]
-
+    [Header("Default Config")]
     [Tooltip("데미지")]
     public float Damage = 10f;
 
@@ -16,6 +15,7 @@ public class CombatData : ScriptableObject
     [Tooltip("쿨다운(초)")]
     public float Cooldown = 1f;
 
+    [Header("Area Config")]
     [Tooltip("광역 공격 여부")]
     public bool IsAreaAttack = false;
 

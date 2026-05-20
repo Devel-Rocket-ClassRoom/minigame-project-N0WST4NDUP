@@ -1,19 +1,13 @@
 using UnityEngine;
 
-public class SubAttachableBase : MonoBehaviour, IAttachable
+public abstract class SubAttachableBase : MonoBehaviour, IAttachable
 {
-    public void Attach()
-    {
-        return;
-    }
+    [Header("Default Config")]
+    [SerializeField] private CombatData _data;
 
-    public void Detach()
-    {
-        return;
-    }
+    public abstract void Attach();
 
-    public void Tick()
-    {
-        return;
-    }
+    public abstract void Detach();
+
+    public abstract void Tick();
 }

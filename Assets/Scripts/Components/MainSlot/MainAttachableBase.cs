@@ -1,19 +1,16 @@
 using UnityEngine;
 
-public class MainAttachableBase : MonoBehaviour, IAttachable
+public abstract class MainAttachableBase : MonoBehaviour, IAttachable, IUpgradable<MainAttachableBase>
 {
-    public void Attach()
-    {
-        return;
-    }
+    [Header("Default Config")]
+    [SerializeField] protected CombatData _data;
+    [SerializeField] private GameObject _prefab;
 
-    public void Detach()
-    {
-        return;
-    }
+    public abstract void Attach();
 
-    public void Tick()
-    {
-        return;
-    }
+    public abstract void Detach();
+
+    public abstract void Tick();
+
+    public abstract MainAttachableBase Upgrade();
 }
