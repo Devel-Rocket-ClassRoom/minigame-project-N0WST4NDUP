@@ -26,7 +26,7 @@ public class SailBoat : CommonEnemyBase
             {
                 damageable?.OnDamaged(_body.CurrentHealth);
             }
-            Destroy(gameObject); // TODO: pool로 반환
+            OnDead();
         }
     }
 

@@ -9,6 +9,8 @@ public class CommonPool : MonoBehaviour
 
     private ObjectPool<CommonEnemyBase> _pool;
 
+    public int Active => _pool.CountActive;
+
     private void Awake()
     {
         _pool = new ObjectPool<CommonEnemyBase>(
