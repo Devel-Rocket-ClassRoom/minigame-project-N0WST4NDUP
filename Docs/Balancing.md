@@ -96,7 +96,7 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 | 영역 | GDD 참조 | 확정 마일스톤 | 현재 상태 |
 |---|---|---|---|
 | 자동 사격 (타입별 발사 규칙·사거리) | §5.2 | W1 | 미확정(❓) |
-| 적 스폰·일반 몹 스탯 (HP/데미지/EXP/등장률) | §5.3.1 | 플레이테스트 | 미확정(❓) |
+| 적 스폰·일반 몹 스탯 (HP/데미지/EXP/등장률) | §5.3.1 | 플레이테스트 | **부분 등재 (§3.2~3.5)** — 일반 몹 3종 `구현 기본값`. EXP·등장률·스폰 곡선은 여전히 `미확정(❓)` |
 | **부하 테스트 임계** (동시 적/투사체/드롭/VFX @60fps) | §5.3.2 | W1 (P0) | 미확정(❓) — W1 종료 전 도출 |
 | EXP / 레벨업 곡선 | §5.4 | W1 | 미확정(❓) |
 | 네임드 (드롭 타이머·흡수 우선순위·leash 반경) | §5.5 | W1 / 플레이테스트 | 미확정(❓) |
@@ -156,3 +156,99 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
   셋업이다. 다만 GDD §5.1은 가속/감속 곡선·최대 속도·회전 반경·브레이크 강도를 모두 `❓`로 두고 있어,
   현재 값은 검증 전 출발점일 뿐이다.
 - **상태**: `구현 기본값` — W1 카메라/조작감 튜닝 게이트(GDD §10)에서 `확정`으로 승격 예정.
+
+### 3.2 일반 몹 공통 감지·이동 (`CommonEnemyBase`)
+
+소스: [Assets/Scripts/Enemies/Common/CommonEnemyBase.cs](../Assets/Scripts/Enemies/Common/CommonEnemyBase.cs).
+`[SerializeField]` 필드라 프리팹/인스턴스마다 인스펙터에서 오버라이드 가능. 아래는 **클래스 기본값**이며,
+실제 적용값은 각 적 프리팹에서 인스펙터로 확인한다.
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `_shipLayerMask` | (인스펙터 지정) | LayerMask | 감지 대상 — 플레이어 함선 레이어 |
+| `_detectRange` | 10 | m | 감지 반경 (OverlapSphere) |
+| `_detectInterval` | 2.5 | s | 감지 갱신 주기 (스로틀) |
+| `_moveSpeed` | 6 | m/s | 이동 속도 |
+| `k_DetectBufferSize` | 8 | — | `OverlapSphereNonAlloc` 결과 버퍼 크기 (`const`, 풀링 시에도 GC-free) |
+
+- **근거**: §0.2 "1런 10분"과 §0.3 "다층 루프의 30초 리듬"을 만족하기 위한 출발점.
+  감지 반경 10m는 카메라 가시 영역(`FarClipPlane` 70m, §3.0.1)보다 작아 "적이 시야 안에서 행동을 시작하는"
+  체감 확보. 이동 속도 6m/s는 플레이어 `MaxSpeed` 10m/s(§3.1)보다 느려 도주 여지를 남기되 압박은 유지.
+  감지 간격 2.5s는 매 프레임 `Physics.OverlapSphere` 호출을 피해 §5.3.2 부하 테스트 임계 부담을 줄인다.
+- **상태**: `구현 기본값` — W1 부하 테스트 + 플레이테스트 후 적별 오버라이드 확정 예정.
+
+### 3.3 일반 몹 — 나룻배 (`SailBoat` / `SailBoat_Data`)
+
+소스: [Assets/Scripts/Enemies/Common/SailBoat/SailBoat.cs](../Assets/Scripts/Enemies/Common/SailBoat/SailBoat.cs),
+에셋 [Assets/ScriptableObjects/Ship/Common/SailBoat_Data.asset](../Assets/ScriptableObjects/Ship/Common/SailBoat_Data.asset).
+**GDD §5.3.1 #1** 매핑.
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Health` | 10 | HP | 잡몹답게 1~2발에 처치되는 출발점 |
+| `InvincibleTime` | 1 | s | 피격 i-frame |
+| 공격 데미지 | `_body.CurrentHealth` | HP | **자살 충돌** — 충돌 시 자기 잔여 HP만큼 데미지 후 `Destroy` |
+| 행동 | 매 프레임 가장 가까운 함선 직진 추격 | — | FSM 없이 `Update`에서 직접 처리 |
+
+- **근거**: GDD §5.3.1 #1 "가장 흔한 잡몹, 밀집 압박용". §0.3 30초 루프의 자주 등장하는 잡몹.
+  HP 10은 출발점 — 빠른 처치감으로 도파민 루프 유지.
+- **상태**: `구현 기본값`.
+- **✅ 의도된 디자인**: 충돌 데미지가 `_body.CurrentHealth`로 잔여 HP에 연동된다. 향후 스테이지 난이도
+  상승으로 나룻배 HP가 스케일링되면 데미지도 **선형으로 증가**한다. 별도 데미지 상수를 두지 않고 HP 한 축으로
+  난이도/위협을 동시에 조정하는 단순 스케일링 패턴. GDD §5.3.1 #1의 `❓` 데미지 값은 이 규칙으로 해소됨.
+
+### 3.4 일반 몹 — 소형 함선 (`GunBoat` / `GunBoat_Data` / `CombatData`)
+
+소스: [Assets/Scripts/Enemies/Common/GunBoat/](../Assets/Scripts/Enemies/Common/GunBoat/) 일괄,
+에셋 [GunBoat_Data.asset](../Assets/ScriptableObjects/Ship/Common/GunBoat_Data.asset),
+[CombatData.asset](../Assets/ScriptableObjects/Combat/CombatData.asset).
+**GDD §5.3.1 #2** 매핑. FSM 4상태: `Idle → Patrol → Chase → Attack`.
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Health` | 15 | HP | 나룻배보다 약간 단단 |
+| `InvincibleTime` | 1 | s | 피격 i-frame |
+| `_idlingInterval` | 3 | s | Idle 대기 시간 — 끝나면 Patrol로 |
+| `_patrolPointCount` | 7 | 개 | 스폰 위치 주변 패트롤 포인트 수 |
+| `_patrolPointRadius` | 5 | m | 패트롤 포인트 분포 반경 (insideUnitCircle) |
+| `CombatData.Damage` | 10 | HP | 즉발 데미지 |
+| `CombatData.Range` | 9 | m | Chase→Attack 전이 거리. **`_detectRange`(10)보다 작아야 함** |
+| `CombatData.Cooldown` | 1 | s | Attack 재발사 쿨다운 |
+| `CombatData.IsAreaAttack` | false | — | 광역 공격 여부 |
+| `CombatData.AreaRadius` | 1 | m | 광역 공격 반경 (현재 사용 안 함) |
+
+- **근거**: GDD §5.3.1 #2 "사거리 유지가 회피의 핵심, 거리 의사결정 유도".
+  §0.2 "궤적 예측" — Range 9m와 MoveSpeed 6m/s 조합으로 플레이어가 "다가오는 사거리"를 예측하고
+  피할 수 있는 출발점. 패트롤은 GDD 표 본문에 없는 코드 측 추가로, "정찰 중인 적" 느낌을 주어
+  스폰 직후 어색함을 줄이는 보조 행동.
+- **상태**: `구현 기본값`.
+- **✅ GDD 갱신 반영**: 일반 몹은 Rigidbody 미사용·`transform` 직접 조작 방식으로 통일됨에 따라 물리 기반
+  자연 감속이 불가능하다. GDD §5.3.1 #2 본문도 "추격 → 사거리 진입 시 **정지** → 공격"으로 의식적으로
+  갱신되어 코드와 정렬됨 (CLAUDE.md §3 SSoT 원칙).
+
+### 3.5 일반 몹 — 잠수함 (`Submarine` / `Submarine_Data`) — 부분 구현
+
+소스: [Assets/Scripts/Enemies/Common/Submarine/](../Assets/Scripts/Enemies/Common/Submarine/) 일괄,
+에셋 [Submarine_Data.asset](../Assets/ScriptableObjects/Ship/Common/Submarine_Data.asset).
+**GDD §5.3.1 #3** 매핑. FSM 4상태: `Idle → Diving → Flee → Surfacing`.
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Health` | 50 | HP | 다른 일반 몹 대비 가장 단단 (잠수 무적 시간 고려) |
+| `InvincibleTime` | 1 | s | 피격 i-frame (수면 노출 시) |
+| `_divingOffset` | (인스펙터) | m | 자식 모델이 잠수 시 내려갈 오프셋 (기본 `Vector3.down`) |
+| `_divingDuration` | 1 | s | 잠수/부상 보간 시간 (smoothstep ease-in-out) |
+| 공격 데미지 | — | — | **🚧 미구현** (`SetMine()` 메서드만 존재, 호출처 없음) |
+
+- **근거**: GDD §5.3.1 #3 "잠수 → 이동 → 출수 → 1회 공격 → 재잠수". HP 50은 잠수 중 콜라이더 비활성(무적)을
+  감안한 보정 — 수면 노출 시간이 짧기에 그 짧은 윈도우에 처치 가능한 수준.
+- **상태**: `구현 기본값` (HP/보간) · `🚧 부분 구현` (공격 사이클 전체 미구현).
+- **🚧 디자인 미확정 — 추후 구현 예정**:
+  - **지뢰(Mine) 공격 사이클**: 지뢰 프리팹/디자인이 아직 확정되지 않아 의식적으로 보류 중. 잠수함 밸런싱
+    (잠수 주기·부상 주기·지뢰 설치 타이밍 등)이 결정된 시점에 `SetMine()` 트리거와 함께 일괄 구현 예정.
+    현재는 `Flee` 상태에서 타겟 잃을 때까지 잠수만 하는 골격 상태로, GDD §5.3.1 #3의 "잠수 → 이동 → 출수
+    → 1회 공격 → 재잠수" 사이클은 아직 충족하지 않는다.
+  - **잠수 중 시인성 보조**: GDD §5.3.1 #3 비고 + §11 리스크 — 그림자/물결/미니맵 마커 중 1개 W1에
+    프로토 후 채택 필요. 현재 잠수 시 시각 단서 없음.
+  - **잠수 중 무적**: 잠수 진입 시 `SetCollider(false)` 호출은 되어 있으나, 프리팹의 `_collider` 인스펙터
+    참조 연결 검증 필요.
