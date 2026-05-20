@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ShipBody : MonoBehaviour, IDamageable
@@ -13,6 +14,8 @@ public class ShipBody : MonoBehaviour, IDamageable
     private float _invincibleTimer;
     public bool IsInvincible => Time.time < _invincibleTimer;
     public bool IsDestroyed => _currentHealth <= 0f;
+
+    public event Action OnDeadEvent;
 
     public void Init(ShipData data)
     {
@@ -34,8 +37,5 @@ public class ShipBody : MonoBehaviour, IDamageable
         }
     }
 
-    private void Die()
-    {
-        gameObject.SetActive(false);
-    }
+    private void Die() => OnDeadEvent?.Invoke();
 }

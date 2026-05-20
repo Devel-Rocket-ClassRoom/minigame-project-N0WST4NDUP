@@ -60,4 +60,9 @@ public class Submarine : CommonEnemyBase
     {
         Instantiate(_minePrefab, transform.position, Quaternion.identity);
     }
+
+    protected override void OnDead()
+    {
+        _pool?.Release(this);
+    }
 }

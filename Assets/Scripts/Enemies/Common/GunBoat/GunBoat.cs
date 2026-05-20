@@ -78,4 +78,9 @@ public class GunBoat : CommonEnemyBase
             _patrolPoints[i] = Vector3.zero;
         }
     }
+
+    protected override void OnDead()
+    {
+        _pool?.Release(this);
+    }
 }

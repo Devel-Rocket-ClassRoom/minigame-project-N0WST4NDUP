@@ -29,4 +29,9 @@ public class SailBoat : CommonEnemyBase
             Destroy(gameObject); // TODO: pool로 반환
         }
     }
+
+    protected override void OnDead()
+    {
+        _pool?.Release(this);
+    }
 }
