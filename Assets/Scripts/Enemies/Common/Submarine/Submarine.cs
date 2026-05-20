@@ -15,15 +15,10 @@ public class Submarine : CommonEnemyBase
 
     public float DivingDuration => _divingDuration;
 
-    private void Start()
-    {
-        _surfacePos = _submarine.localPosition;
-        Init();
-    }
-
     public override void Init()
     {
         base.Init();
+        _surfacePos = _submarine.localPosition;
         StateMachine.ChangeState(new SubmarineIdleState(this));
     }
 
@@ -41,7 +36,7 @@ public class Submarine : CommonEnemyBase
     {
         if (_shipLayerMask == (_shipLayerMask | (1 << other.gameObject.layer)))
         {
-            Destroy(gameObject); // TODO: pool로 반환
+            OnDead();
         }
     }
 
@@ -59,5 +54,10 @@ public class Submarine : CommonEnemyBase
     public void SetMine()
     {
         Instantiate(_minePrefab, transform.position, Quaternion.identity);
+    }
+
+    protected override void OnDead()
+    {
+        _pool?.Release(this);
     }
 }

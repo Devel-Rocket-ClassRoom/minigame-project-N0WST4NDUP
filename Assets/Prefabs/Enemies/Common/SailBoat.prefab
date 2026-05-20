@@ -4968,8 +4968,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6017895192433769413}
   - component: {fileID: 2801682253844284735}
-  - component: {fileID: 6572195887131298162}
   - component: {fileID: 3780583097350194323}
+  - component: {fileID: 6572195887131298162}
   m_Layer: 6
   m_Name: SailBoat
   m_TagString: Untagged
@@ -5017,25 +5017,6 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 2
   m_Center: {x: 0, y: 0.6, z: -0.2}
---- !u!114 &6572195887131298162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9072632847244024706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67866be90eea1634dbc43b68a4ec10aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SailBoat
-  _data: {fileID: 11400000, guid: 6ad0560def30e8b41976af7806c54bc8, type: 2}
-  _shipLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _detectRange: 20
-  _detectInterval: 3
-  _moveSpeed: 3
 --- !u!114 &3780583097350194323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5048,3 +5029,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04ffef221da1ef4fbb90196752662dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipBody
+--- !u!114 &6572195887131298162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072632847244024706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67866be90eea1634dbc43b68a4ec10aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SailBoat
+  _shipLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _data: {fileID: 11400000, guid: 6ad0560def30e8b41976af7806c54bc8, type: 2}
+  _detectRange: 20
+  _detectInterval: 3
+  _moveSpeed: 3

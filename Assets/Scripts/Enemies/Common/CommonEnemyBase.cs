@@ -13,7 +13,7 @@ public abstract class CommonEnemyBase : MonoBehaviour
     [SerializeField] private float _moveSpeed = 6f;
 
     protected ShipBody _body;
-    // TODO: protected CommonPool _pool;
+    protected CommonPool _pool;
 
     public Transform Target { get; protected set; }
     protected readonly Collider[] _detectBuffer = new Collider[k_DetectBufferSize];
@@ -24,7 +24,15 @@ public abstract class CommonEnemyBase : MonoBehaviour
     private void Awake()
     {
         _body = GetComponent<ShipBody>();
+        _body.OnDeadEvent += OnDead;
     }
+
+    private void OnDestroy()
+    {
+        if (_body != null) _body.OnDeadEvent -= OnDead;
+    }
+
+    public void SetPool(CommonPool pool) => _pool = pool;
 
     public virtual void Init() // TODO: stage 추가시 체력 증가 등 초기화 작업 추가
     {
@@ -55,5 +63,12 @@ public abstract class CommonEnemyBase : MonoBehaviour
         Target = bestTarget;
 
         _detectTimer = Time.time + _detectInterval;
+    }
+
+    protected abstract void OnDead();
+
+    public void ReturnToPool()
+    {
+        _pool?.Release(this);
     }
 }

@@ -85,18 +85,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Submarine
   _shipLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   _data: {fileID: 11400000, guid: 06adc46ea6a15d84f94af4d48a67d14b, type: 2}
-  _detectRange: 10
+  _detectRange: 13
   _detectInterval: 2.5
   _moveSpeed: 2
+  _collider: {fileID: 7604716815188705475}
   _submarine: {fileID: 7056124533430652143}
   _minePrefab: {fileID: 0}
-  _divingOffset: {x: 0, y: -0.5, z: 0}
+  _divingOffset: {x: 0, y: -1, z: 0}
   _divingDuration: 1
-  _divingInterval: 3
-  _inDiveDuration: 2
-  _collider: {fileID: 7604716815188705475}
 --- !u!1 &1602932287521672318
 GameObject:
   m_ObjectHideFlags: 0

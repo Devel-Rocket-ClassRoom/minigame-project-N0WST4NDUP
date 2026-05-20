@@ -2,28 +2,23 @@ using UnityEngine;
 
 public class GunBoat : CommonEnemyBase
 {
+    protected const int k_patrolPointRadius = 8;
     public EnemyStateMachine StateMachine { get; } = new();
 
     [Header("GunBoat Config")]
     [SerializeField] private CombatData _combatData;
     [SerializeField] private float _idlingInterval = 3f;
-    [SerializeField] private int _patrolPointCount = 7;
     [SerializeField] private float _patrolPointRadius = 5f;
 
     [Header("Combat Config")]
     [SerializeField] private GameObject _head;
     [SerializeField] private Transform _firePoint;
 
-    private Vector3[] _patrolPoints; // TODO: 풀로 반환할 때 null 전환해서 GC가 수거할 수 있게
+    private Vector3[] _patrolPoints = new Vector3[k_patrolPointRadius];
     private int _currentPatrolIndex = -1;
 
     public CombatData CombatData => _combatData;
     public float IdlingInterval => _idlingInterval;
-
-    private void Start()
-    {
-        _patrolPoints = new Vector3[_patrolPointCount];
-    }
 
     public override void Init()
     {
@@ -57,7 +52,7 @@ public class GunBoat : CommonEnemyBase
     private void GeneratePatrolPoints()
     {
         var origin = transform.position;
-        for (int i = 0; i < _patrolPointCount; i++)
+        for (int i = 0; i < _patrolPoints.Length; i++)
         {
             var offset = Random.insideUnitCircle * _patrolPointRadius;
             _patrolPoints[i] = new(origin.x + offset.x, origin.y, origin.z + offset.y);
@@ -77,5 +72,10 @@ public class GunBoat : CommonEnemyBase
         {
             _patrolPoints[i] = Vector3.zero;
         }
+    }
+
+    protected override void OnDead()
+    {
+        _pool?.Release(this);
     }
 }
