@@ -66,4 +66,9 @@ public abstract class CommonEnemyBase : MonoBehaviour
     }
 
     protected abstract void OnDead();
+
+    public void ReturnToPool()
+    {
+        _pool?.Release(this);
+    }
 }
