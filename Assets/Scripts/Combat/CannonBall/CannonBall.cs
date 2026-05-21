@@ -1,89 +1,87 @@
 using UnityEngine;
 
+public class CannonConfig
+{
+    public readonly float Damage;
+    public readonly float ArcHeight;
+    public readonly float FlightDuration;
+    public readonly float AreaRadius;
+
+    public CannonConfig(float damage, float arcHeight, float flightDuration, float areaRadius)
+    {
+        Damage = damage;
+        ArcHeight = arcHeight;
+        FlightDuration = flightDuration;
+        AreaRadius = areaRadius;
+    }
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class CannonBall : CombatItemBase
 {
-    private const float SplashDuration = 3.5f;
-
-    [SerializeField] private GameObject _waterSplashPrefab; // TODO: ParticlePool 도입 시 제거
     private Rigidbody _rigidBody;
-    private bool _splashFlag = false;
-    private float _splashTimer;
+
+    private CannonConfig _config;
+    private Vector3 _p0, _p1, _p2;
+    private float _duration;
+    private float _elapsed;
+    private bool _flying;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();
-        // Init();
     }
 
     public override void Init()
     {
-        DespawnSplash();
-        // var direction = Vector3.up * 10f + Vector3.right * 2f;
-        // Fire(direction);
     }
 
     public override void Reset()
     {
-        DespawnSplash();
-        _splashFlag = false;
-        _rigidBody.isKinematic = false;
+        _config = null;
+        _flying = false;
     }
 
-    public override void Fire(Vector3 force)
+    public void SetConfig(CannonConfig config) => _config = config;
+
+    public override void Fire(Vector3 target)
     {
-        _rigidBody.AddForce(force, ForceMode.Impulse);
+        if (_config == null) return;
+
+        _p0 = transform.position;
+        _p2 = target;
+        _p1 = (_p0 + _p2) * 0.5f + Vector3.up * _config.ArcHeight;
+        _duration = Mathf.Max(0.01f, _config.FlightDuration);
+        _elapsed = 0f;
+        _flying = true;
     }
 
     private void Update()
     {
-        if (_splashFlag)
+        if (!_flying) return;
+
+        _elapsed += Time.deltaTime;
+        var t = Mathf.Clamp01(_elapsed / _duration);
+        var u = 1f - t;
+        transform.position = u * u * _p0 + 2f * u * t * _p1 + t * t * _p2;
+
+        if (t >= 1f)
         {
-            TickSplash();
-            return;
+            ReturnToPool();
         }
+    }
 
-        if (transform.position.y < 0f)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
         {
-            OnHitWater();
+            if (other.TryGetComponent(out ShipBody ship))
+            {
+                ship.OnDamaged(_config.Damage);
+            }
+
+            ParticlePoolRegistry.Get(ParticleKind.Explosion).Play(transform.position);
+            ReturnToPool();
         }
-    }
-
-    private void OnHitWater()
-    {
-        _rigidBody.linearVelocity = Vector3.zero;
-        _rigidBody.isKinematic = true;
-
-        var pos = transform.position;
-        pos.y = 0f;
-        transform.position = pos;
-
-        SpawnSplash();
-        _splashFlag = true;
-        _splashTimer = SplashDuration;
-    }
-
-    private void TickSplash()
-    {
-        _splashTimer -= Time.deltaTime;
-        if (_splashTimer > 0f) return;
-
-        DespawnSplash();
-        _splashFlag = false;
-        ReturnToPool();
-    }
-
-    // TODO: ParticlePool 도입 시 풀에서 splash 인스턴스 Get
-    private void SpawnSplash()
-    {
-        if (_waterSplashPrefab == null) return;
-        _waterSplashPrefab.SetActive(true);
-    }
-
-    // TODO: ParticlePool 도입 시 splash 인스턴스 Release
-    private void DespawnSplash()
-    {
-        if (_waterSplashPrefab == null) return;
-        _waterSplashPrefab.SetActive(false);
     }
 }

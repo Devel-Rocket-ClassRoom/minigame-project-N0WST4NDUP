@@ -2,8 +2,14 @@ using UnityEngine;
 
 public class CannonAttachable : MainAttachableBase
 {
-    [SerializeField] protected float _upward = 5f;
+    [Header("Cannon Config")]
     [SerializeField] protected Transform _firePoint;
+
+    [Tooltip("포물선 정점 높이(m)")]
+    [SerializeField] protected float _arcHeight = 3f;
+
+    [Tooltip("비행 시간(초) - 키울수록 느림")]
+    [SerializeField] protected float _flightDuration = 0.8f;
 
     private CannonBase _cannon;
 
@@ -64,7 +70,11 @@ public class CannonAttachable : MainAttachableBase
             _cannon = _cannon.Upgrade();
         }
 
-        _cannon.Settings(_upward, _firePoint);
+        _cannon.SetBarrel(
+            _firePoint,
+            _arcHeight,
+            _flightDuration
+        );
     }
 
     private void DoubleCannonTest()
@@ -74,7 +84,11 @@ public class CannonAttachable : MainAttachableBase
             _cannon = new DoubleCannon(_cannon);
         }
 
-        _cannon.Settings(_upward, _firePoint);
+        _cannon.SetBarrel(
+            _firePoint,
+            _arcHeight,
+            _flightDuration
+        );
     }
 
     private void TripleCannonTest()
@@ -84,6 +98,10 @@ public class CannonAttachable : MainAttachableBase
             _cannon = new TripleCannon(_cannon);
         }
 
-        _cannon.Settings(_upward, _firePoint);
+        _cannon.SetBarrel(
+            _firePoint,
+            _arcHeight,
+            _flightDuration
+        );
     }
 }
