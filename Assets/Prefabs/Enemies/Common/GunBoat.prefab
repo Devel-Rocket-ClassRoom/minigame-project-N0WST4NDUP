@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 6753789537812792510}
   m_Layer: 0
   m_Name: GunBoat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,7 +212,6 @@ MonoBehaviour:
   _moveSpeed: 3
   _combatData: {fileID: 11400000, guid: 36e8e5933252d8946925aaa40cb4ca1e, type: 2}
   _idlingInterval: 3
-  _patrolPointCount: 7
   _patrolPointRadius: 20
   _head: {fileID: 8512060137703479484}
   _firePoint: {fileID: 1330955960018874512}

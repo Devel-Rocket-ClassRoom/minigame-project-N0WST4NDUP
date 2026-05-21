@@ -76,6 +76,7 @@ public class GunBoat : CommonEnemyBase
 
     protected override void OnDead()
     {
+        Debug.Log("군함 사망");
         _pool?.Release(this);
     }
 }

@@ -32,6 +32,7 @@ public class SailBoat : CommonEnemyBase
 
     protected override void OnDead()
     {
+        Debug.Log("돛단배 사망");
         _pool?.Release(this);
     }
 }
