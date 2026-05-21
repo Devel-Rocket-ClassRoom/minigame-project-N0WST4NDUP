@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class RearAttachableBase : MonoBehaviour, IAttachable
+public abstract class RearAttachableBase : MonoBehaviour
 {
     [Header("Default Config")]
     [SerializeField] private CombatData _data;

@@ -1,6 +1,7 @@
+using UnityEngine;
+
 public interface IAttachable
 {
-    void Attach();
+    void Attach(Transform transform);
     void Detach();
-    void Tick();
 }

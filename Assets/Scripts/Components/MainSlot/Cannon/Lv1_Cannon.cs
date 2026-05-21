@@ -1,22 +1,24 @@
-public class Lv1_Cannon : MainAttachableBase
-{
-    public override void Attach()
-    {
-        return;
-    }
+using UnityEngine;
 
-    public override void Detach()
+public class Lv1_Cannon : CannonBase
+{
+    public Lv1_Cannon(CombatData data)
     {
-        return;
+        _data = data;
+        Debug.Log("캐넌 레벨 1");
     }
 
     public override void Tick()
     {
-        return;
+        TickCooldown();
+
+        if (!CanFire) return;
+
+        FireProcess();
     }
 
-    public override MainAttachableBase Upgrade()
+    public override CannonBase Upgrade()
     {
-        throw new System.NotImplementedException();
+        return new Lv2_Cannon(_data);
     }
 }

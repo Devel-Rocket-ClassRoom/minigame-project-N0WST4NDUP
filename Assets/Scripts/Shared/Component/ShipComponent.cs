@@ -1,34 +1,34 @@
 using UnityEngine;
 
-public abstract class ShipComponent : MonoBehaviour
+public class ShipComponent : MonoBehaviour
 {
-    [SerializeField][Min(1)] private int _mainSlotCount = 1;
-    [SerializeField][Min(0)] private int _subSlotCount = 0;
-    [SerializeField][Min(0)] private int _rearSlotCount = 1;
+    // [SerializeField][Min(1)] private int _mainSlotCount = 1;
+    // [SerializeField][Min(0)] private int _subSlotCount = 0;
+    // [SerializeField][Min(0)] private int _rearSlotCount = 1;
 
-    private MainAttachableBase[] _mainSlots;
-    private SubAttachableBase[] _subSlots;
-    private RearAttachableBase[] _rearSlots;
+    [Header("Main Component")]
+    [SerializeField] private MainAttachableBase _mainSlot;
+    [SerializeField] private Transform _mainSlotPosition;
 
-    private void Awake()
+    [Header("Sub Component")]
+    [SerializeField] private SubAttachableBase _subSlot;
+    [SerializeField] private Transform _subSlotPosition;
+
+    [Header("Rear Component")]
+    [SerializeField] private RearAttachableBase _rearSlot;
+    [SerializeField] private Transform _rearSlotPosition;
+
+    private void Start()
     {
-        _mainSlots = new MainAttachableBase[_mainSlotCount];
-        _subSlots = new SubAttachableBase[_subSlotCount];
-        _rearSlots = new RearAttachableBase[_rearSlotCount];
+        _mainSlot?.Attach(_mainSlotPosition);
+        _subSlot?.Attach();
+        _rearSlot?.Attach();
     }
 
-    private void Update()
-    {
-        OperateSlots(_mainSlots);
-        OperateSlots(_subSlots);
-        OperateSlots(_rearSlots);
-    }
-
-    private void OperateSlots(IAttachable[] slots)
-    {
-        foreach (var slot in slots)
-        {
-            slot?.Tick();
-        }
-    }
+    // private void Awake()
+    // {
+    //     _mainSlots = new MainAttachableBase[_mainSlotCount];
+    //     _subSlots = new SubAttachableBase[_subSlotCount];
+    //     _rearSlots = new RearAttachableBase[_rearSlotCount];
+    // }
 }
