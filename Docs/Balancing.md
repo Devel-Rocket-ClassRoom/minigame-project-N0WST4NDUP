@@ -95,7 +95,7 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 
 | 영역 | GDD 참조 | 확정 마일스톤 | 현재 상태 |
 |---|---|---|---|
-| 자동 사격 (타입별 발사 규칙·사거리) | §5.2 | W1 | 미확정(❓) |
+| 자동 사격 (타입별 발사 규칙·사거리) | §5.2 | W1 | **부분 등재 (§3.6)** — 주포(캐넌) 1차 구현. 부포·어뢰 등 타 타입은 여전히 `미확정(❓)` |
 | 적 스폰·일반 몹 스탯 (HP/데미지/EXP/등장률) | §5.3.1 | 플레이테스트 | **부분 등재 (§3.2~3.5)** — 일반 몹 3종 `구현 기본값`. EXP·등장률·스폰 곡선은 여전히 `미확정(❓)` |
 | **부하 테스트 임계** (동시 적/투사체/드롭/VFX @60fps) | §5.3.2 | W1 (P0) | 미확정(❓) — W1 종료 전 도출 |
 | EXP / 레벨업 곡선 | §5.4 | W1 | 미확정(❓) |
@@ -212,16 +212,21 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 | `_patrolPointCount` | 7 | 개 | 스폰 위치 주변 패트롤 포인트 수 |
 | `_patrolPointRadius` | 5 | m | 패트롤 포인트 분포 반경 (insideUnitCircle) |
 | `CombatData.Damage` | 10 | HP | 즉발 데미지 |
-| `CombatData.Range` | 9 | m | Chase→Attack 전이 거리. **`_detectRange`(10)보다 작아야 함** |
+| `CombatData.MinRange` | 1 | m | (GunBoat 미사용) — 캐넌 랜덤 발사 거리 하한용 필드. 클래스 기본값. |
+| `CombatData.MaxRange` | 10 | m | Chase→Attack 전이 거리. **`_detectRange`(10) 이하여야 함**. 클래스 기본값. |
 | `CombatData.Cooldown` | 1 | s | Attack 재발사 쿨다운 |
 | `CombatData.IsAreaAttack` | false | — | 광역 공격 여부 |
 | `CombatData.AreaRadius` | 1 | m | 광역 공격 반경 (현재 사용 안 함) |
 
 - **근거**: GDD §5.3.1 #2 "사거리 유지가 회피의 핵심, 거리 의사결정 유도".
-  §0.2 "궤적 예측" — Range 9m와 MoveSpeed 6m/s 조합으로 플레이어가 "다가오는 사거리"를 예측하고
+  §0.2 "궤적 예측" — MaxRange 10m와 MoveSpeed 6m/s 조합으로 플레이어가 "다가오는 사거리"를 예측하고
   피할 수 있는 출발점. 패트롤은 GDD 표 본문에 없는 코드 측 추가로, "정찰 중인 적" 느낌을 주어
   스폰 직후 어색함을 줄이는 보조 행동.
 - **상태**: `구현 기본값`.
+- **⚠️ 자산 마이그레이션 잔재**: `CombatData.asset` YAML에는 구 필드 `Range: 9`가 남아있으나, 코드
+  필드명이 `MinRange`/`MaxRange`로 분리되며(`[FormerlySerializedAs]` 미부여) 해당 값은 직렬화에서
+  끊겨 클래스 기본값(`MaxRange = 10`)이 적용된다. 즉 Chase→Attack 전이 거리는 사실상 1m 증가(9 → 10).
+  W1 부하/플레이테스트 시 자산을 재저장하면 표기/실제가 다시 일치할 예정.
 - **✅ GDD 갱신 반영**: 일반 몹은 Rigidbody 미사용·`transform` 직접 조작 방식으로 통일됨에 따라 물리 기반
   자연 감속이 불가능하다. GDD §5.3.1 #2 본문도 "추격 → 사거리 진입 시 **정지** → 공격"으로 의식적으로
   갱신되어 코드와 정렬됨 (CLAUDE.md §3 SSoT 원칙).
@@ -252,3 +257,61 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
     프로토 후 채택 필요. 현재 잠수 시 시각 단서 없음.
   - **잠수 중 무적**: 잠수 진입 시 `SetCollider(false)` 호출은 되어 있으나, 프리팹의 `_collider` 인스펙터
     참조 연결 검증 필요.
+
+### 3.6 주포 — 캐넌 (`CannonBase` 계열 / `CannonData` / `CannonBall`)
+
+소스: [Assets/Scripts/Components/MainSlot/Cannon/](../Assets/Scripts/Components/MainSlot/Cannon/),
+[Assets/Scripts/Combat/CannonBall/CannonBall.cs](../Assets/Scripts/Combat/CannonBall/CannonBall.cs),
+에셋 [CannonData.asset](../Assets/ScriptableObjects/Combat/CannonData.asset).
+**GDD §5.2 자동 사격 / §6.1 슬롯 & 컴포넌트** 매핑 — 주포 슬롯 1차 구현.
+
+#### CannonData (SO)
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Damage` | 50 | HP | 피격 대상 데미지 (적용 로직은 충돌 처리 미구현) |
+| `MinRange` | 1 | m | 랜덤 발사 거리 하한. 클래스 기본값 (자산 YAML은 구 `Range`만 잔존). |
+| `MaxRange` | 10 | m | 랜덤 발사 거리 상한. 클래스 기본값. |
+| `Cooldown` | 2 | s | 발사 간격 |
+| `IsAreaAttack` | true | — | 광역 공격 여부 (적용 로직 미구현) |
+| `AreaRadius` | 1 | m | 광역 반경 (사용 안 함) |
+
+#### 캐넌 본체 — 발사 파라미터
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Lv1_Cannon.Upward` | 5 | — | 수직 임펄스 크기 (`const`, Lv1 전용). 수평 = 랜덤 단위벡터 × Range, 합성하여 포물선 궤적. |
+| 발사 방향 | XZ 평면 랜덤 360° | — | `Random.Range(0, 2π)`로 수평 방향 결정 (타게팅 미구현, 무지향). |
+
+#### 업그레이드 사슬 (데코레이터 패턴)
+
+| 단계 | 클래스 | 역할 |
+|---|---|---|
+| 1 | `Lv1_Cannon` | 단일 발사 (수직 5 임펄스) |
+| 2 | `Lv2_Cannon` | 단일 발사, Lv1 대체 (스탯 강화 자리표) |
+| 3 | `DoubleCannon` | 데코레이터 — 내부 캐넌의 `FireProcess`를 1 Tick에 2회 실행 |
+| 4 | `TripleCannon` | 데코레이터 — 1 Tick에 3회 실행 |
+
+업그레이드 키 입력은 현재 `CannonAttachable`의 `Alpha1` (테스트용). 진화 트리거 UI는 GDD §6.5
+"드롭 교체 파워업" 마감 시 정리 예정.
+
+#### CannonBall (포탄, `CombatItemBase` 풀링 대상)
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `SplashDuration` | 3.5 | s | 수면 닿은 뒤 splash 표시 유지 시간. `const`. |
+| 수면 충돌 처리 | `y < 0` 시 `isKinematic = true` + y → 0 스냅 | — | 가라앉음 방지. Splash 종료 시 `ReturnToPool()`. |
+
+- **근거**: GDD §5.2 "슬롯에 장착된 컴포넌트가 각자의 쿨다운/타게팅 규칙으로 자동 발사" 충족을 위한
+  첫 슬롯 구현. §0.3 "자동 사격(Vampire Survivors)" 결합의 출발점. Damage 50은 GunBoat HP 15(§3.4)·
+  나룻배 HP 10(§3.3) 기준 1~2발 처치 — §0.3 30초 루프의 즉시 체감 확보. Cooldown 2s는 발사가 시각적으로
+  드물어 보이지 않는 출발점이며 더블/트리플 데코레이터로 체감 DPS를 키우는 설계 여지를 남긴다.
+  데미지·궤적·랜덤 방향 모두 **타게팅 미구현**으로, 적 명중을 전제로 한 밸런싱은 W1 부하/플레이테스트 후
+  본격 등재한다.
+- **상태**: `구현 기본값` — W1 게이트에서 타게팅·데미지 적용 로직 추가 후 재평가.
+- **🚧 미구현 / 추후**:
+  - **타게팅**: 현재 무지향(랜덤). GDD §5.2 "타입별 발사 규칙"의 주포=전방 규약은 미적용.
+  - **데미지 적용**: `Damage 50`은 SO에 박혀 있으나 충돌 시 `IDamageable` 호출 경로 없음.
+  - **광역 공격**: `IsAreaAttack=true`이지만 실제 splash 반경 데미지 처리 없음.
+  - **수명/맥스 라이프**: 수평 발사로 수면을 못 만나면 영구 부유 가능. 타이머 컷오프 미구현.
+  - **`CannonData.asset` 마이그레이션**: `Range: 10` 잔존 → 인스펙터 재저장 시 `MinRange`/`MaxRange`로 YAML 갱신 예정.
