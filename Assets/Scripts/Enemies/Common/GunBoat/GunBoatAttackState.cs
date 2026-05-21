@@ -33,7 +33,7 @@ public class GunBoatAttackState : IEnemyState
         {
             _gunBoat.StateMachine.ChangeState(new GunBoatIdleState(_gunBoat));
         }
-        else if (Vector3.Distance(_gunBoat.transform.position, _gunBoat.Target.position) > _gunBoat.CombatData.Range)
+        else if (Vector3.Distance(_gunBoat.transform.position, _gunBoat.Target.position) > _gunBoat.CombatData.MaxRange)
         {
             _gunBoat.StateMachine.ChangeState(new GunBoatChaseState(_gunBoat));
         }

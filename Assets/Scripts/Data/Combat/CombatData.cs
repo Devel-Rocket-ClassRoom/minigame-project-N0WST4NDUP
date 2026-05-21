@@ -9,8 +9,10 @@ public class CombatData : ScriptableObject
     [Tooltip("데미지")]
     public float Damage = 10f;
 
-    [Tooltip("사용 범위")]
-    public float Range = 10f;
+    [Tooltip("최소 범위")]
+    public float MinRange = 1f;
+    [Tooltip("최대 범위")]
+    public float MaxRange = 10f;
 
     [Tooltip("쿨다운(초)")]
     public float Cooldown = 1f;
