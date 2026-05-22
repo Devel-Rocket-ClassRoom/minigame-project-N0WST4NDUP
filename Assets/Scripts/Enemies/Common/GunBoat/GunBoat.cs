@@ -22,6 +22,7 @@ public class GunBoat : CommonEnemyBase
 
     public override void Init()
     {
+        base.Init();
         GeneratePatrolPoints();
         StateMachine.ChangeState(new GunBoatIdleState(this));
     }
