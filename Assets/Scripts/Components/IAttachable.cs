@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IAttachable
 {
-    void Attach(Transform transform);
+    void Attach();
     void Detach();
 }

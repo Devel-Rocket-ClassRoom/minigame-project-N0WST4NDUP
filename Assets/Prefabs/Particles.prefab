@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4349456370377215415}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8596646816603180688}
   - component: {fileID: 5678066347846178025}
   - component: {fileID: 7407303911512195438}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BoatWakeParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

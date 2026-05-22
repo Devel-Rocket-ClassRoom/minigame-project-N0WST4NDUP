@@ -5,6 +5,8 @@ public class ShipComponent : MonoBehaviour
     // [SerializeField][Min(1)] private int _mainSlotCount = 1;
     // [SerializeField][Min(0)] private int _subSlotCount = 0;
     // [SerializeField][Min(0)] private int _rearSlotCount = 1;
+    [Header("Default Config")]
+    [SerializeField] private LayerMask _target;
 
     [Header("Main Component")]
     [SerializeField] private MainAttachableBase _mainSlot;
@@ -18,9 +20,15 @@ public class ShipComponent : MonoBehaviour
     [SerializeField] private RearAttachableBase _rearSlot;
     [SerializeField] private Transform _rearSlotPosition;
 
+    private void Awake()
+    {
+        var go = Instantiate(_mainSlot, _mainSlotPosition);
+        go.SetTarget(_target);
+    }
+
     private void Start()
     {
-        _mainSlot?.Attach(_mainSlotPosition);
+        _mainSlot?.Attach();
         _subSlot?.Attach();
         _rearSlot?.Attach();
     }

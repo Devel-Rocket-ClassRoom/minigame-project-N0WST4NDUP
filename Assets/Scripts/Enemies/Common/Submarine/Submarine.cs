@@ -58,7 +58,6 @@ public class Submarine : CommonEnemyBase
 
     protected override void OnDead()
     {
-        Debug.Log("잠수함 사망");
         _pool?.Release(this);
     }
 }

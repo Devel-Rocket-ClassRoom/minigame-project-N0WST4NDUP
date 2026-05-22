@@ -4,17 +4,17 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Enemy
+  - Common
   - Named
-  - Missile
+  - Boss
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ship
+  - Player
   - Water
   - UI
-  - Common
+  - Enemy
   - 
   - 
   - 

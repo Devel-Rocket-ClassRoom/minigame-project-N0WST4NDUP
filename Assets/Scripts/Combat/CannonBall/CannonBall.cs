@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class CannonConfig
 {
+    public readonly LayerMask Target;
     public readonly float Damage;
     public readonly float ArcHeight;
     public readonly float FlightDuration;
     public readonly float AreaRadius;
 
-    public CannonConfig(float damage, float arcHeight, float flightDuration, float areaRadius)
+    public CannonConfig(LayerMask target, float damage, float arcHeight, float flightDuration, float areaRadius)
     {
+        Target = target;
         Damage = damage;
         ArcHeight = arcHeight;
         FlightDuration = flightDuration;
@@ -19,18 +21,15 @@ public class CannonConfig
 [RequireComponent(typeof(Rigidbody))]
 public class CannonBall : CombatItemBase
 {
-    private Rigidbody _rigidBody;
+    private const int k_hitBufferSize = 32;
+    private static readonly Collider[] _hitBuffer = new Collider[k_hitBufferSize];
 
+    // RigidBody -> 베지어 커브로 변경
     private CannonConfig _config;
     private Vector3 _p0, _p1, _p2;
     private float _duration;
     private float _elapsed;
     private bool _flying;
-
-    private void Awake()
-    {
-        _rigidBody = GetComponent<Rigidbody>();
-    }
 
     public override void Init()
     {
@@ -67,21 +66,39 @@ public class CannonBall : CombatItemBase
 
         if (t >= 1f)
         {
-            ReturnToPool();
+            Explode(ParticleKind.WaterSplash);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (_config.Target == (_config.Target | (1 << other.gameObject.layer)))
         {
-            if (other.TryGetComponent(out ShipBody ship))
-            {
-                ship.OnDamaged(_config.Damage);
-            }
-
-            ParticlePoolRegistry.Get(ParticleKind.Explosion).Play(transform.position);
-            ReturnToPool();
+            Debug.Log($"Trigger Enter Snap: {transform.position}");
+            Explode(ParticleKind.Explosion);
         }
+    }
+
+    private void Explode(ParticleKind particleKind)
+    {
+        Vector3 center = transform.position;
+        if (particleKind == ParticleKind.Explosion)
+            Debug.Log($"In Explode Snap: {center}");
+
+        int count = Physics.OverlapSphereNonAlloc(
+            center,
+            _config.AreaRadius,
+            _hitBuffer,
+            _config.Target,
+            QueryTriggerInteraction.Collide);
+
+        for (int i = 0; i < count; i++)
+        {
+            var ship = _hitBuffer[i].GetComponentInParent<ShipBody>();
+            if (ship != null) ship?.OnDamaged(_config.Damage);
+        }
+
+        ParticlePoolRegistry.Get(particleKind).Play(center);
+        ReturnToPool();
     }
 }

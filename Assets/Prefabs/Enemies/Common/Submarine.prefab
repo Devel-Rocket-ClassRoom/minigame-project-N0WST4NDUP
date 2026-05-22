@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7604716815188705475}
   - component: {fileID: 1067687874818815582}
   - component: {fileID: 4555355958016637542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Submarine
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4942,7 +4942,7 @@ GameObject:
   - component: {fileID: 7056124533430652143}
   - component: {fileID: 4413587847898027120}
   - component: {fileID: 8106702174959192742}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Submarine_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

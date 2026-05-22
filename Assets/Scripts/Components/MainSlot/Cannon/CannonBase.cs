@@ -7,11 +7,13 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
     protected float _cooldownTimer;
     public bool CanFire => _cooldownTimer <= 0;
 
+    public LayerMask Target { get; private set; }
     public Transform FirePoint { get; private set; }
     public float ArcHeight { get; private set; }
     public float FlightDuration { get; private set; }
-    public void SetBarrel(Transform firePoint, float arcHeight, float flightDuration)
+    public void SetBarrel(LayerMask target, Transform firePoint, float arcHeight, float flightDuration)
     {
+        Target = target;
         FirePoint = firePoint;
         ArcHeight = arcHeight;
         FlightDuration = flightDuration;
@@ -27,6 +29,7 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
         ball.transform.position = FirePoint.position;
 
         CannonConfig config = new(
+            Target,
             _data.Damage,
             ArcHeight,
             FlightDuration,

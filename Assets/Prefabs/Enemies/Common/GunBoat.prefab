@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5885041076511560210}
   - component: {fileID: 5035902066819788589}
   - component: {fileID: 1673948433633690252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GunBoat_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330955960018874512}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2805536115167210014}
   - component: {fileID: 8559955595747661151}
   - component: {fileID: 6753789537812792510}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GunBoat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 2506298353870669157}
   - component: {fileID: 16964587172862947}
   - component: {fileID: 2544597896495834092}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 7859464047776283773}
   - component: {fileID: 1010191439726638482}
   - component: {fileID: 6773590165673391287}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 915573686035107667}
   - component: {fileID: 5786033535904365973}
   - component: {fileID: 8369584391007428264}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

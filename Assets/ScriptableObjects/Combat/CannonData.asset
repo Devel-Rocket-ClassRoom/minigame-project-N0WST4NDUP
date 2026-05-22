@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: CannonData
   m_EditorClassIdentifier: Assembly-CSharp::CombatData
   Damage: 50
-  Range: 10
+  MinRange: 1
+  MaxRange: 10
   Cooldown: 2
   IsAreaAttack: 1
-  AreaRadius: 1
+  AreaRadius: 1.6

@@ -48,8 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CannonAttachable
   _data: {fileID: 11400000, guid: 4e0a6dedbbe6f6949b8623da132b774b, type: 2}
   _prefab: {fileID: 1938446800915802764}
-  _upward: 5
   _firePoint: {fileID: 2603186532278607751}
+  _arcHeight: 10
+  _flightDuration: 1
 --- !u!1 &2290830698298185083
 GameObject:
   m_ObjectHideFlags: 0

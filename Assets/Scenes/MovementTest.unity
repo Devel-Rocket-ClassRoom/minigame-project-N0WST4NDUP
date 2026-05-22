@@ -392,6 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eed517db0b3ac54f9a5c64250e30621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipComponent
+  _target:
+    serializedVersion: 2
+    m_Bits: 64
   _mainSlot: {fileID: 2519735852428327152, guid: 0939242a3e44ae941a3423264effa613, type: 3}
   _mainSlotPosition: {fileID: 296390267}
   _subSlot: {fileID: 0}
@@ -651,6 +654,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1857326799}
   - {fileID: 1424692930}
   m_Father: {fileID: 1485150037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1627,6 +1631,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720679909}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1857326798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857326799}
+  - component: {fileID: 1857326800}
+  m_Layer: 0
+  m_Name: WaterSplashPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857326799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857326798}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 365335543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1857326800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857326798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
+  _kind: 0
+  _prefab: {fileID: 1415187202445000303, guid: e2550dae06524a94bbc4bcdf375a88b9, type: 3}
+  _defaultCapacity: 32
+  _maxSize: 100
 --- !u!1 &1995174424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,10 +1860,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particles
       objectReference: {fileID: 0}
-    - target: {fileID: 1843494913957120277, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4349456370377215415, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1851,10 +1899,6 @@ PrefabInstance:
     - target: {fileID: 4349456370377215415, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8108069842247198324, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

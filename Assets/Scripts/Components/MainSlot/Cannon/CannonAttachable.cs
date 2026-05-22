@@ -6,10 +6,10 @@ public class CannonAttachable : MainAttachableBase
     [SerializeField] protected Transform _firePoint;
 
     [Tooltip("포물선 정점 높이(m)")]
-    [SerializeField] protected float _arcHeight = 3f;
+    [SerializeField] protected float _arcHeight = 5f;
 
-    [Tooltip("비행 시간(초) - 키울수록 느림")]
-    [SerializeField] protected float _flightDuration = 0.8f;
+    [Tooltip("비행 시간(초)")]
+    [SerializeField] protected float _flightDuration = 0.7f;
 
     private CannonBase _cannon;
 
@@ -49,9 +49,8 @@ public class CannonAttachable : MainAttachableBase
         }
     }
 
-    public override void Attach(Transform transform)
+    public override void Attach()
     {
-        Instantiate(_prefab, transform);
     }
 
     public override void Detach()
@@ -71,6 +70,7 @@ public class CannonAttachable : MainAttachableBase
         }
 
         _cannon.SetBarrel(
+            _target,
             _firePoint,
             _arcHeight,
             _flightDuration
@@ -85,6 +85,7 @@ public class CannonAttachable : MainAttachableBase
         }
 
         _cannon.SetBarrel(
+            _target,
             _firePoint,
             _arcHeight,
             _flightDuration
@@ -99,6 +100,7 @@ public class CannonAttachable : MainAttachableBase
         }
 
         _cannon.SetBarrel(
+            _target,
             _firePoint,
             _arcHeight,
             _flightDuration
