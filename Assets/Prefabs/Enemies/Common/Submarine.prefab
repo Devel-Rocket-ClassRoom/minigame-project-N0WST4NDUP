@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7604716815188705475}
   - component: {fileID: 1067687874818815582}
   - component: {fileID: 4555355958016637542}
+  - component: {fileID: 2900586017675401174}
   m_Layer: 6
   m_Name: Submarine
   m_TagString: Enemy
@@ -95,6 +96,20 @@ MonoBehaviour:
   _minePrefab: {fileID: 0}
   _divingOffset: {x: 0, y: -1, z: 0}
   _divingDuration: 1
+--- !u!114 &2900586017675401174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191034324052587663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b036b5ebc6e866c469b8b81916117f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::XPDropper
+  _active: 1
+  _xp: 1
 --- !u!1 &1602932287521672318
 GameObject:
   m_ObjectHideFlags: 0

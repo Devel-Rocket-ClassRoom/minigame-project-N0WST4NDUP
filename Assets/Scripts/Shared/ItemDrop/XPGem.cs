@@ -2,16 +2,21 @@ using UnityEngine;
 
 public class XPGem : MonoBehaviour
 {
-    [SerializeField] private float _magnetSpeed = 10f;
+    [SerializeField] private float _moveSpeed = 10f;
 
-    private float _xp;
+    private int _xp;
 
     private bool _isPicked;
     private Transform _target;
+    private LayerMask _targetLayer;
 
-    public void Init(DropData data)
+    private XPGemPool _pool;
+
+    public void SetPool(XPGemPool pool) => _pool = pool;
+
+    public void Init(int xp)
     {
-        _xp = data.XPReward;
+        _xp = xp;
     }
 
     public void Reset()
@@ -26,7 +31,7 @@ public class XPGem : MonoBehaviour
         if (_target == null) return;
 
         var dir = (_target.position - transform.position).normalized;
-        transform.position += dir * (_magnetSpeed * Time.deltaTime);
+        transform.position += dir * (_moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,13 +39,17 @@ public class XPGem : MonoBehaviour
         if (!_isPicked || _target == null) return;
         if (other.transform != _target) return;
 
-        Debug.Log($"XP Absorbed: {_xp}");
-        gameObject.SetActive(false);
+        if (_targetLayer == other.gameObject.layer)
+        {
+            Debug.Log($"XP Absorbed: {_xp}");
+            _pool?.Release(this);
+        }
     }
 
     public void OnPick(Transform target)
     {
-        _target = target;
         _isPicked = true;
+        _target = target;
+        _targetLayer = target.gameObject.layer;
     }
 }

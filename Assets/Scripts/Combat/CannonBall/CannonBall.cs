@@ -74,7 +74,6 @@ public class CannonBall : CombatItemBase
     {
         if (_config.Target == (_config.Target | (1 << other.gameObject.layer)))
         {
-            Debug.Log($"Trigger Enter Snap: {transform.position}");
             Explode(ParticleKind.Explosion);
         }
     }
@@ -82,9 +81,6 @@ public class CannonBall : CombatItemBase
     private void Explode(ParticleKind particleKind)
     {
         Vector3 center = transform.position;
-        if (particleKind == ParticleKind.Explosion)
-            Debug.Log($"In Explode Snap: {center}");
-
         int count = Physics.OverlapSphereNonAlloc(
             center,
             _config.AreaRadius,

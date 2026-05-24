@@ -5,7 +5,14 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private PlayerInput _input;
+
+    [Header("Dependencies")]
     [SerializeField] private ShipMovement _movement;
+
+    [Header("Starting Config")]
+    [SerializeField] private float _level = 1f;
+    [SerializeField] private float _maxXP;
+
 
     private void Awake()
     {
