@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ShipStats))]
 public class ShipComponent : MonoBehaviour
 {
     // [SerializeField][Min(1)] private int _mainSlotCount = 1;
@@ -20,15 +21,18 @@ public class ShipComponent : MonoBehaviour
     [SerializeField] private RearAttachableBase _rearSlot;
     [SerializeField] private Transform _rearSlotPosition;
 
+    private ShipStats _stats;
+
     private void Awake()
     {
-        var go = Instantiate(_mainSlot, _mainSlotPosition);
-        go.SetTarget(_target);
+        _stats = GetComponent<ShipStats>();
+
+        _mainSlot = Instantiate(_mainSlot, _mainSlotPosition);
     }
 
     private void Start()
     {
-        _mainSlot?.Attach();
+        _mainSlot?.Attach(_target, _stats);
         _subSlot?.Attach();
         _rearSlot?.Attach();
     }

@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Lv2_Cannon : CannonBase
 {
-    public Lv2_Cannon(CombatData data)
+    public Lv2_Cannon(CombatData data, ShipStats stats)
     {
         _data = data;
+        _stats = stats;
         Debug.Log("캐넌 레벨 2");
     }
 

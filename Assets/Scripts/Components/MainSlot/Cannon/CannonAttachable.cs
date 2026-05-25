@@ -49,20 +49,11 @@ public class CannonAttachable : MainAttachableBase
         }
     }
 
-    public override void Attach()
-    {
-    }
-
-    public override void Detach()
-    {
-        Destroy(gameObject);
-    }
-
     private void CannonTest()
     {
         if (_cannon == null)
         {
-            _cannon = new Lv1_Cannon(_data);
+            _cannon = new Lv1_Cannon(_data, _stats);
         }
         else
         {

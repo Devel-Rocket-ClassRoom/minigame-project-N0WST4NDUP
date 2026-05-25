@@ -4,4 +4,7 @@ public enum StatType
     Range,
     FireRate,
     AreaRadius,
+    Health,
+    MoveSpeed,
+    TurnSpeed,
 }
