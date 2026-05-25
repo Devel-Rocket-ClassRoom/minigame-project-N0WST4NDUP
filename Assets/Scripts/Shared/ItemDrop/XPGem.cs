@@ -10,6 +10,8 @@ public class XPGem : MonoBehaviour
     private Transform _target;
     private LayerMask _targetLayer;
 
+    private PlayerXP _playerXp;
+
     private XPGemPool _pool;
 
     public void SetPool(XPGemPool pool) => _pool = pool;
@@ -41,7 +43,7 @@ public class XPGem : MonoBehaviour
 
         if (_targetLayer == other.gameObject.layer)
         {
-            Debug.Log($"XP Absorbed: {_xp}");
+            _playerXp?.AddXp(_xp);
             _pool?.Release(this);
         }
     }
@@ -51,5 +53,6 @@ public class XPGem : MonoBehaviour
         _isPicked = true;
         _target = target;
         _targetLayer = target.gameObject.layer;
+        target.TryGetComponent(out _playerXp);     // 캐싱
     }
 }

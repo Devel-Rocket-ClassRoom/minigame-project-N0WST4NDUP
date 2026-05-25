@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 186825970}
   - component: {fileID: 186825967}
   - component: {fileID: 186825968}
+  - component: {fileID: 186825971}
   - component: {fileID: 186825963}
   - component: {fileID: 186825969}
   m_Layer: 3
@@ -483,8 +484,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   _movement: {fileID: 186825963}
-  _level: 0
-  _maxXP: 0
 --- !u!114 &186825969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +528,20 @@ CapsuleCollider:
   m_Height: 3.3
   m_Direction: 2
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &186825971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186825962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ba55de991f2a24ca7e7785b3e39018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerXP
+  _baseXp: 10
+  _stepXp: 3
 --- !u!1 &296390266
 GameObject:
   m_ObjectHideFlags: 0
@@ -2171,6 +2184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 125254962}
     m_Modifications:
+    - target: {fileID: 801881498970550205, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
+      propertyPath: _playerXP
+      value: 
+      objectReference: {fileID: 186825971}
     - target: {fileID: 7435364554490463040, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2271,8 +2288,7 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7998996648620738563, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

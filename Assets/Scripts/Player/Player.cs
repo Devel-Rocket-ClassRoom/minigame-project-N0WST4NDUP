@@ -9,11 +9,6 @@ public class Player : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private ShipMovement _movement;
 
-    [Header("Starting Config")]
-    [SerializeField] private float _level = 1f;
-    [SerializeField] private float _maxXP;
-
-
     private void Awake()
     {
         _input = GetComponent<PlayerInput>();
