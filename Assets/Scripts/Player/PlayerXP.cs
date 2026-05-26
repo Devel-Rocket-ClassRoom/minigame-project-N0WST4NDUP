@@ -9,11 +9,19 @@ public class PlayerXP : MonoBehaviour
 
     public long TotalXp { get; private set; }
     public event Action OnXPChanged;
+    public event Action OnLevelUp;
 
     public void AddXp(int amount)
     {
+        int prevLevel = Resolve(TotalXp).level;
         TotalXp += amount;
+        int newLevel = Resolve(TotalXp).level;
+
         OnXPChanged?.Invoke();
+        for (int lv = prevLevel + 1; lv <= newLevel; lv++)
+        {
+            OnLevelUp?.Invoke();
+        }
     }
 
     public (int level, long current, long max) Resolve(long total)
