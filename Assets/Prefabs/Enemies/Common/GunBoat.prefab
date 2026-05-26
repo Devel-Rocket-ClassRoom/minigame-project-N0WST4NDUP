@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 2805536115167210014}
   - component: {fileID: 8559955595747661151}
   - component: {fileID: 6753789537812792510}
+  - component: {fileID: 2436562044000537253}
   m_Layer: 6
   m_Name: GunBoat
   m_TagString: Enemy
@@ -215,6 +216,20 @@ MonoBehaviour:
   _patrolPointRadius: 20
   _head: {fileID: 8512060137703479484}
   _firePoint: {fileID: 1330955960018874512}
+--- !u!114 &2436562044000537253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4839266524676193444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b036b5ebc6e866c469b8b81916117f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::XPDropper
+  _active: 1
+  _xp: 1
 --- !u!1 &7116023539375120710
 GameObject:
   m_ObjectHideFlags: 0

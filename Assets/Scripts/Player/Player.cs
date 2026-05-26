@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private PlayerInput _input;
+
+    [Header("Dependencies")]
     [SerializeField] private ShipMovement _movement;
 
     private void Awake()

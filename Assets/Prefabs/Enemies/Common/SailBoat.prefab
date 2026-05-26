@@ -4970,6 +4970,7 @@ GameObject:
   - component: {fileID: 2801682253844284735}
   - component: {fileID: 3780583097350194323}
   - component: {fileID: 6572195887131298162}
+  - component: {fileID: 2296118762677937310}
   m_Layer: 6
   m_Name: SailBoat
   m_TagString: Enemy
@@ -5048,3 +5049,17 @@ MonoBehaviour:
   _detectRange: 20
   _detectInterval: 3
   _moveSpeed: 3
+--- !u!114 &2296118762677937310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072632847244024706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b036b5ebc6e866c469b8b81916117f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::XPDropper
+  _active: 1
+  _xp: 1

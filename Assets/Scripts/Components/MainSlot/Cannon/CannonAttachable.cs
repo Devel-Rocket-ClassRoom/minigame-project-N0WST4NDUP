@@ -14,96 +14,40 @@ public class CannonAttachable : MainAttachableBase
     private CannonBase _cannon;
 
     public CannonBase Cannon => _cannon;
+    public override int Level => _cannon?.Level ?? 0;
+    public override bool CanUpgrade => _cannon == null ? true : _cannon.CanUpgrade;
+
+    public override void Attach(LayerMask target, ShipStats stats)
+    {
+        base.Attach(target, stats);
+
+        _cannon = new Lv1_Cannon(_data, _stats);
+        _cannon.SetBarrel(
+            _target,
+            _firePoint,
+            _arcHeight,
+            _flightDuration
+        );
+    }
 
     private void Update()
     {
         _cannon?.Tick();
-
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            CannonTest();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            if (_cannon != null)
-            {
-                DoubleCannonTest();
-            }
-            else
-            {
-                Debug.Log("캐넌이 아직 없습니다.");
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (_cannon != null)
-            {
-                TripleCannonTest();
-            }
-            else
-            {
-                Debug.Log("캐넌이 아직 없습니다.");
-            }
-        }
     }
 
-    public override void Attach()
+    public override void Upgrade()
     {
+        _cannon = _cannon.Upgrade();
     }
 
-    public override void Detach()
+    public override void WrapDouble()
     {
-        Destroy(gameObject);
+        _cannon = new DoubleCannon(_cannon);
+
     }
 
-    private void CannonTest()
+    public override void WrapTriple()
     {
-        if (_cannon == null)
-        {
-            _cannon = new Lv1_Cannon(_data);
-        }
-        else
-        {
-            _cannon = _cannon.Upgrade();
-        }
-
-        _cannon.SetBarrel(
-            _target,
-            _firePoint,
-            _arcHeight,
-            _flightDuration
-        );
-    }
-
-    private void DoubleCannonTest()
-    {
-        if (_cannon is Lv1_Cannon || _cannon is Lv2_Cannon)
-        {
-            _cannon = new DoubleCannon(_cannon);
-        }
-
-        _cannon.SetBarrel(
-            _target,
-            _firePoint,
-            _arcHeight,
-            _flightDuration
-        );
-    }
-
-    private void TripleCannonTest()
-    {
-        if (_cannon is Lv1_Cannon || _cannon is Lv2_Cannon)
-        {
-            _cannon = new TripleCannon(_cannon);
-        }
-
-        _cannon.SetBarrel(
-            _target,
-            _firePoint,
-            _arcHeight,
-            _flightDuration
-        );
+        _cannon = new TripleCannon(_cannon);
     }
 }

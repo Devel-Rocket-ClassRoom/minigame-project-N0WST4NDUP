@@ -5,6 +5,8 @@ using UnityEngine;
     menuName = "Combat/CombatData")]
 public class CombatData : ScriptableObject
 {
+    public Sprite Icon;
+
     [Header("Default Config")]
     [Tooltip("데미지")]
     public float Damage = 10f;

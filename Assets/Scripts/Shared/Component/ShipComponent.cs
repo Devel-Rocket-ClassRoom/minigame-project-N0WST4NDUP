@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ShipStats))]
 public class ShipComponent : MonoBehaviour
 {
     // [SerializeField][Min(1)] private int _mainSlotCount = 1;
@@ -9,34 +10,75 @@ public class ShipComponent : MonoBehaviour
     [SerializeField] private LayerMask _target;
 
     [Header("Main Component")]
-    [SerializeField] private MainAttachableBase _mainSlot;
+    [SerializeField] private MainAttachableBase _startingComponent;
+    private MainAttachableBase _mainSlot;
     [SerializeField] private Transform _mainSlotPosition;
 
     [Header("Sub Component")]
-    [SerializeField] private SubAttachableBase _subSlot;
+    private SubAttachableBase _subSlot;
     [SerializeField] private Transform _subSlotPosition;
 
     [Header("Rear Component")]
-    [SerializeField] private RearAttachableBase _rearSlot;
+    private RearAttachableBase _rearSlot;
     [SerializeField] private Transform _rearSlotPosition;
+
+    private ShipStats _stats;
+
+    public MainAttachableBase MainSlot => _mainSlot;
+    // public SubAttachableBase SubSlot => _subSlot;
+    // public RearAttachableBase RearSlot => _rearSlot;
 
     private void Awake()
     {
-        var go = Instantiate(_mainSlot, _mainSlotPosition);
-        go.SetTarget(_target);
+        _stats = GetComponent<ShipStats>();
+
+        _mainSlot = Instantiate(_startingComponent, _mainSlotPosition);
     }
 
     private void Start()
     {
-        _mainSlot?.Attach();
-        _subSlot?.Attach();
-        _rearSlot?.Attach();
+        _mainSlot?.Attach(_target, _stats);
+        // _subSlot?.Attach();
+        // _rearSlot?.Attach();
     }
 
-    // private void Awake()
-    // {
-    //     _mainSlots = new MainAttachableBase[_mainSlotCount];
-    //     _subSlots = new SubAttachableBase[_subSlotCount];
-    //     _rearSlots = new RearAttachableBase[_rearSlotCount];
-    // }
+    public bool IsEmpty(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase _ => _mainSlot == null,
+        _ => false
+    };
+
+    public int GetLevel(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase _ => _mainSlot?.Level ?? 0,
+        _ => 0
+    };
+
+    public bool CanInstall(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase main =>
+            _mainSlot == null ||
+            (_mainSlot.GetType() == main.GetType() && _mainSlot.CanUpgrade),
+        _ => false
+    };
+
+    public void Install(IAttachable attachable)
+    {
+        if (!CanInstall(attachable)) return;
+
+        switch (attachable)
+        {
+            case MainAttachableBase main:
+                if (_mainSlot == null)
+                {
+                    _mainSlot = Instantiate(main, _mainSlotPosition);
+                    _mainSlot.Attach(_target, _stats);
+                }
+                else
+                {
+                    _mainSlot.Upgrade();
+                }
+                break;
+        }
+    }
 }
