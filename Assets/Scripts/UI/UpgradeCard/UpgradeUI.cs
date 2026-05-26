@@ -27,6 +27,7 @@ public class UpgradeUI : MonoBehaviour
     private void HandleLevelUp()
     {
         gameObject.SetActive(true);
+        Time.timeScale = 0f;
         ClearSpawned();
 
         for (int i = 0; i < _cardCount; i++)
@@ -35,6 +36,12 @@ public class UpgradeUI : MonoBehaviour
             card.Bind(BuildDummyOption());
             _spawned.Add(card);
         }
+    }
+
+    public void Close()
+    {
+        Time.timeScale = 1f;
+        gameObject.SetActive(false);
     }
 
     private void ClearSpawned()
@@ -50,15 +57,10 @@ public class UpgradeUI : MonoBehaviour
     {
         return new UpgradeOption
         {
-            Icon = null, // TODO: 에셋 찾으면 추가
+            Icon = null,
             Name = "Cannon",
             Level = 1,
-            StatChanges = new[]
-            {
-                new StatChangeData { Type = StatType.Damage, Before = 10, After = 20 },
-                new StatChangeData { Type = StatType.FireRate, Before = 10, After = 20 },
-                // new StatChangeData { Type = StatType.Range, Before = 10, After = 20 },
-            }
+            Description = "Basic Cannon."
         };
     }
 }

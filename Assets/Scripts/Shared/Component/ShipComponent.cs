@@ -10,15 +10,16 @@ public class ShipComponent : MonoBehaviour
     [SerializeField] private LayerMask _target;
 
     [Header("Main Component")]
-    [SerializeField] private MainAttachableBase _mainSlot;
+    [SerializeField] private MainAttachableBase _startingComponent;
+    private MainAttachableBase _mainSlot;
     [SerializeField] private Transform _mainSlotPosition;
 
     [Header("Sub Component")]
-    [SerializeField] private SubAttachableBase _subSlot;
+    private SubAttachableBase _subSlot;
     [SerializeField] private Transform _subSlotPosition;
 
     [Header("Rear Component")]
-    [SerializeField] private RearAttachableBase _rearSlot;
+    private RearAttachableBase _rearSlot;
     [SerializeField] private Transform _rearSlotPosition;
 
     private ShipStats _stats;
@@ -27,7 +28,7 @@ public class ShipComponent : MonoBehaviour
     {
         _stats = GetComponent<ShipStats>();
 
-        _mainSlot = Instantiate(_mainSlot, _mainSlotPosition);
+        _mainSlot = Instantiate(_startingComponent, _mainSlotPosition);
     }
 
     private void Start()
