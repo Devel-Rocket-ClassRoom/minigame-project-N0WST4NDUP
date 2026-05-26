@@ -98,10 +98,13 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 | 자동 사격 (타입별 발사 규칙·사거리) | §5.2 | W1 | **부분 등재 (§3.6)** — 주포(캐넌) 1차 구현. 부포·어뢰 등 타 타입은 여전히 `미확정(❓)` |
 | 적 스폰·일반 몹 스탯 (HP/데미지/EXP/등장률) | §5.3.1 | 플레이테스트 | **부분 등재 (§3.2~3.5)** — 일반 몹 3종 `구현 기본값`. EXP·등장률·스폰 곡선은 여전히 `미확정(❓)` |
 | **부하 테스트 임계** (동시 적/투사체/드롭/VFX @60fps) | §5.3.2 | W1 (P0) | 미확정(❓) — W1 종료 전 도출 |
-| EXP / 레벨업 곡선 | §5.4 | W1 | 미확정(❓) |
+| EXP / 레벨업 곡선 | §5.4 | W1 | **부분 등재 (§3.7)** — `PlayerXP` 선형 곡선 `구현 기본값`. 플레이테스트로 곡선 형태(선형 vs 지수) 재검토 필요. |
+| EXP 드롭·자석·젬 이동 | §5.4 | W1 | **부분 등재 (§3.8)** — 자석 반경 5m, 젬 이동 10m/s `구현 기본값`. 드롭당 EXP는 `XPDropper` 인스펙터 (현재 기본 1). |
+| ShipStats / Modifier 시스템 | §5.4 / §6.1 | — | **신규 등재 (§3.9)** — 스탯 정의·계산식. 시스템 자체는 `구현 완성`, 풀에 들어갈 모디파이어 값은 플레이테스트 미확정 |
+| 강화 카드 풀 (3택 레벨업) | §5.4 | W1~W2 | **부분 등재 (§3.10)** — 카드 4종 SO 작성, 풀에 스탯 모디파이어 3종만 연결. 컴포넌트 카드(Cannon/Double/Triple)는 SO 존재하나 풀 미연결. |
 | 네임드 (드롭 타이머·흡수 우선순위·leash 반경) | §5.5 | W1 / 플레이테스트 | 미확정(❓) |
 | 보스 (트리거 X분/Y킬·캐치업 속도·패턴 단계) | §5.6 | 플레이테스트 / W2 | 미확정(❓) |
-| 컴포넌트 슬롯 (카테고리·개수·Lv 상한·레벨업 효과) | §6.1 | W1 / W2 | 미확정(❓) |
+| 컴포넌트 슬롯 (카테고리·개수·Lv 상한·레벨업 효과) | §6.1 | W1 / W2 | 미확정(❓) — Main/Sub/Rear 골격만 구현. 카테고리 확정/슬롯 Lv 상한 미정. |
 | 피해 / 사망 (i-frame 무적시간) | §5.7 | W1 | 미확정(❓) |
 
 > **부하 테스트 임계**(§5.3.2)는 스폰 매니저 상한·풀 사이즈의 기준이 되는 P0 항목이다. 우선 확정한다.
@@ -292,8 +295,18 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 | 3 | `DoubleCannon` | 데코레이터 — 내부 캐넌의 `FireProcess`를 1 Tick에 2회 실행 |
 | 4 | `TripleCannon` | 데코레이터 — 1 Tick에 3회 실행 |
 
-업그레이드 키 입력은 현재 `CannonAttachable`의 `Alpha1` (테스트용). 진화 트리거 UI는 GDD §6.5
-"드롭 교체 파워업" 마감 시 정리 예정.
+**데코레이터 cooldown 위임 규약 (중요)**: `DoubleCannon`/`TripleCannon`은 `CannonBase`를 상속하지만
+자기 자신의 `_cooldownTimer`를 **절대 세팅하지 않는다**. 대신 `CanFire`와 `TickCooldown`을 `override`해
+inner `_cannon`으로 위임 — 가장 안쪽 leaf cannon(Lv1/Lv2)의 타이머 하나로 전체 체인이 발사 주기를 결정한다.
+이로써 `TripleCannon(DoubleCannon(Lv1))` 스택 시 **1 cooldown 주기에 2×3=6발이 동시 발사**된다.
+초기 구현에서는 wrapper의 자체 `_cooldownTimer`가 0으로 방치돼 항상 `CanFire=true`가 되어 무한 발사
+버그가 있었으며, [CannonBase.cs:9, :60](../Assets/Scripts/Components/MainSlot/Cannon/CannonBase.cs)의
+`virtual` 승격 + 두 데코레이터의 위임 override로 수정됨.
+
+업그레이드 트리거는 현재 두 경로:
+- **레벨업 카드** (`UpgradeUI` → `UpgradePool.Pick`) — 정상 경로. 단, 현재 `UpgradePool.asset`에는 캐넌 계열
+  SO(`Cannon.asset / MainDoubleWrapper.asset / MainTripleWrapper.asset`)가 **풀에 미연결**이라 카드로 등장하지 않음.
+- 테스트용 키 입력은 `CannonAttachable`에서 제거됨 (이전 `Alpha1` 핫키 → 카드 시스템으로 일원화).
 
 #### CannonBall (포탄, `CombatItemBase` 풀링 대상)
 
@@ -315,3 +328,131 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
   - **광역 공격**: `IsAreaAttack=true`이지만 실제 splash 반경 데미지 처리 없음.
   - **수명/맥스 라이프**: 수평 발사로 수면을 못 만나면 영구 부유 가능. 타이머 컷오프 미구현.
   - **`CannonData.asset` 마이그레이션**: `Range: 10` 잔존 → 인스펙터 재저장 시 `MinRange`/`MaxRange`로 YAML 갱신 예정.
+
+### 3.7 EXP 곡선 (`PlayerXP`)
+
+소스: [Assets/Scripts/Player/PlayerXP.cs](../Assets/Scripts/Player/PlayerXP.cs).
+**GDD §5.4 EXP / 레벨업** 매핑.
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `_baseXp` | 10 | XP | Lv1 → Lv2 필요량 |
+| `_stepXp` | 3 | XP | 레벨당 필요량 증가폭 |
+| 곡선 식 | `MaxXpForLevel(lv) = baseXp + (lv-1) × stepXp` | — | **선형** 증가 |
+| 예시 (Lv1→Lv10) | 10 / 13 / 16 / 19 / 22 / 25 / 28 / 31 / 34 / 37 | XP | 누적 233 XP |
+
+- **근거**: §0.2 "1런 10분" 안에서 5분 루프(빌드 의사결정)를 발생시킬 만큼의 레벨업 빈도가 필요.
+  선형 곡선은 후반에도 레벨업이 자주 발생해 카드 선택 의사결정을 지속적으로 던지는 출발점.
+  지수 곡선 채택 시 후반 정체로 30초 루프(§0.3) 신선도가 떨어질 수 있어 의식적으로 선형 선택.
+  드롭당 XP가 1(§3.8)이므로 Lv2 도달은 일반 몹 10마리 처치에 해당 — 30초 루프와 정합.
+- **상태**: `구현 기본값` — W1 플레이테스트에서 곡선 형태(선형 vs 완만한 지수)·계수 재검토.
+- **🚧 미구현 / 추후**:
+  - **레벨업 시 보상 변화**: 현재 모든 레벨이 동일하게 3택 카드 1회 제공. 특정 레벨에서 추가 보상(슬롯 해금 등) 검토 가능.
+  - **HP 재생·EXP 흡수 반경 확장 등 패시브 스탯** (GDD §5.4 후보): 현재 `StatType` enum에 미정의.
+
+### 3.8 EXP 드롭·자석·젬 이동 (`XPDropper` / `XPMagnet` / `XPGem`)
+
+소스: [Assets/Scripts/Shared/ItemDrop/XPGem.cs](../Assets/Scripts/Shared/ItemDrop/XPGem.cs),
+[XPDropper.cs](../Assets/Scripts/Shared/ItemDrop/XPDropper.cs),
+[Assets/Scripts/Player/XPMagenet.cs](../Assets/Scripts/Player/XPMagenet.cs) (파일명 typo: `XPMagenet`).
+**GDD §5.4** 매핑. 풀링: [XPGemPool.cs](../Assets/Scripts/Core/Pool/ItemDrop/XPGemPool.cs) (Singleton).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `XPDropper._xp` | 1 | XP | 적 사망 시 젬 1개에 부여되는 XP량. 인스펙터 오버라이드. |
+| `XPDropper._active` | (인스펙터) | bool | false면 드롭 무시. 적별로 ON/OFF 가능. |
+| `XPMagnet._radius` | 5 | m | 자석 흡인 반경. `SphereCollider isTrigger=true`로 진입 감지 → `OnPick(target)` 호출. |
+| `XPGem._moveSpeed` | 10 | m/s | 흡인 시작 후 타겟을 향한 직선 이동 속도. |
+| 흡인 동작 | 직선 추적 (관성·곡선 없음) | — | `dir = (target - pos).normalized; pos += dir × speed × dt` |
+| 흡수 조건 | 트리거 충돌 + `gameObject.layer == _targetLayer` | — | 자석 진입 시 캐싱한 레이어와 일치해야 `PlayerXP.AddXp` 호출 후 풀로 반환 |
+
+- **근거**: §0.3 "30초 루프 즉시 체감" — 자석 반경 5m는 플레이어 시야(카메라 가시 영역 §3.0.1) 안에서
+  처치 직후 흡인이 시작되는 거리. 젬 속도 10m/s는 플레이어 `MaxSpeed`(§3.1)와 동일해 정지 상태일 때
+  ≈0.5초 안에 도달해 도파민 루프 유지, 이동 중에는 따라잡는 텐션도 발생.
+  드롭당 1 XP는 §3.7 곡선과 직결 — Lv2 진입에 10마리 처치 필요.
+- **상태**: `구현 기본값` — W1 부하/플레이테스트로 자석 반경·젬 속도 튜닝.
+- **⚠️ 코드 품질 노트**: `XPMagenet.cs` 파일/클래스명에 typo (`Magenet` → 정확히는 `Magnet`).
+  리네이밍은 별도 chore 이슈로 분리 권장.
+- **🚧 미구현 / 추후**:
+  - **드롭 타이머·소멸 연출**: EXP 젬은 시간 만료 없이 영구 상주 (GDD §5.5 네임드 드롭과 달리 일반 EXP 젬은 타이머 불필요로 보임 — 디자인 확정 필요).
+  - **드롭 경쟁** (GDD §2·§5.5): 네임드 시스템 자체가 미구현이라 적의 EXP 흡수 흐름 없음.
+
+### 3.9 ShipStats / Modifier 시스템 (`ShipStats` / `Modifier` / `StatType`)
+
+소스: [Assets/Scripts/Shared/Modifier/](../Assets/Scripts/Shared/Modifier/).
+**GDD §5.4 강화 카드 / §6.1 슬롯** 매핑. 모든 컴포넌트의 동적 스탯 조회 단일 창구.
+
+#### 정의
+
+| 항목 | 값 / 형식 | 설명 |
+|---|---|---|
+| `StatType` enum | `Damage / Range / FireRate / AreaRadius / Health / MoveSpeed / TurnSpeed` (7종) | 게임 전체에서 사용하는 스탯 카테고리. 추가 시 enum 갱신 + UI 표시 연동 필요. |
+| `ModifierOp` enum | `Add / PercentAdd` | 합산 방식. |
+| `Modifier` 직렬화 | `{ Stat, Op, Value }` | SO 또는 코드에서 생성. `ShipStats.AddModifier(m)`로 등록. |
+
+#### 계산식
+
+```
+GetEffective(stat, baseValue) = (baseValue + Σ Modifier.Value where Op==Add) × (1 + Σ Modifier.Value where Op==PercentAdd)
+```
+
+- **합산 보너스 우선, 퍼센트는 마지막에 곱셈** — 뱀파이어 서바이버즈 풍 누적 가산식.
+- 등록된 모든 모디파이어가 영구 누적 (현재 제거 API 없음).
+- 컴포넌트는 base value를 가지고 `_stats.GetEffective(...)`로 실제 적용값을 매번 조회 (예: [CannonBase.cs:30](../Assets/Scripts/Components/MainSlot/Cannon/CannonBase.cs#L30) `Effective(...)`).
+
+#### 근거 / 상태
+
+- **근거**: §0.3 "빌드 다양성" — 카드 픽업으로 스탯이 누적되는 뱀서식 빌드 트랙의 토대. 가산+곱셈 분리로
+  희귀 카드(PercentAdd) vs 일반 카드(Add)의 체감 차이를 만드는 여지를 남김.
+- **상태**: 시스템 자체 `구현 완성`. 풀에 들어갈 구체 모디파이어 값들은 §3.10 참조.
+- **🚧 미구현 / 추후**:
+  - **모디파이어 제거 / 만료**: 일시 버프/디버프 도입 시 필요. v1.0 스코프 외 가능성.
+  - **PercentAdd 누적 상한**: 무제한 누적 시 후반 OP 위험. 카드 풀 제약 또는 상한 캡 검토.
+
+### 3.10 강화 카드 풀 (`UpgradePool` / `UpgradeDefinition` 계열)
+
+소스: [Assets/Scripts/Data/Upgrade/](../Assets/Scripts/Data/Upgrade/),
+UI [Assets/Scripts/UI/UpgradeCard/UpgradeUI.cs](../Assets/Scripts/UI/UpgradeCard/UpgradeUI.cs).
+**GDD §5.4 3택 강화창** 매핑.
+
+#### 동작 흐름
+
+1. `PlayerXP.OnLevelUp` → `UpgradeUI.HandleLevelUp`.
+2. `UpgradePool.Pick(cardCount=3, ship, stats)` 호출.
+   - 풀 내 `UpgradeDefinition`을 `IsAvailable(ship, stats)`로 필터.
+   - 남은 후보를 셔플해 앞 `Pick` 개만큼 반환 (중복 없음).
+3. `Time.timeScale = 0`, 카드 프리팹을 `_cardGroup` 아래 생성, 클릭 시 `def.Apply(ship, stats)` 후 `timeScale=1`.
+
+#### 카드 종류 (`UpgradeDefinition` 서브클래스)
+
+| 서브클래스 | `IsAvailable` | `GetDisplayLevel` | `Apply` |
+|---|---|---|---|
+| `MainEquipment` | `ship.CanInstall(prefab)` | `IsEmpty? 1 : level+1` | `ship.Install(prefab)` |
+| `RearEquipment` | 동일 (`RearAttachable`) | 동일 | 동일 |
+| `SubEquipment` | 동일 (`SubAttachable`) | 동일 | 동일 |
+| `StatModifierUpgrade` | `true` (**무제한**) | `0` | 보유 모디파이어 배열을 `stats.AddModifier(m)` 순차 등록 |
+
+#### 풀에 등록된 카드 SO (`UpgradePool.asset`)
+
+| 파일 | 종류 | 효과 | 표시명 / 설명 |
+|---|---|---|---|
+| `Modifier/Damage+1.asset` | StatModifier | `Damage` `Add` `+1` | "Damage" / "Damage + 1" |
+| `Modifier/FireRate+30.asset` | StatModifier | `FireRate` `PercentAdd` `+0.3` (= +30%) | "Fire Rate" / "Fire Rate + 0.3" (⚠️ 표시 텍스트는 +30% 의미로 정정 권장) |
+| `Modifier/Range+5.asset` | StatModifier | `Range` `Add` `+5` | "Range" / "Range + 5" |
+
+#### 작성됐으나 풀 미연결 SO
+
+| 파일 | 종류 | 비고 |
+|---|---|---|
+| `Attachable/Cannon.asset` | MainEquipment | Lv1 캐넌 신규 장착 카드. |
+| `Attachable/MainDoubleWrapper.asset` | MainEquipment | DoubleCannon 데코레이터 래핑 카드. |
+| `Attachable/MainTripleWrapper.asset` | MainEquipment | TripleCannon 데코레이터 래핑 카드. |
+
+- **근거**: §0.3 "다층 루프의 5분 의사결정" — 레벨업 3택은 뱀서식 빌드 의사결정의 핵심.
+  현재 풀은 스탯 모디파이어 3종만 활성화 — 의식적으로 컴포넌트 카드를 풀 미연결 상태로 두어
+  **W1 부하/스탯 모디파이어 단독 밸런싱**을 먼저 검증한 뒤 컴포넌트 카드를 풀에 추가할 예정.
+- **상태**: 시스템 `구현 완성`, 카드 풀 구성·값 `구현 기본값`.
+- **🚧 미구현 / 추후**:
+  - **스탯 모디파이어 누적 상한** (GDD §5.4): `IsAvailable=true`로 무제한 스택 — 카드 코멘트로 "일정 개수? false로 밸런싱" 플래그됨.
+  - **풀에 컴포넌트 카드 연결**: Cannon/Double/Triple SO를 `UpgradePool.asset` `_definitions` 배열에 추가하면 즉시 등장 가능.
+  - **드롭 접촉 시 일시정지 + 교체 UI** (GDD §6.1): 현재는 레벨업 시점에만 카드 등장. 드롭 접촉 분기 미구현.
