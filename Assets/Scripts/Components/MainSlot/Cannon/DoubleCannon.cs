@@ -12,6 +12,9 @@ public class DoubleCannon : CannonBase
 
     public override int Level => _cannon.Level;
     public override bool CanUpgrade => _cannon.CanUpgrade;
+    public override bool CanFire => _cannon.CanFire;
+
+    public override void TickCooldown() => _cannon.TickCooldown();
 
     public override void Tick()
     {

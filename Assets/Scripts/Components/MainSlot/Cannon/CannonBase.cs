@@ -6,7 +6,7 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
     protected ShipStats _stats;
 
     protected float _cooldownTimer;
-    public bool CanFire => _cooldownTimer <= 0;
+    public virtual bool CanFire => _cooldownTimer <= 0;
 
     public LayerMask Target { get; private set; }
     public Transform FirePoint { get; private set; }
@@ -57,5 +57,5 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
         return target;
     }
 
-    public void TickCooldown() => _cooldownTimer -= Time.deltaTime;
+    public virtual void TickCooldown() => _cooldownTimer -= Time.deltaTime;
 }
