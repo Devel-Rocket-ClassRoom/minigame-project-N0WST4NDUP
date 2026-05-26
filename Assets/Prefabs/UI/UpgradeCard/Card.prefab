@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7757899418298248108}
   - component: {fileID: 6089251229979428691}
   - component: {fileID: 1748911855139411903}
-  - component: {fileID: 6680697879071760847}
+  - component: {fileID: 1846066921930077351}
   - component: {fileID: 8421043221695391089}
   m_Layer: 5
   m_Name: Card
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &6680697879071760847
+--- !u!114 &1846066921930077351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,9 +111,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1653075400919671449}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Toggle
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
   m_Navigation:
     m_Mode: 3
     m_WrapAround: 0
@@ -143,13 +143,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 6089251229979428691}
-  toggleTransition: 1
-  graphic: {fileID: 0}
-  m_Group: {fileID: 0}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
 --- !u!114 &8421043221695391089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +162,7 @@ MonoBehaviour:
   _nameText: {fileID: 984283998035440576}
   _levelText: {fileID: 9055467354059127000}
   _descriptionText: {fileID: 4186732957181120501}
+  _button: {fileID: 1846066921930077351}
 --- !u!1 &2584253832511410997
 GameObject:
   m_ObjectHideFlags: 0

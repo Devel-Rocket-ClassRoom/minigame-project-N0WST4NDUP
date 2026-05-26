@@ -5,6 +5,9 @@ public class UpgradeUI : MonoBehaviour
 {
     [Header("Dependencies")]
     [SerializeField] private PlayerXP _playerXP;
+    [SerializeField] private ShipComponent _ship;
+    [SerializeField] private ShipStats _stats;
+    [SerializeField] private UpgradePool _pool;
 
     [Header("Card Spawn")]
     [SerializeField] private CardView _cardPrefab;
@@ -26,16 +29,25 @@ public class UpgradeUI : MonoBehaviour
 
     private void HandleLevelUp()
     {
+        var picks = _pool.Pick(_cardCount, _ship, _stats);
+        if (picks.Count == 0) return;
+
         gameObject.SetActive(true);
         Time.timeScale = 0f;
         ClearSpawned();
 
-        for (int i = 0; i < _cardCount; i++)
+        foreach (var def in picks)
         {
             var card = Instantiate(_cardPrefab, _cardGroup);
-            card.Bind(BuildDummyOption());
+            card.Bind(def.BuildDisplay(_ship, _stats), () => Select(def));
             _spawned.Add(card);
         }
+    }
+
+    private void Select(UpgradeDefinition def)
+    {
+        def.Apply(_ship, _stats);
+        Close();
     }
 
     public void Close()
@@ -53,14 +65,4 @@ public class UpgradeUI : MonoBehaviour
         _spawned.Clear();
     }
 
-    private UpgradeOption BuildDummyOption()
-    {
-        return new UpgradeOption
-        {
-            Icon = null,
-            Name = "Cannon",
-            Level = 1,
-            Description = "Basic Cannon."
-        };
-    }
 }

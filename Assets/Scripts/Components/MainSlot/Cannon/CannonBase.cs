@@ -12,6 +12,9 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
     public Transform FirePoint { get; private set; }
     public float ArcHeight { get; private set; }
     public float FlightDuration { get; private set; }
+    public abstract int Level { get; }
+    public abstract bool CanUpgrade { get; }
+
     public void SetBarrel(LayerMask target, Transform firePoint, float arcHeight, float flightDuration)
     {
         Target = target;
@@ -26,7 +29,7 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
 
     protected float Effective(StatType type, float baseValue) => _stats != null ? _stats.GetEffective(type, baseValue) : baseValue;
 
-    public void FireProcess()
+    public virtual void FireProcess()
     {
         var ball = CombatPoolRegistry.Get<CannonBall>();
         ball.transform.position = FirePoint.position;

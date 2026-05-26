@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(
     fileName = "StatModifier",
-    menuName = "Upgrade/Stat Modifier", order = 1)]
+    menuName = "Upgrade/Stat Modifier", order = 2)]
 public class StatModifierUpgrade : UpgradeDefinition
 {
     [SerializeField] private Modifier[] _modifiers;

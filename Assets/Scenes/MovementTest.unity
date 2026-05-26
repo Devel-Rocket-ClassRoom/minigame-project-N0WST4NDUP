@@ -1983,10 +1983,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeUI
       objectReference: {fileID: 0}
-    - target: {fileID: 2370849771259597396, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4378885577427866733, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2067,22 +2063,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4436392948136482818, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5266872117804898362, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5266872117804898362, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542041039608579577, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 8446044032570986414, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
+      propertyPath: _ship
+      value: 
+      objectReference: {fileID: 186825969}
+    - target: {fileID: 8446044032570986414, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
+      propertyPath: _stats
+      value: 
+      objectReference: {fileID: 186825972}
     - target: {fileID: 8446044032570986414, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
       propertyPath: _playerXP
       value: 

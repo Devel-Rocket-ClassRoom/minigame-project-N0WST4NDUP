@@ -1,13 +1,27 @@
 using UnityEngine;
 
-public abstract class RearAttachableBase : MonoBehaviour
+public abstract class RearAttachableBase : MonoBehaviour, IAttachable
 {
     [Header("Default Config")]
-    [SerializeField] private CombatData _data;
+    [SerializeField] protected CombatData _data;
+    // [SerializeField] protected GameObject _prefab;
 
-    public abstract void Attach();
+    protected LayerMask _target;
+    protected ShipStats _stats;
 
-    public abstract void Detach();
+    public abstract int Level { get; }
+    public abstract bool CanUpgrade { get; }
 
-    public abstract void Tick();
+    public virtual void Attach(LayerMask target, ShipStats stats)
+    {
+        _target = target;
+        _stats = stats;
+    }
+
+    public virtual void Detach()
+    {
+        Destroy(gameObject);
+    }
+
+    public abstract void Upgrade();
 }

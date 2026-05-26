@@ -90,6 +90,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeUI
   _playerXP: {fileID: 0}
+  _ship: {fileID: 0}
+  _stats: {fileID: 0}
+  _pool: {fileID: 11400000, guid: bdf28d2839de3454992eda04dd595643, type: 2}
   _cardPrefab: {fileID: 8421043221695391089, guid: 2ed99427251fa494daa864bb4d5649e3, type: 3}
   _cardGroup: {fileID: 5266872117804898362}
   _cardCount: 3
@@ -104,7 +107,6 @@ GameObject:
   - component: {fileID: 5266872117804898362}
   - component: {fileID: 3317468860338374191}
   - component: {fileID: 8719789260805195632}
-  - component: {fileID: 6978811611487836389}
   m_Layer: 5
   m_Name: CardGroup
   m_TagString: Untagged
@@ -171,16 +173,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &6978811611487836389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6542041039608579577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ToggleGroup
-  m_AllowSwitchOff: 0

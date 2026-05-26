@@ -24,6 +24,10 @@ public class ShipComponent : MonoBehaviour
 
     private ShipStats _stats;
 
+    public MainAttachableBase MainSlot => _mainSlot;
+    // public SubAttachableBase SubSlot => _subSlot;
+    // public RearAttachableBase RearSlot => _rearSlot;
+
     private void Awake()
     {
         _stats = GetComponent<ShipStats>();
@@ -34,14 +38,47 @@ public class ShipComponent : MonoBehaviour
     private void Start()
     {
         _mainSlot?.Attach(_target, _stats);
-        _subSlot?.Attach();
-        _rearSlot?.Attach();
+        // _subSlot?.Attach();
+        // _rearSlot?.Attach();
     }
 
-    // private void Awake()
-    // {
-    //     _mainSlots = new MainAttachableBase[_mainSlotCount];
-    //     _subSlots = new SubAttachableBase[_subSlotCount];
-    //     _rearSlots = new RearAttachableBase[_rearSlotCount];
-    // }
+    public bool IsEmpty(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase _ => _mainSlot == null,
+        _ => false
+    };
+
+    public int GetLevel(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase _ => _mainSlot?.Level ?? 0,
+        _ => 0
+    };
+
+    public bool CanInstall(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase main =>
+            _mainSlot == null ||
+            (_mainSlot.GetType() == main.GetType() && _mainSlot.CanUpgrade),
+        _ => false
+    };
+
+    public void Install(IAttachable attachable)
+    {
+        if (!CanInstall(attachable)) return;
+
+        switch (attachable)
+        {
+            case MainAttachableBase main:
+                if (_mainSlot == null)
+                {
+                    _mainSlot = Instantiate(main, _mainSlotPosition);
+                    _mainSlot.Attach(_target, _stats);
+                }
+                else
+                {
+                    _mainSlot.Upgrade();
+                }
+                break;
+        }
+    }
 }

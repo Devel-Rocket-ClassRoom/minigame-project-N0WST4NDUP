@@ -9,6 +9,9 @@ public class Lv2_Cannon : CannonBase
         Debug.Log("캐넌 레벨 2");
     }
 
+    public override int Level => 2;
+    public override bool CanUpgrade => false;
+
     public override void Tick()
     {
         _cooldownTimer -= Time.deltaTime * 1.3f; // 임시

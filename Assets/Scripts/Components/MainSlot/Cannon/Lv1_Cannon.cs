@@ -9,6 +9,9 @@ public class Lv1_Cannon : CannonBase
         Debug.Log("캐넌 레벨 1");
     }
 
+    public override int Level => 1;
+    public override bool CanUpgrade => true;
+
     public override void Tick()
     {
         TickCooldown();
@@ -20,6 +23,8 @@ public class Lv1_Cannon : CannonBase
 
     public override CannonBase Upgrade()
     {
-        return new Lv2_Cannon(_data, _stats);
+        var next = new Lv2_Cannon(_data, _stats);
+        next.SetBarrel(Target, FirePoint, ArcHeight, FlightDuration);
+        return next;
     }
 }

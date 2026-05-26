@@ -4,10 +4,13 @@ public abstract class MainAttachableBase : MonoBehaviour, IAttachable
 {
     [Header("Default Config")]
     [SerializeField] protected CombatData _data;
-    [SerializeField] protected GameObject _prefab;
+    // [SerializeField] protected GameObject _prefab;
 
     protected LayerMask _target;
     protected ShipStats _stats;
+
+    public abstract int Level { get; }
+    public abstract bool CanUpgrade { get; }
 
     public virtual void Attach(LayerMask target, ShipStats stats)
     {
@@ -19,4 +22,10 @@ public abstract class MainAttachableBase : MonoBehaviour, IAttachable
     {
         Destroy(gameObject);
     }
+
+    public abstract void Upgrade();
+
+    public abstract void WrapDouble();
+
+    public abstract void WrapTriple();
 }
