@@ -17,5 +17,5 @@ MonoBehaviour:
   _description: Fire Rate + 0.3
   _modifiers:
   - Stat: 2
-    Op: 0
+    Op: 1
     Value: 0.3
