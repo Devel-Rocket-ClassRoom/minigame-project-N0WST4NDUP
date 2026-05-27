@@ -37,5 +37,10 @@ public class ShipBody : MonoBehaviour, IDamageable
         }
     }
 
+    public void Repair(float amount)
+    {
+        _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
+    }
+
     private void Die() => OnDeadEvent?.Invoke();
 }
