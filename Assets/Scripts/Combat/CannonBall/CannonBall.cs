@@ -72,6 +72,8 @@ public class CannonBall : CombatItemBase
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other == null) return;
+
         if (_config.Target == (_config.Target | (1 << other.gameObject.layer)))
         {
             Explode(ParticleKind.Explosion);
