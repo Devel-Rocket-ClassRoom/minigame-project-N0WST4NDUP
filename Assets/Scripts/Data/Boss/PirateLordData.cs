@@ -1,0 +1,22 @@
+using UnityEngine;
+
+[CreateAssetMenu(
+    fileName = "PirateLordData",
+    menuName = "Boss/PirateLordData", order = 0)]
+public class PirateLordData : ShipData
+{
+    [Header("Phase Config")]
+    public float Phase1ToPhase2HpThreshold = 0.5f;
+    public float Phase3DecayPerSecond = 5f;
+
+    [Header("Movements")]
+    public ShipMovementData[] ChaseSpeeds = new ShipMovementData[3];
+
+    // [Header("Patterns")]
+    //   - BroadsideConfig      : BroadsideVolleyConfig
+    //   - MortarConfig         : MortarRainConfig
+    //   - WhirlpoolConfig      : WhirlpoolConfig
+    //   - RammingConfig        : RammingConfig
+    //   - ProximityChannelConfig : ProximityChannelConfig
+    //   - HorrorFXConfig       : HorrorFXConfig
+}
