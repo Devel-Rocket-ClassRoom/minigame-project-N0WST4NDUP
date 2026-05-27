@@ -14,14 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradePool
   _attachmentDefinitions:
   - {fileID: 11400000, guid: 1d28f99db9da44f40bc279caab01f865, type: 2}
-  - {fileID: 11400000, guid: c4df248b16dd4504cb2935b604a66c99, type: 2}
+  - {fileID: 11400000, guid: 37441fb627d1a7c42b79da5a05f2e6a1, type: 2}
   - {fileID: 11400000, guid: d6a03589b00daad44bf2aca96af29557, type: 2}
-  _modifierDefinitions:
-  - {fileID: 11400000, guid: ee64f8f0d9e9cb045ac92cdd34311388, type: 2}
-  - {fileID: 11400000, guid: fca02d55bd2fd6e45a65d79c4f6005e0, type: 2}
-  - {fileID: 11400000, guid: 279b819088642e94fa0eb4bffa628820, type: 2}
-  - {fileID: 11400000, guid: bb9104eefc6ed0549ad44944423a9b8a, type: 2}
-  - {fileID: 11400000, guid: 5a72b825c8ab1b142a5db082569f61b3, type: 2}
-  - {fileID: 11400000, guid: 7ceccd50a37f8e2408d8a8ccf58c6499, type: 2}
-  - {fileID: 11400000, guid: 57c94e1c72caf6347b8cc8304abebfc6, type: 2}
-  - {fileID: 11400000, guid: 1c794a0f53f91254f9cd952a1b2eefeb, type: 2}
+  _modifierDefinitions: []

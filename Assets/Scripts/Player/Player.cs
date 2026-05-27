@@ -4,20 +4,23 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    private PlayerInput _input;
-
     [Header("Dependencies")]
     [SerializeField] private ShipMovement _movement;
 
+    private InputAction _throttleAction;
+    private InputAction _turnAction;
+
     private void Awake()
     {
-        _input = GetComponent<PlayerInput>();
+        var input = GetComponent<PlayerInput>();
+        _throttleAction = input.actions["Throttle"];
+        _turnAction = input.actions["Turn"];
     }
 
     private void Update()
     {
-        float throttle = _input.actions["Throttle"].ReadValue<float>(); // Fix: _input.actions[Throttle] 캐싱해서 사용
-        float turn = _input.actions["Turn"].ReadValue<float>(); // Fix: _input.actions[Turn] 캐싱해서 사용
+        float throttle = _throttleAction.ReadValue<float>();
+        float turn = _turnAction.ReadValue<float>();
         _movement.UpdateMove(throttle, turn);
     }
 }
