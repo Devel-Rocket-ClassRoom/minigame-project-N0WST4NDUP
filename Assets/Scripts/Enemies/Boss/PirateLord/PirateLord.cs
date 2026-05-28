@@ -1,4 +1,5 @@
 using System;
+using Unity.Behavior;
 using UnityEngine;
 
 public class PirateLord : MonoBehaviour
@@ -16,10 +17,14 @@ public class PirateLord : MonoBehaviour
     [SerializeField] private ShipBody _body;
     [SerializeField] private ShipMovement _movement;
     [SerializeField] private Collider _collider;
+    [SerializeField] private BehaviorGraphAgent _agent;
     [SerializeField] private Transform _target; // 임시
 
     private Phase _currentPhase = Phase.P1;
     private bool _decaying = false;
+
+    [Header("Patterns")]
+    [SerializeField] private RadialSweepAttack _radialSweep;
 
     public static event Action<Vector3> OnBossSpawned;
     public static event Action<Phase> OnPhaseChanged;
@@ -31,6 +36,7 @@ public class PirateLord : MonoBehaviour
         _body.OnDeadEvent += HandleP2Death;
         _movement.SetData(_data.PhaseMovements[(int)_currentPhase]);
         _collider.enabled = true;
+        _agent.SetVariableValue("Target", _target == null ? null : _target.gameObject);
     }
 
     private void Start()
@@ -55,17 +61,6 @@ public class PirateLord : MonoBehaviour
         {
             ChangePhase(Phase.P2);
         }
-
-        if (_target == null) return;
-
-        Vector3 toTarget = _target.position - transform.position;
-        toTarget.y = 0f;
-
-        float angle = Vector3.SignedAngle(transform.forward, toTarget, Vector3.up);
-        float turn = Mathf.Sign(angle);
-        float throttle = 1f;
-
-        _movement.UpdateMove(throttle, turn);
     }
 
     private void ChangePhase(Phase phase)
@@ -74,6 +69,10 @@ public class PirateLord : MonoBehaviour
 
         _currentPhase = phase;
         _movement.SetData(_data.PhaseMovements[(int)_currentPhase]);
+
+
+        _radialSweep.enabled = (phase != Phase.P3);
+
 
         OnPhaseChanged?.Invoke(_currentPhase);
     }

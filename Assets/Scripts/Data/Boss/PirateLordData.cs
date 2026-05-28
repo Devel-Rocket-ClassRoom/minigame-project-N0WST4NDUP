@@ -12,8 +12,8 @@ public class PirateLordData : ShipData
     [Header("Movements")]
     public ShipMovementData[] PhaseMovements = new ShipMovementData[3];
 
-    // [Header("Patterns")]
-    //   - BroadsideConfig      : BroadsideVolleyConfig
+    [Header("Patterns")]
+    public RadialSweepConfig RadialSweepConfig;
     //   - MortarConfig         : MortarRainConfig
     //   - WhirlpoolConfig      : WhirlpoolConfig
     //   - RammingConfig        : RammingConfig

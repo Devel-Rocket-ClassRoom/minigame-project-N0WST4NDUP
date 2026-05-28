@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d34751ce29497249bc8bb2eba11604e, type: 3}
   m_Name: P1MovementData
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
-  MaxSpeed: 12
-  Acceleration: 3
-  BrakeStrength: 3
+  MaxSpeed: 8
+  Acceleration: 2
+  BrakeStrength: 2
   TurnSpeed: 30
   LateralGrip: 0.5

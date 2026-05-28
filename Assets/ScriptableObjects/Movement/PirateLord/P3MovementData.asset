@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d34751ce29497249bc8bb2eba11604e, type: 3}
   m_Name: P3MovementData
   m_EditorClassIdentifier: Assembly-CSharp::ShipMovementData
-  MaxSpeed: 18
+  MaxSpeed: 14
   Acceleration: 4
   BrakeStrength: 4
   TurnSpeed: 80

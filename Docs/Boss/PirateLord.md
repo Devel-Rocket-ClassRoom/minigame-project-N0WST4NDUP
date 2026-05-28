@@ -20,7 +20,7 @@
 
 | 페이즈 | HP 구간 | 무적 | 콜라이더 | 핵심 행동 |
 |---|---|---|---|---|
-| **P1** | 100% → 50% | X | ON | 사격 위주 (Broadside + Mortar) |
+| **P1** | 100% → 50% | X | ON | 사격 위주 (Radial Sweep + Mortar) |
 | **P2** | 50% → 0 | X | ON | Whirlpool→Ramming 콤보 추가, 사격 빈도 ↓ |
 | **P3** | 100% → 0 (자연 감소) | O | OFF | 빠른 추격 + 근접 채널링 DoT + 공포 효과. 공격 패턴 없음 |
 
@@ -36,7 +36,7 @@
 
 | 패턴 | 페이즈 | 압박 의도 | 데미지 | 쿨다운 | 비고 |
 |---|---|---|---|---|---|
-| **Broadside Volley** | P1, P2(빈도↓) | 보스 축선 회피 강제 (정면·후면이 안전지대) | `❓W2 확정` | `❓W2 확정` | 측면 부채꼴 다탄 동시 발사 |
+| **Radial Sweep** | P1, P2(빈도↓) | 회전 역방향 무빙 강제 (제자리 금지) | `❓W2 확정` | `❓W2 확정` | 보스 주위 360° 순차 발사. ProjectileCount 균등 분포, 시계/반시계 회전. CannonBall 풀 재사용 |
 | **Mortar Rain** | P1, P2(빈도↓) | 안전지대 지속 갱신 (정지 금지) | `❓W2 확정` | `❓W2 확정` | 화면 원형 텔레그래프 → 지연 폭발 |
 | **Whirlpool** | P2 | 같은 자리 못 있게 강제 (슬로우+풀링) | 즉발 데미지 없음 | `❓W2 확정` | 플레이어 위치 추적, 일정 시간 후 소멸 |
 | **Ramming Charge** | P2 | 횡축 무빙 강제 | `❓W2 확정` | `❓W2 확정` | 텔레그래프 라인 → 보스 본체 돌진 |
@@ -67,7 +67,7 @@
 스크립트 위치: `Assets/Scripts/Data/Boss/`
 
 - `PirateLordData.cs` — Pirate Lord 통합 데이터 (`ShipData` 상속 — HP/InvincibleTime은 base, 페이즈 임계·페이즈별 `ShipMovementData[3]` 참조·P3 decay rate·각 패턴 Config 참조는 본 클래스)
-- `BroadsideVolleyConfig.cs` — ProjectileCount, ArcAngle, Damage, Cooldown, TelegraphDuration
+- `RadialSweepConfig.cs` — ProjectileCount, Damage, Cooldown, ShotInterval, Clockwise, TelegraphDuration, Range, ArcHeight, FlightDuration, AreaRadius, TargetLayerMask
 - `MortarRainConfig.cs` — ShellCount, AreaRadius, Damage, Cooldown, TelegraphDuration, ScatterRadius
 - `WhirlpoolConfig.cs` — ZoneRadius, PullStrength, PlayerSlowPercent, Duration, Cooldown
 - `RammingConfig.cs` — ChargeSpeed, ChargeDistance, Damage, TelegraphDuration, Cooldown
