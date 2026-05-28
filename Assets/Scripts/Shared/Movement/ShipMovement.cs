@@ -16,8 +16,15 @@ public class ShipMovement : MonoBehaviour
         _rigidbody.useGravity = false;
     }
 
+    public void SetData(ShipMovementData data)
+    {
+        _data = data;
+    }
+
     private void FixedUpdate()
     {
+        if (_data == null) return;
+
         float forward = Mathf.Max(_throttle, 0f);
         float brake = Mathf.Max(-_throttle, 0f);
         float forwardSpeed = Vector3.Dot(_rigidbody.linearVelocity, transform.forward);
@@ -33,12 +40,12 @@ public class ShipMovement : MonoBehaviour
                 Vector3.MoveTowards(_rigidbody.linearVelocity, Vector3.zero, step);
         }
 
-        // 2) 선회 — 속도에 비례. 토크 대신 회전 직접 적용이 튜닝하기 쉬움
+        //2) 선회 — 속도에 비례. 토크 대신 회전 직접 적용이 튜닝하기 쉬움
         float turnRate = _turn * _data.TurnSpeed * speedFactor; // deg/s
         Quaternion delta = Quaternion.Euler(0f, turnRate * Time.fixedDeltaTime, 0f);
         _rigidbody.MoveRotation(_rigidbody.rotation * delta);
 
-        // 3) 측면 저항 — "배다움"의 핵심
+        // // 3) 측면 저항 — "배다움"의 핵심
         Vector3 v = _rigidbody.linearVelocity;
         Vector3 forwardV = transform.forward * Vector3.Dot(v, transform.forward);
         Vector3 lateralV = v - forwardV;

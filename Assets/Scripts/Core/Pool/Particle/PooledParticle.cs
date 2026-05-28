@@ -24,5 +24,7 @@ public class PooledParticle : MonoBehaviour
         _particle.Play(true);
     }
 
+    public void Stop() => _particle.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
     private void OnParticleSystemStopped() => _pool?.Release(this);
 }

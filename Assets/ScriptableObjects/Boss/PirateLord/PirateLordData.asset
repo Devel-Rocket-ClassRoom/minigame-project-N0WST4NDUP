@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4847b58db5b7442bbb58c13b66f0d6, type: 3}
+  m_Name: PirateLordData
+  m_EditorClassIdentifier: Assembly-CSharp::PirateLordData
+  Name: Pirate Lord
+  Description: The King of Pirates.
+  Health: 1000
+  InvincibleTime: 0
+  Phase1ToPhase2HpThreshold: 0.5
+  Phase3DecayPerSecond: 25
+  PhaseMovements:
+  - {fileID: 11400000, guid: 45c30af7c0b420940bb227ad2a84f026, type: 2}
+  - {fileID: 11400000, guid: 4ea0b707eb8100f4eb60b831088958ab, type: 2}
+  - {fileID: 11400000, guid: 5bd3bd1006ab71c42b9c6ab00f736830, type: 2}
+  RadialSweepConfig: {fileID: 0}
