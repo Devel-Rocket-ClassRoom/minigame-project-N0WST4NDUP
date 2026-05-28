@@ -16,7 +16,7 @@ public class ShipMovement : MonoBehaviour
         _rigidbody.useGravity = false;
     }
 
-    public void Init(ShipMovementData data)
+    public void SetData(ShipMovementData data)
     {
         _data = data;
     }

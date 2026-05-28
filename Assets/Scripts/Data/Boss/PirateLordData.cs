@@ -7,10 +7,10 @@ public class PirateLordData : ShipData
 {
     [Header("Phase Config")]
     public float Phase1ToPhase2HpThreshold = 0.5f;
-    public float Phase3DecayPerSecond = 5f;
+    public float Phase3DecayPerSecond = 50f;
 
     [Header("Movements")]
-    public ShipMovementData[] ChaseSpeeds = new ShipMovementData[3];
+    public ShipMovementData[] PhaseMovements = new ShipMovementData[3];
 
     // [Header("Patterns")]
     //   - BroadsideConfig      : BroadsideVolleyConfig
