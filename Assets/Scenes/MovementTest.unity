@@ -1613,7 +1613,7 @@ MonoBehaviour:
   _stages:
   - {fileID: 11400000, guid: a22efa2fe9af9da4c9976b0b5c65fe6e, type: 2}
   _player: {fileID: 186825966}
-  _bossSpawnAnchor: {fileID: 725480935}
+  _bossSpawnOffset: {x: 100, y: 0, z: 100}
 --- !u!4 &1327955295
 Transform:
   m_ObjectHideFlags: 0

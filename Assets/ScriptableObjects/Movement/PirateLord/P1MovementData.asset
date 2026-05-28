@@ -15,5 +15,5 @@ MonoBehaviour:
   MaxSpeed: 8
   Acceleration: 2
   BrakeStrength: 2
-  TurnSpeed: 30
+  TurnSpeed: 10
   LateralGrip: 0.5

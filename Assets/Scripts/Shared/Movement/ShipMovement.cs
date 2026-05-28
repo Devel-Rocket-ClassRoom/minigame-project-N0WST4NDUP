@@ -50,6 +50,9 @@ public class ShipMovement : MonoBehaviour
         Vector3 forwardV = transform.forward * Vector3.Dot(v, transform.forward);
         Vector3 lateralV = v - forwardV;
         _rigidbody.linearVelocity = forwardV + lateralV * (1f - _data.LateralGrip);
+
+        // 4) 충돌 토크 무시 — 회전은 MoveRotation으로만 제어
+        _rigidbody.angularVelocity = Vector3.zero;
     }
 
     public void UpdateMove(float throttle, float turn)

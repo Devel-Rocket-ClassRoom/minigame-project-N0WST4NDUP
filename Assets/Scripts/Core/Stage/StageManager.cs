@@ -5,7 +5,7 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField] private StageData[] _stages;
     [SerializeField] private Transform _player;
-    [SerializeField] private Transform _bossSpawnAnchor;
+    [SerializeField] private Vector3 _bossSpawnOffset = new(100, 0, 100);
 
     public static StageData CurrentStage { get; private set; }
     public static int CurrentStageIndex { get; private set; } = -1;
@@ -67,8 +67,8 @@ public class StageManager : MonoBehaviour
             return;
         }
 
-        Vector3 spawnPos = _bossSpawnAnchor != null ? _bossSpawnAnchor.position : Vector3.zero;
-        Quaternion spawnRot = _bossSpawnAnchor != null ? _bossSpawnAnchor.rotation : Quaternion.identity;
+        Vector3 spawnPos = _player.position + _bossSpawnOffset;
+        Quaternion spawnRot = Quaternion.LookRotation(_player.position - spawnPos);
         _currentBoss = Instantiate(CurrentStage.BossPrefab, spawnPos, spawnRot);
         _currentBoss.GetComponent<PirateLord>().Init(_player); // 임시, 나중에 보스 상위 추상화로 Init
         _bossSpawned = true;
