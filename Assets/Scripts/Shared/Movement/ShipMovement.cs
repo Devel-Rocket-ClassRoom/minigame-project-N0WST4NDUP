@@ -16,8 +16,15 @@ public class ShipMovement : MonoBehaviour
         _rigidbody.useGravity = false;
     }
 
+    public void Init(ShipMovementData data)
+    {
+        _data = data;
+    }
+
     private void FixedUpdate()
     {
+        if (_data == null) return;
+
         float forward = Mathf.Max(_throttle, 0f);
         float brake = Mathf.Max(-_throttle, 0f);
         float forwardSpeed = Vector3.Dot(_rigidbody.linearVelocity, transform.forward);
