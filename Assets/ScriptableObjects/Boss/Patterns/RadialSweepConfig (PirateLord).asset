@@ -15,13 +15,13 @@ MonoBehaviour:
   ProjectileCount: 12
   ShotInterval: 0.3
   Clockwise: 1
-  Cooldown: 10
+  Cooldown: 7
   TelegraphDuration: 0
-  Range: 0
-  Damage: 0
-  ArcHeight: 0
-  FlightDuration: 0
-  AreaRadius: 0
+  Range: 20
+  Damage: 20
+  ArcHeight: 8
+  FlightDuration: 1.2
+  AreaRadius: 4
   TargetLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8

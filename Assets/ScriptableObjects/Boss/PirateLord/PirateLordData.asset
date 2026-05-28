@@ -17,8 +17,9 @@ MonoBehaviour:
   Health: 1000
   InvincibleTime: 0
   Phase1ToPhase2HpThreshold: 0.5
-  Phase3DecayPerSecond: 5
+  Phase3DecayPerSecond: 25
   PhaseMovements:
   - {fileID: 11400000, guid: 45c30af7c0b420940bb227ad2a84f026, type: 2}
   - {fileID: 11400000, guid: 4ea0b707eb8100f4eb60b831088958ab, type: 2}
   - {fileID: 11400000, guid: 5bd3bd1006ab71c42b9c6ab00f736830, type: 2}
+  RadialSweepConfig: {fileID: 0}
