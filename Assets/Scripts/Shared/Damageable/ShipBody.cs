@@ -15,6 +15,7 @@ public class ShipBody : MonoBehaviour, IDamageable
     public bool IsInvincible => Time.time < _invincibleTimer;
     public bool IsDestroyed => _currentHealth <= 0f;
 
+    public event Action<float> OnHealthChanged;
     public event Action OnDeadEvent;
 
     public void Init(ShipData data)
@@ -29,6 +30,7 @@ public class ShipBody : MonoBehaviour, IDamageable
         if (IsInvincible || IsDestroyed) return;
 
         _currentHealth -= damage;
+        OnHealthChanged?.Invoke(_currentHealth);
         _invincibleTimer = Time.time + _invincibleTime;
         if (_currentHealth <= 0)
         {
@@ -40,6 +42,7 @@ public class ShipBody : MonoBehaviour, IDamageable
     public void Repair(float amount)
     {
         _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
+        OnHealthChanged?.Invoke(_currentHealth);
     }
 
     private void Die() => OnDeadEvent?.Invoke();

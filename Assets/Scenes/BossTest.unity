@@ -1469,10 +1469,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Boss] PirateLord'
       objectReference: {fileID: 0}
-    - target: {fileID: 2712582011409209949, guid: ec2f612e87266cd47bc78f21e8256011, type: 3}
-      propertyPath: _target
-      value: 
-      objectReference: {fileID: 736616976}
     - target: {fileID: 2807092016615517642, guid: ec2f612e87266cd47bc78f21e8256011, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

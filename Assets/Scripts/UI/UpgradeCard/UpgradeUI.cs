@@ -16,6 +16,11 @@ public class UpgradeUI : MonoBehaviour
 
     private readonly List<CardView> _spawned = new();
 
+    private void Awake()
+    {
+        gameObject.SetActive(true);
+    }
+
     private void Start()
     {
         _playerXP.OnLevelUp += HandleLevelUp;
