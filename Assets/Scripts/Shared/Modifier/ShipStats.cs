@@ -31,4 +31,6 @@ public class ShipStats : MonoBehaviour
         }
         return (baseValue + add) * (1f + percent);
     }
+
+    public void UpdateModifier() => OnStatsChanged?.Invoke();
 }

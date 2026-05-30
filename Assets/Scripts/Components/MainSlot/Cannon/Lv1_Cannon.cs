@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Lv1_Cannon : CannonBase
 {
+    protected override float BallScale => 1f;
+
     public Lv1_Cannon(CombatData data, ShipStats stats)
     {
         _data = data;
@@ -11,15 +13,6 @@ public class Lv1_Cannon : CannonBase
 
     public override int Level => 1;
     public override bool CanUpgrade => true;
-
-    public override void Tick()
-    {
-        TickCooldown();
-
-        if (!CanFire) return;
-
-        FireProcess();
-    }
 
     public override CannonBase Upgrade()
     {

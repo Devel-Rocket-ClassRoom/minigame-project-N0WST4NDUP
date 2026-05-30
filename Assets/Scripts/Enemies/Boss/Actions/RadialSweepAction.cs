@@ -30,13 +30,11 @@ public partial class RadialSweepAction : Action
         _agent = Self.Value.GetComponent<BehaviorGraphAgent>();
         _cooldownTimer = Config.Value.Cooldown;
         _inSweeping = false;
-        Debug.Log($"[BT RadialSweep] Activated (RunOn={RunOn?.Value})");
         return Status.Running;
     }
 
     protected override void OnEnd()
     {
-        Debug.Log("[BT RadialSweep] Deactivated");
     }
 
     protected override Status OnUpdate()
@@ -45,7 +43,6 @@ public partial class RadialSweepAction : Action
             && _agent.GetVariable<Phase>("Phase", out var phaseVar)
             && phaseVar.Value != RunOn.Value)
         {
-            Debug.Log($"[BT RadialSweep] Phase mismatch ({phaseVar.Value} vs RunOn={RunOn.Value}) → end");
             return Status.Success;
         }
 
@@ -59,7 +56,6 @@ public partial class RadialSweepAction : Action
                 _inSweeping = true;
                 _shotIndex = 0;
                 _shotTimer = 0f;
-                Debug.Log($"[BT RadialSweep] Sweep started ({config.ProjectileCount} shots, {(config.Clockwise ? "CW" : "CCW")})");
             }
         }
         else

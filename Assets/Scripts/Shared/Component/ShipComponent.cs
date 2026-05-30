@@ -45,12 +45,16 @@ public class ShipComponent : MonoBehaviour
     public bool IsEmpty(IAttachable attachable) => attachable switch
     {
         MainAttachableBase _ => _mainSlot == null,
+        SubAttachableBase _ => _subSlot == null,
+        RearAttachableBase _ => _rearSlot == null,
         _ => false
     };
 
     public int GetLevel(IAttachable attachable) => attachable switch
     {
         MainAttachableBase _ => _mainSlot?.Level ?? 0,
+        SubAttachableBase _ => _subSlot?.Level ?? 0,
+        RearAttachableBase _ => _rearSlot?.Level ?? 0,
         _ => 0
     };
 
@@ -59,6 +63,12 @@ public class ShipComponent : MonoBehaviour
         MainAttachableBase main =>
             _mainSlot == null ||
             (_mainSlot.GetType() == main.GetType() && _mainSlot.CanUpgrade),
+        SubAttachableBase sub =>
+            _subSlot == null ||
+            (_subSlot.GetType() == sub.GetType() && _subSlot.CanUpgrade),
+        RearAttachableBase rear =>
+            _rearSlot == null ||
+            (_rearSlot.GetType() == rear.GetType() && _rearSlot.CanUpgrade),
         _ => false
     };
 
@@ -77,6 +87,28 @@ public class ShipComponent : MonoBehaviour
                 else
                 {
                     _mainSlot.Upgrade();
+                }
+                break;
+            case SubAttachableBase sub:
+                if (_subSlot == null)
+                {
+                    _subSlot = Instantiate(sub, _subSlotPosition);
+                    _subSlot.Attach(_target, _stats);
+                }
+                else
+                {
+                    _subSlot.Upgrade();
+                }
+                break;
+            case RearAttachableBase rear:
+                if (_rearSlot == null)
+                {
+                    _rearSlot = Instantiate(rear, _rearSlotPosition);
+                    _rearSlot.Attach(_target, _stats);
+                }
+                else
+                {
+                    _rearSlot.Upgrade();
                 }
                 break;
         }

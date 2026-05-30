@@ -25,7 +25,6 @@ public class PirateLord : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log($"[PirateLord] Spawned at {transform.position} | HP {_body.CurrentHealth}/{_body.MaxHealth} | Phase {_currentPhase}");
         OnBossSpawned?.Invoke(this);
     }
 
@@ -61,14 +60,12 @@ public class PirateLord : MonoBehaviour
 
     private void ApplyPhaseTransition(Phase phase)
     {
-        Debug.Log($"[PirateLord] Phase transition: {_currentPhase} → {phase} | HP {_body.CurrentHealth}/{_body.MaxHealth}");
         _currentPhase = phase;
         _movement.SetData(_data.PhaseMovements[(int)phase]);
 
         if (phase == Phase.P3)
         {
             // Pirate Lord 고유 — 유령선화
-            Debug.Log("[PirateLord] Ghost ship activated — collider OFF, HP restored, decay started");
             if (TryGetComponent<Collider>(out var col))
             {
                 col.enabled = false;
@@ -86,7 +83,6 @@ public class PirateLord : MonoBehaviour
     private void HandleBossDeath()
     {
         _body.OnDeadEvent -= HandleBossDeath;
-        Debug.Log($"[PirateLord] Defeated at {transform.position}");
         OnBossDeathEvent?.Invoke(transform.position);
     }
 }

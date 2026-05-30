@@ -15,7 +15,6 @@ public class HorrorFXController : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("[HorrorFX] Enabled — Volume/Perlin starting");
         _weight = 0f;
         if (_volume != null) _volume.weight = 0f;
         if (_perlin != null)
@@ -28,7 +27,6 @@ public class HorrorFXController : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("[HorrorFX] Disabled");
         if (_volume != null) _volume.weight = 0f;
         if (_perlin != null)
         {
@@ -63,7 +61,6 @@ public class HorrorFXController : MonoBehaviour
             Value = -_config.PlayerSlowPercent
         };
         _playerStats.AddModifier(mod);
-        Debug.Log($"[HorrorFX] Slow applied: -{_config.PlayerSlowPercent * 100f:F0}% for {_config.PlayerSlowDuration}s");
         StartCoroutine(RemoveAfter(mod, _config.PlayerSlowDuration));
     }
 

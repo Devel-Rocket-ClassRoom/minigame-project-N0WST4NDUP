@@ -15,6 +15,8 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
     public abstract int Level { get; }
     public abstract bool CanUpgrade { get; }
 
+    protected virtual float BallScale => 1f;
+
     public void SetBarrel(LayerMask target, Transform firePoint, float arcHeight, float flightDuration)
     {
         Target = target;
@@ -23,7 +25,14 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
         FlightDuration = flightDuration;
     }
 
-    public abstract void Tick();
+    public virtual void Tick()
+    {
+        TickCooldown();
+
+        if (!CanFire) return;
+
+        FireProcess();
+    }
 
     public abstract CannonBase Upgrade();
 
@@ -33,6 +42,7 @@ public abstract class CannonBase : IComponent, IUpgradable<CannonBase>
     {
         var ball = CombatPoolRegistry.Get<CannonBall>();
         ball.transform.position = FirePoint.position;
+        ball.transform.localScale = Vector3.one * BallScale;
 
         CannonConfig config = new(
             Target,
