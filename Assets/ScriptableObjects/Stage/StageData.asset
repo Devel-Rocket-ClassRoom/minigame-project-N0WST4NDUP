@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageData
   StageName: Stage 1
   BossPrefab: {fileID: 2593535582019348553, guid: ec2f612e87266cd47bc78f21e8256011, type: 3}
-  BossSpawnAfterSec: 60
+  BossSpawnAfterSec: 180

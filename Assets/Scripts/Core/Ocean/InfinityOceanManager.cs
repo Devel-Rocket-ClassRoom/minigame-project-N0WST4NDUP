@@ -41,6 +41,8 @@ public class InfinityOceanManager : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (_target == null) return;
+
         Vector2Int cell = GetCell(_target.position);
         if (cell == _centerCell) return;
 

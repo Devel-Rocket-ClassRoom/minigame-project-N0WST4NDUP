@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 186825967}
   - component: {fileID: 186825968}
   - component: {fileID: 186825971}
+  - component: {fileID: 186825973}
   - component: {fileID: 186825972}
   - component: {fileID: 186825963}
   - component: {fileID: 186825969}
@@ -488,6 +489,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fa8372ddd657634f9d12b1b64a880b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  _data: {fileID: 11400000, guid: 3e7c9ee3a3fffdc4a9b6244510da659b, type: 2}
+  _body: {fileID: 186825973}
   _movement: {fileID: 186825963}
 --- !u!114 &186825969
 MonoBehaviour:
@@ -506,7 +509,7 @@ MonoBehaviour:
     m_Bits: 64
   _startingComponent: {fileID: -7171757408369763360, guid: 265dfa266153a8947b25aa6a7c03794c, type: 3}
   _mainSlotPosition: {fileID: 296390267}
-  _subSlotPosition: {fileID: 0}
+  _subSlotPosition: {fileID: 990921547}
   _rearSlotPosition: {fileID: 1204893791}
 --- !u!136 &186825970
 CapsuleCollider:
@@ -557,6 +560,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a073557bfb1567419e8bf984b939be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipStats
+--- !u!114 &186825973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186825962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04ffef221da1ef4fbb90196752662dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShipBody
 --- !u!224 &292464151 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4378885577427866733, guid: fb0cf8df1abed304880885dbf88a8fb4, type: 3}
@@ -1660,6 +1675,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960683661}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &990921546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990921547}
+  m_Layer: 3
+  m_Name: SubSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &990921547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990921546}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1505372459}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1147389006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,6 +2157,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 296390267}
+  - {fileID: 990921547}
   - {fileID: 1204893791}
   m_Father: {fileID: 186825966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2312,7 +2359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
-  _kind: 0
+  _kind: 5
   _prefab: {fileID: 1347608588729730467, guid: 77fa922e642988c4393ed0cd925f11b0, type: 3}
   _defaultCapacity: 16
   _maxSize: 100
@@ -3003,6 +3050,10 @@ PrefabInstance:
       propertyPath: _playerXP
       value: 
       objectReference: {fileID: 186825971}
+    - target: {fileID: 2227218070782507278, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
+      propertyPath: _playerHP
+      value: 
+      objectReference: {fileID: 186825973}
     - target: {fileID: 7435364554490463040, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3101,6 +3152,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7435364554783512503, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7435364555802625113, guid: 91877702213e13142a6e7167bfb5c034, type: 3}
+      propertyPath: m_WholeNumbers
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

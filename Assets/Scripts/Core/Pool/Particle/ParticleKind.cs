@@ -5,4 +5,5 @@ public enum ParticleKind
     Explosion,
     MortarTelegraph,
     Die,
+    Heal,
 }
