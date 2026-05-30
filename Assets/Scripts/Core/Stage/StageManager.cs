@@ -10,12 +10,13 @@ public class StageManager : MonoBehaviour
     public static StageData CurrentStage { get; private set; }
     public static int CurrentStageIndex { get; private set; } = -1;
     public static int StageCount { get; private set; }
+    public static float Elapsed { get; private set; }
+    public static float BossSpawnAfterSec => CurrentStage != null ? CurrentStage.BossSpawnAfterSec : 0f;
+    public static bool BossSpawned { get; private set; }
 
     public static event Action<StageData> OnStageStarted;
     public static event Action OnGameClear;
 
-    private float _elapsed;
-    private bool _bossSpawned;
     private GameObject _currentBoss;
 
     private void OnDestroy()
@@ -37,11 +38,11 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if (_bossSpawned || CurrentStage == null) return;
+        if (BossSpawned || CurrentStage == null) return;
 
-        _elapsed += Time.deltaTime;
-        Debug.Log($"[StageManager] Elapsed time: {_elapsed:F1}s / {CurrentStage.BossSpawnAfterSec}s");
-        if (_elapsed >= CurrentStage.BossSpawnAfterSec)
+        Elapsed += Time.deltaTime;
+        Debug.Log($"[StageManager] Elapsed time: {Elapsed:F1}s / {CurrentStage.BossSpawnAfterSec}s");
+        if (Elapsed >= CurrentStage.BossSpawnAfterSec)
         {
             SpawnBoss();
         }
@@ -51,8 +52,8 @@ public class StageManager : MonoBehaviour
     {
         CurrentStageIndex = index;
         CurrentStage = _stages[index];
-        _elapsed = 0f;
-        _bossSpawned = false;
+        Elapsed = 0f;
+        BossSpawned = false;
         _currentBoss = null;
 
         Debug.Log($"[StageManager] Stage {index + 1}/{StageCount} started: {CurrentStage.StageName} (boss in {CurrentStage.BossSpawnAfterSec}s)");
@@ -71,12 +72,12 @@ public class StageManager : MonoBehaviour
         Quaternion spawnRot = Quaternion.LookRotation(_player.position - spawnPos);
         _currentBoss = Instantiate(CurrentStage.BossPrefab, spawnPos, spawnRot);
         _currentBoss.GetComponent<PirateLord>().Init(_player); // 임시, 나중에 보스 상위 추상화로 Init
-        _bossSpawned = true;
+        BossSpawned = true;
 
         PirateLord.OnBossDeathEvent -= HandleBossDeath;
         PirateLord.OnBossDeathEvent += HandleBossDeath;
 
-        Debug.Log($"[StageManager] Boss spawned at {_elapsed:F1}s elapsed");
+        Debug.Log($"[StageManager] Boss spawned at {Elapsed:F1}s elapsed");
     }
 
     private void HandleBossDeath(Vector3 _)

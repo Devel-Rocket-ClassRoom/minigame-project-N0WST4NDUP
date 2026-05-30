@@ -151,17 +151,17 @@ if (RunOn != null && _agent != null
 ## 7. 이벤트 hook
 
 ```csharp
-public static event Action<Vector3> OnBossSpawned;    // 등장 연출
-public static event Action<Phase>   OnPhaseChanged;   // HUD HP바 갱신
-public static event Action<Vector3> OnBossDeathEvent; // 스테이지 클리어 트리거 (StageManager 구독)
+public static event Action<PirateLord> OnBossSpawned;    // 등장 연출 + HUD 전환 (.Body, .transform.position 등 접근)
+public static event Action<Phase>      OnPhaseChanged;   // HUD HP바 페이즈 라벨 갱신
+public static event Action<Vector3>    OnBossDeathEvent; // 스테이지 클리어 트리거 (StageManager 구독)
 ```
 
 현재 소비처:
 - `StageManager`가 `OnBossDeathEvent` 구독 → 다음 스테이지 진행 또는 `OnGameClear` 발화.
+- `BossHPUI`가 `OnBossSpawned`/`OnPhaseChanged`/`OnBossDeathEvent` 구독 → 대기 게이지를 보스 HP 게이지로 전환, 페이즈 라벨/HP 수치 갱신, 사망 시 숨김.
 
 미사용 (후속):
-- `OnBossSpawned` — 등장 연출/사운드 큐
-- `OnPhaseChanged` — HUD HP 바 단계 표시
+- `OnBossSpawned` — 등장 컷인/사운드 큐
 
 ---
 

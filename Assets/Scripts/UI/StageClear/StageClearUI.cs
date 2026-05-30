@@ -10,6 +10,8 @@ public class StageClearUI : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.SetActive(true);
+
         if (_panel != null) _panel.SetActive(false);
         StageManager.OnGameClear += HandleGameClear;
         if (_homeButton != null) _homeButton.onClick.AddListener(Restart);

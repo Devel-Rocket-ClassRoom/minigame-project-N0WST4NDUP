@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MortarRainConfig (PirateLord)
   m_EditorClassIdentifier: Assembly-CSharp::MortarRainConfig
   ShellCount: 3
-  Cooldown: 8
-  TelegraphDuration: 1.5
+  Cooldown: 4
+  TelegraphDuration: 2
   AreaRadius: 8
   Damage: 18
   ArcHeight: 20
