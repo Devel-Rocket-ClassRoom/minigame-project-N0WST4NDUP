@@ -16,15 +16,6 @@ public class TripleCannon : CannonBase
 
     public override void TickCooldown() => _cannon.TickCooldown();
 
-    public override void Tick()
-    {
-        _cannon.TickCooldown();
-
-        if (!_cannon.CanFire) return;
-
-        FireProcess();
-    }
-
     public override CannonBase Upgrade()
     {
         _cannon = _cannon.Upgrade();

@@ -4,8 +4,6 @@ public class GunBoatAttackState : IEnemyState
 {
     private readonly GunBoat _gunBoat;
 
-    private float _attackTimer;
-
     public GunBoatAttackState(GunBoat gunBoat)
     {
         _gunBoat = gunBoat;
@@ -13,7 +11,7 @@ public class GunBoatAttackState : IEnemyState
 
     public void OnEnter()
     {
-        _attackTimer = 0f;
+        return;
     }
 
     public void OnExit()
@@ -23,10 +21,10 @@ public class GunBoatAttackState : IEnemyState
 
     public void OnTick()
     {
-        if (Time.time < _attackTimer) return;
+        if (!_gunBoat.CanFire) return;
 
         _gunBoat.OnFire();
-        _attackTimer = Time.time + _gunBoat.CombatData.Cooldown;
+        _gunBoat.ScheduleFireAfter(_gunBoat.CombatData.Cooldown);
 
         _gunBoat.FindClosestShip();
         if (_gunBoat.Target == null)

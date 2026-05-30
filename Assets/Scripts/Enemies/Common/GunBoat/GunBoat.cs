@@ -16,9 +16,11 @@ public class GunBoat : CommonEnemyBase
 
     private Vector3[] _patrolPoints = new Vector3[k_patrolPointRadius];
     private int _currentPatrolIndex = -1;
+    private float _attackTimer;
 
     public CombatData CombatData => _combatData;
     public float IdlingInterval => _idlingInterval;
+    public bool CanFire => Target != null && Time.time >= _attackTimer;
 
     public override void Init()
     {
@@ -31,6 +33,7 @@ public class GunBoat : CommonEnemyBase
     {
         Target = null;
         ClearPatrolPoints();
+        _attackTimer = 0f;
     }
 
     private void Update()
@@ -48,6 +51,7 @@ public class GunBoat : CommonEnemyBase
         {
             damageable.OnDamaged(CombatData.Damage);
         }
+        ParticlePoolRegistry.Get(ParticleKind.HitFlash).Play(Target.position);
     }
 
     private void GeneratePatrolPoints()
@@ -77,6 +81,9 @@ public class GunBoat : CommonEnemyBase
 
     protected override void OnDead()
     {
+        ParticlePoolRegistry.Get(ParticleKind.Die).Play(transform.position);
         _pool?.Release(this);
     }
+
+    public void ScheduleFireAfter(float delay) => _attackTimer = Time.time + delay;
 }

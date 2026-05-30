@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb5037314ab6fc24ba4a3f0603121624, type: 3}
-  m_Name: CombatData
+  m_Name: MachineGunData
   m_EditorClassIdentifier: Assembly-CSharp::CombatData
-  Damage: 10
-  Range: 9
+  Icon: {fileID: 0}
+  Damage: 2.3
+  MinRange: 0
+  MaxRange: 10
   Cooldown: 1
   IsAreaAttack: 0
   AreaRadius: 1

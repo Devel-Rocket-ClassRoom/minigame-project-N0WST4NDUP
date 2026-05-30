@@ -6,15 +6,15 @@ public abstract class MainAttachableBase : MonoBehaviour, IAttachable
     [SerializeField] protected CombatData _data;
     // [SerializeField] protected GameObject _prefab;
 
-    protected LayerMask _target;
+    protected LayerMask _targetLayer;
     protected ShipStats _stats;
 
     public abstract int Level { get; }
     public abstract bool CanUpgrade { get; }
 
-    public virtual void Attach(LayerMask target, ShipStats stats)
+    public virtual void Attach(LayerMask targetLayer, ShipStats stats)
     {
-        _target = target;
+        _targetLayer = targetLayer;
         _stats = stats;
     }
 

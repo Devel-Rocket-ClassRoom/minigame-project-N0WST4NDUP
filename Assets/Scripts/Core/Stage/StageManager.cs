@@ -57,6 +57,7 @@ public class StageManager : MonoBehaviour
     private void SpawnBoss()
     {
         if (CurrentStage.BossPrefab == null) return;
+        if (_player == null) return;
 
         Vector3 spawnPos = _player.position + _bossSpawnOffset;
         Quaternion spawnRot = Quaternion.LookRotation(_player.position - spawnPos);

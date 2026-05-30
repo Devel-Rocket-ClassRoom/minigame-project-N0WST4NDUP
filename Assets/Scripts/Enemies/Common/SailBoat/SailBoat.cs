@@ -32,6 +32,7 @@ public class SailBoat : CommonEnemyBase
 
     protected override void OnDead()
     {
+        ParticlePoolRegistry.Get(ParticleKind.Die).Play(transform.position);
         _pool?.Release(this);
     }
 }

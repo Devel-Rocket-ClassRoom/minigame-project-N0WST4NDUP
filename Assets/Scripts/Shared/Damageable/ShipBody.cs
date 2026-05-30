@@ -30,19 +30,20 @@ public class ShipBody : MonoBehaviour, IDamageable
         if (IsInvincible || IsDestroyed) return;
 
         _currentHealth -= damage;
-        OnHealthChanged?.Invoke(_currentHealth);
         _invincibleTimer = Time.time + _invincibleTime;
         if (_currentHealth <= 0)
         {
             _currentHealth = 0;
             Die();
         }
+        OnHealthChanged?.Invoke(_currentHealth);
     }
 
     public void Repair(float amount)
     {
         _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
         OnHealthChanged?.Invoke(_currentHealth);
+        ParticlePoolRegistry.Get(ParticleKind.Heal).Play(transform.position);
     }
 
     private void Die() => OnDeadEvent?.Invoke();
