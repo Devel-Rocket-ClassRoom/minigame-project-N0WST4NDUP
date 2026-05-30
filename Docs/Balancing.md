@@ -103,7 +103,7 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 | ShipStats / Modifier 시스템 | §5.4 / §6.1 | — | **신규 등재 (§3.9)** — 스탯 정의·계산식. 시스템 자체는 `구현 완성`, 풀에 들어갈 모디파이어 값은 플레이테스트 미확정 |
 | 강화 카드 풀 (3택 레벨업) | §5.4 | W1~W2 | **부분 등재 (§3.10)** — 카드 4종 SO 작성, 풀에 스탯 모디파이어 3종만 연결. 컴포넌트 카드(Cannon/Double/Triple)는 SO 존재하나 풀 미연결. |
 | 네임드 (드롭 타이머·흡수 우선순위·leash 반경) | §5.5 | W1 / 플레이테스트 | 미확정(❓) |
-| 보스 (트리거 X분/Y킬·캐치업 속도·패턴 단계) | §5.6 | 플레이테스트 / W2 | 미확정(❓) |
+| 보스 (트리거·캐치업 속도·패턴 단계) | §5.6 | 플레이테스트 / W2 | **부분 등재 (§3.11)** — Pirate Lord 1체의 HP·페이즈 임계·decay·P1/P2 사격 패턴 2종·P3 채널링+FX `구현 기본값`. P2 콤보(Whirlpool/Ramming)는 **주말 후속**, 보스 등장 트리거 X분/Y킬은 네임드 시스템 미구현으로 시간 단일 조건만. |
 | 컴포넌트 슬롯 (카테고리·개수·Lv 상한·레벨업 효과) | §6.1 | W1 / W2 | 미확정(❓) — Main/Sub/Rear 골격만 구현. 카테고리 확정/슬롯 Lv 상한 미정. |
 | 피해 / 사망 (i-frame 무적시간) | §5.7 | W1 | 미확정(❓) |
 
@@ -456,3 +456,146 @@ UI [Assets/Scripts/UI/UpgradeCard/UpgradeUI.cs](../Assets/Scripts/UI/UpgradeCard
   - **스탯 모디파이어 누적 상한** (GDD §5.4): `IsAvailable=true`로 무제한 스택 — 카드 코멘트로 "일정 개수? false로 밸런싱" 플래그됨.
   - **풀에 컴포넌트 카드 연결**: Cannon/Double/Triple SO를 `UpgradePool.asset` `_definitions` 배열에 추가하면 즉시 등장 가능.
   - **드롭 접촉 시 일시정지 + 교체 UI** (GDD §6.1): 현재는 레벨업 시점에만 카드 등장. 드롭 접촉 분기 미구현.
+
+### 3.11 보스 — Pirate Lord (`PirateLordData` + 4종 Pattern Config + 3종 Phase Movement)
+
+소스: [Assets/Scripts/Data/Boss/](../Assets/Scripts/Data/Boss/),
+사양 상세는 [Docs/Boss/PirateLord.md](Boss/PirateLord.md). GDD §5.6 매핑.
+v1.0 유일 보스로 1 스테이지 클리어 게이트.
+
+#### 3.11.1 PirateLordData (HP·페이즈)
+
+에셋 [PirateLordData.asset](../Assets/ScriptableObjects/Boss/PirateLord/PirateLordData.asset).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Health` | 1000 | HP | 플레이어 `MaxSpeed 10`(§3.1) · `Damage 50`(§3.6) 기준 ≈20발 처치 — P1+P2 합쳐 약 3~4분 |
+| `InvincibleTime` | 0 | s | P3 자연 감소(`OnDamaged` 매 프레임 호출)를 i-frame 가드가 막지 않도록 0 |
+| `Phase1ToPhase2HpThreshold` | 0.5 | 0–1 | HP 50% 도달 시 BT `HpThresholdWatchAction`이 P1 → P2 신호 |
+| `Phase3DecayPerSecond` | 25 | HP/s | P3 진입 후 HP 자연 감소율 — 1000HP / 25 = 40초 페이즈 (도망 승리 체감 시간) |
+
+- **근거**: §0.2 "1런 10분"에서 보스전 비중을 약 4~5분으로 잡아 30초/5분 루프(§0.3)와 정합. P3 40초는
+  Vampire Survivors의 "Reaper" 추격 클라이맥스 길이와 비슷한 체감 — 도망 압박이 지루하지 않으면서도
+  공포 효과(`HorrorFXController`) 적용 사이클이 충분히 반복될 시간.
+- **상태**: `구현 기본값`.
+
+#### 3.11.2 PhaseMovements (P1/P2/P3 — `ShipMovementData[3]`)
+
+에셋 [P1MovementData.asset](../Assets/ScriptableObjects/Movement/PirateLord/P1MovementData.asset) /
+[P2MovementData.asset](../Assets/ScriptableObjects/Movement/PirateLord/P2MovementData.asset) /
+[P3MovementData.asset](../Assets/ScriptableObjects/Movement/PirateLord/P3MovementData.asset).
+
+| 페이즈 | MaxSpeed | Acceleration | BrakeStrength | TurnSpeed | LateralGrip |
+|---|---|---|---|---|---|
+| P1 | 8 m/s | 2 | 2 | 10 deg/s | 0.5 |
+| P2 | 9 m/s | 3 | 3 | 12 deg/s | 0.5 |
+| P3 | 14 m/s | 4 | 4 | 30 deg/s | 0.5 |
+
+- **근거**: 플레이어 `MaxSpeed 10`(§3.1) 기준 — P1(80%) 도주 여지, P2(90%) 압박 강화, P3(140%) 캐치업
+  추격으로 "도망 불가능에 가깝지만 거리 유지는 가능"한 GDD §5.6 leash-less 사양 충족. TurnSpeed가
+  플레이어(60 deg/s)보다 낮은 건 보스가 큰 함선이라는 무게감 표현 + P3에서 30으로 올려 추격 강도 증가.
+- **상태**: `구현 기본값`.
+
+#### 3.11.3 Radial Sweep (`RadialSweepConfig`) — P1, P2
+
+에셋 [RadialSweepConfig (PirateLord).asset](../Assets/ScriptableObjects/Boss/Patterns/RadialSweepConfig%20(PirateLord).asset).
+구현 [RadialSweepAction.cs](../Assets/Scripts/Enemies/Boss/Actions/RadialSweepAction.cs).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `ProjectileCount` | 12 | 발 | 360° / 12 = 30° 간격 |
+| `ShotInterval` | 0.3 | s | 한 발씩 0.3s 간격 발사 |
+| `Clockwise` | true | — | 시계방향 회전 발사 |
+| `Cooldown` | 7 | s | 사이클 간 대기 |
+| `Range` | 20 | m | 보스 본체 반경(5m) + 사거리 — 화면 절반 가량 도달 |
+| `Damage` | 20 | HP | 플레이어 100HP 기준 한 발 20% (5발이면 즉사) |
+| `ArcHeight` | 8 | m | CannonBall 베지어 호 높이 |
+| `FlightDuration` | 1.2 | s | 발사~폭발 비행 시간 |
+| `AreaRadius` | 4 | m | 폭발 광역 반경 |
+| `TelegraphDuration` | 0 | s | (미사용) — Radial Sweep은 회전 자체가 텔레그래프 |
+| `TargetLayerMask` | Player | — | 폭발 적용 대상 레이어 |
+
+- **근거**: §0.2 "궤적 예측" — 12발이 회전 방향으로 순차 발사되면 플레이어는 회전 역방향으로 무빙하면 회피
+  가능. 3.6초 휘두름 + 7초 쿨다운으로 GDD §5.6 보스 사양의 "압박 의도(제자리 금지)" 충족하면서도 P1+P2
+  합쳐 약 30사이클 발생 → 다층 패턴 학습 시간 확보.
+- **상태**: `구현 기본값`.
+
+#### 3.11.4 Mortar Rain (`MortarRainConfig`) — P1, P2
+
+에셋 [MortarRainConfig (PirateLord).asset](../Assets/ScriptableObjects/Boss/Patterns/MortarRainConfig%20(PirateLord).asset).
+구현 [MortarRainAction.cs](../Assets/Scripts/Enemies/Boss/Actions/MortarRainAction.cs).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `ShellCount` | 3 | 발 | 한 사이클 동시 낙하 셸 수 |
+| `Cooldown` | 8 | s | 사이클 간 대기 |
+| `TelegraphDuration` | 1.5 | s | 원형 텔레그래프 표시 시간 — 회피 윈도우 |
+| `AreaRadius` | 8 | m | 플레이어 주변 셸 위치 산포 반경 |
+| `ScatterRadius` | 3 | m | 개별 폭발 광역 반경 |
+| `Damage` | 18 | HP | 3발이라 약간 낮춤. 직격 시 18%, 중복 적중 시 큰 타격 |
+| `ArcHeight` | 20 | m | 위에서 떨어지는 시작 높이 |
+| `FlightDuration` | 0.6 | s | 텔레그래프 후 낙하 시간 — 짧게(예측 시간은 텔레그래프가 담당) |
+| `TargetLayerMask` | Player | — | 폭발 적용 대상 레이어 |
+
+- **근거**: §0.2 "정지 금지, 안전지대 지속 갱신" — `AreaRadius 8m`는 플레이어 위치 중심 셸 산포라 정지하면
+  3발 중 1발이 직격할 확률 높음. `TelegraphDuration 1.5s` + `FlightDuration 0.6s`로 회피 윈도우는 충분히
+  주되 순간 반응이 아닌 사전 회피 의사결정 유도. Radial Sweep(쿨다운 7s)과 엇갈리는 Cooldown 8s로
+  두 패턴이 P1/P2 동안 교차 사이클 형성.
+- **상태**: `구현 기본값`.
+
+#### 3.11.5 Proximity Channel (`ProximityChannelConfig`) — P3
+
+에셋 [ProximityChannelConfig (PirateLord).asset](../Assets/ScriptableObjects/Boss/Patterns/ProximityChannelConfig%20(PirateLord).asset).
+구현 [ProximityChannelAction.cs](../Assets/Scripts/Enemies/Boss/Actions/ProximityChannelAction.cs).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `ZoneRadius` | 12 | m | 보스 본체 반경(5m) + 안전 거리(7m). 플레이어가 이 반경 안에 있으면 데미지 |
+| `DpsTickInterval` | 0.5 | s | 데미지 틱 간격 |
+| `DpsPerTick` | 8 | HP | 0.5s × 8 = DPS 16. 안에 계속 머물면 ≈6초 사망 |
+| `TargetLayerMask` | Player | — | 데미지 적용 대상 레이어 |
+
+- **근거**: GDD §5.6 P3 "도망만 쳐도 승리" 사양 충족. 보스 P3 MaxSpeed 14 vs 플레이어 10 → 거리 좁혀지는
+  속도는 4m/s. ZoneRadius 12m라 ≈3초 안에 따라잡힘 — 그 동안 플레이어는 방향 전환으로 거리 유지 가능.
+  DPS 16은 안에 계속 머물면 즉사하는 수준이라 §0.2 "궤적 예측"의 위협 회피 학습 강제.
+- **상태**: `구현 기본값`.
+
+#### 3.11.6 Horror FX (`HorrorFXConfig`) — P3
+
+에셋 [HorrorFXConfig (PirateLord).asset](../Assets/ScriptableObjects/Boss/Patterns/HorrorFXConfig%20(PirateLord).asset).
+구현 [HorrorFXAction.cs](../Assets/Scripts/Enemies/Boss/Actions/HorrorFXAction.cs) +
+[HorrorFXController.cs](../Assets/Scripts/Enemies/Boss/Patterns/HorrorFXController.cs).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `VolumeWeightLerpSec` | 2 | s | URP Volume weight 0→1 페이드인 시간 |
+| `PerlinAmplitude` | 0.8 | — | Cinemachine Basic Multi Channel Perlin 진폭 |
+| `PerlinFrequency` | 1 | — | Cinemachine Perlin 빈도 |
+| `PlayerSlowPercent` | 0.25 | 0–1 | `PercentAdd(-0.25)` — MoveSpeed 25% 감속 |
+| `PlayerSlowDuration` | 1.5 | s | 각 슬로우 적용 지속 시간 |
+| `PlayerSlowInterval` | 3 | s | 슬로우 적용 주기 |
+
+- **근거**: P3 "유령선 클라이맥스" 분위기 — Volume 페이드 2s로 점진적 압박, Perlin 진폭 0.8은 시야 흔들림은
+  주되 어지러움 한계 아래. 슬로우는 3s마다 1.5s씩 적용(=절반 시간 슬로우 적용) → 캐치업 거리 유지 압박 강화.
+  플레이어는 슬로우 적용 사이클을 읽어 무빙 패턴을 조정.
+- **상태**: `구현 기본값`.
+- **🚧 wiring 의존**: URP Volume 프로필(Lens Distortion/Chromatic Aberration/Vignette 등) + Cinemachine
+  Basic Multi Channel Perlin + Player ShipStats 인스펙터 wiring 필요. 미연결 시 시각 효과만 누락되고
+  나머지(슬로우)는 정상 동작.
+
+#### 3.11.7 보스 등장 트리거 (`StageData.BossSpawnAfterSec`)
+
+소스 [StageData.cs](../Assets/Scripts/Data/Stage/StageData.cs) + [StageManager.cs](../Assets/Scripts/Core/Stage/StageManager.cs).
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `BossSpawnAfterSec` | (스테이지별, SO 인스펙터) | s | 스테이지 시작 후 보스 활성화까지 경과 시간 |
+| `_bossSpawnOffset` | (씬 인스펙터) | m | 플레이어 기준 월드 offset — 카메라 쿼터뷰 고정이라 항상 화면 위쪽에서 등장하도록 설정 |
+| 보스 회전 | `LookRotation(player - spawnPos)` | — | 스폰 시 보스 forward가 플레이어를 향함 |
+
+- **근거**: GDD §5.6 본래 사양 `(경과시간 ≥ X분) AND (네임드 처치 수 ≥ Y)`에서 네임드 시스템 미구현으로
+  시간 단일 조건만 사용. v1.0 1런 10분 중 보스전 4~5분(§3.11.1)이 적정 비중이라 `BossSpawnAfterSec`은
+  300~360s 범위에서 플레이테스트 튜닝 예정.
+- **상태**: `구현 기본값` (네임드 시스템 미구현, 시간 단일 트리거).
+- **🚧 미구현 / 추후**:
+  - **네임드 처치 수 조건**: 네임드 시스템 도입 시 `StageData`에 `NamedKillsRequired` 필드 추가 예정.

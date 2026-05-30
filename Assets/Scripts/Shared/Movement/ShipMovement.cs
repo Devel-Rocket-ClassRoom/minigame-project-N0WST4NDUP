@@ -19,8 +19,15 @@ public class ShipMovement : MonoBehaviour
         _stats = GetComponent<ShipStats>();
     }
 
+    public void SetData(ShipMovementData data)
+    {
+        _data = data;
+    }
+
     private void FixedUpdate()
     {
+        if (_data == null) return;
+
         float forward = Mathf.Max(_throttle, 0f);
         float brake = Mathf.Max(-_throttle, 0f);
         float forwardSpeed = Vector3.Dot(_rigidbody.linearVelocity, transform.forward);
@@ -41,11 +48,14 @@ public class ShipMovement : MonoBehaviour
         Quaternion delta = Quaternion.Euler(0f, turnRate * Time.fixedDeltaTime, 0f);
         _rigidbody.MoveRotation(_rigidbody.rotation * delta);
 
-        // 3) 측면 저항 — "배다움"의 핵심
+        // // 3) 측면 저항 — "배다움"의 핵심
         Vector3 v = _rigidbody.linearVelocity;
         Vector3 forwardV = transform.forward * Vector3.Dot(v, transform.forward);
         Vector3 lateralV = v - forwardV;
         _rigidbody.linearVelocity = forwardV + lateralV * (1f - _data.LateralGrip);
+
+        // 4) 충돌 토크 무시 — 회전은 MoveRotation으로만 제어
+        _rigidbody.angularVelocity = Vector3.zero;
     }
 
     public void UpdateMove(float throttle, float turn)
