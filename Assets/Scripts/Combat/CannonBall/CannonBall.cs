@@ -39,6 +39,7 @@ public class CannonBall : CombatItemBase
     {
         _config = null;
         _flying = false;
+        transform.localScale = Vector3.one;
     }
 
     public void SetConfig(CannonConfig config) => _config = config;

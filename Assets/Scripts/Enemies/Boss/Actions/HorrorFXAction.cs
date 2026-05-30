@@ -25,7 +25,6 @@ public partial class HorrorFXAction : Action
         if (_fx == null) return Status.Failure;
         _agent = Self.Value.GetComponent<BehaviorGraphAgent>();
         _fx.enabled = true;
-        Debug.Log($"[BT HorrorFX] Activated (RunOn={RunOn?.Value})");
         return Status.Running;
     }
 
@@ -35,7 +34,6 @@ public partial class HorrorFXAction : Action
             && _agent.GetVariable<Phase>("Phase", out var phaseVar)
             && phaseVar.Value != RunOn.Value)
         {
-            Debug.Log($"[BT HorrorFX] Phase mismatch ({phaseVar.Value} vs RunOn={RunOn.Value}) → end");
             return Status.Success;
         }
         return Status.Running;
@@ -44,6 +42,5 @@ public partial class HorrorFXAction : Action
     protected override void OnEnd()
     {
         if (_fx != null) _fx.enabled = false;
-        Debug.Log("[BT HorrorFX] Deactivated");
     }
 }

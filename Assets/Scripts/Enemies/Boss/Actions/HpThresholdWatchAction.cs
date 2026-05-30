@@ -30,7 +30,6 @@ public partial class HpThresholdWatchAction : Action
         if (_body == null) return Status.Failure;
         if (_body.CurrentHealth <= _body.MaxHealth * ThresholdRatio.Value)
         {
-            Debug.Log($"[BT HpThresholdWatch] Triggered at HP {_body.CurrentHealth}/{_body.MaxHealth} (ratio {ThresholdRatio.Value})");
             return Status.Success;
         }
         return Status.Running;
