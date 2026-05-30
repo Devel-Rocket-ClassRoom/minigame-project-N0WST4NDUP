@@ -26,13 +26,11 @@ public partial class PursueAction : Action
         _selfTr = Self.Value.transform;
         _movement = Self.Value.GetComponent<ShipMovement>();
         if (_movement == null) return Status.Failure;
-        Debug.Log($"[BT Pursue] Activated (target: {(Target.Value != null ? Target.Value.name : "null")})");
         return Status.Running;
     }
 
     protected override void OnEnd()
     {
-        Debug.Log("[BT Pursue] Deactivated");
     }
 
     protected override Status OnUpdate()

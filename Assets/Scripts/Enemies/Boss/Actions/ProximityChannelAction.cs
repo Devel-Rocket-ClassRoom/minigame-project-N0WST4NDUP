@@ -29,13 +29,11 @@ public partial class ProximityChannelAction : Action
         _selfTr = Self.Value.transform;
         _agent = Self.Value.GetComponent<BehaviorGraphAgent>();
         _tickTimer = Config.Value.DpsTickInterval;
-        Debug.Log($"[BT ProximityChannel] Activated (RunOn={RunOn?.Value}, radius {Config.Value.ZoneRadius})");
         return Status.Running;
     }
 
     protected override void OnEnd()
     {
-        Debug.Log("[BT ProximityChannel] Deactivated");
     }
 
     protected override Status OnUpdate()
@@ -44,7 +42,6 @@ public partial class ProximityChannelAction : Action
             && _agent.GetVariable<Phase>("Phase", out var phaseVar)
             && phaseVar.Value != RunOn.Value)
         {
-            Debug.Log($"[BT ProximityChannel] Phase mismatch ({phaseVar.Value} vs RunOn={RunOn.Value}) → end");
             return Status.Success;
         }
 

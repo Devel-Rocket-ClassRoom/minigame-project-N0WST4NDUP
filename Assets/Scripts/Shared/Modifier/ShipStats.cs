@@ -32,11 +32,5 @@ public class ShipStats : MonoBehaviour
         return (baseValue + add) * (1f + percent);
     }
 
-    public void RemoveModifier(Modifier m)
-    {
-        _modifiers.Remove(m);
-        OnStatsChanged?.Invoke();
-    }
-
     public void UpdateModifier() => OnStatsChanged?.Invoke();
 }

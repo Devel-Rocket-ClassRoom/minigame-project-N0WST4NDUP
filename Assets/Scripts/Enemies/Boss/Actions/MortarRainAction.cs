@@ -35,13 +35,11 @@ public partial class MortarRainAction : Action
         _state = State.Cooldown;
         _timer = Config.Value.Cooldown;
         _telegraphParticles = new PooledParticle[Config.Value.ShellCount];
-        Debug.Log($"[BT MortarRain] Activated (RunOn={RunOn?.Value})");
         return Status.Running;
     }
 
     protected override void OnEnd()
     {
-        Debug.Log("[BT MortarRain] Deactivated");
     }
 
     protected override Status OnUpdate()
@@ -50,7 +48,6 @@ public partial class MortarRainAction : Action
             && _agent.GetVariable<Phase>("Phase", out var phaseVar)
             && phaseVar.Value != RunOn.Value)
         {
-            Debug.Log($"[BT MortarRain] Phase mismatch ({phaseVar.Value} vs RunOn={RunOn.Value}) → end");
             return Status.Success;
         }
 
@@ -61,13 +58,11 @@ public partial class MortarRainAction : Action
         switch (_state)
         {
             case State.Cooldown:
-                Debug.Log($"[BT MortarRain] Telegraph marking {config.ShellCount} shells");
                 MarkTelegraphs(config);
                 _state = State.Telegraph;
                 _timer = config.TelegraphDuration;
                 break;
             case State.Telegraph:
-                Debug.Log($"[BT MortarRain] Firing {config.ShellCount} shells");
                 FireShells(config);
                 _state = State.Cooldown;
                 _timer = config.Cooldown;

@@ -39,7 +39,6 @@ public partial class OnDeadWatchAction : Action
 
     private void OnDead()
     {
-        Debug.Log("[BT OnDeadWatch] Death detected");
         _triggered = true;
     }
 }

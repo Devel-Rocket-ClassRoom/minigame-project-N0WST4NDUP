@@ -26,11 +26,7 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        if (_stages == null || _stages.Length == 0)
-        {
-            Debug.LogError("[StageManager] No stages configured");
-            return;
-        }
+        if (_stages == null || _stages.Length == 0) return;
 
         StageCount = _stages.Length;
         StartStage(0);
@@ -41,7 +37,6 @@ public class StageManager : MonoBehaviour
         if (BossSpawned || CurrentStage == null) return;
 
         Elapsed += Time.deltaTime;
-        Debug.Log($"[StageManager] Elapsed time: {Elapsed:F1}s / {CurrentStage.BossSpawnAfterSec}s");
         if (Elapsed >= CurrentStage.BossSpawnAfterSec)
         {
             SpawnBoss();
@@ -56,17 +51,12 @@ public class StageManager : MonoBehaviour
         BossSpawned = false;
         _currentBoss = null;
 
-        Debug.Log($"[StageManager] Stage {index + 1}/{StageCount} started: {CurrentStage.StageName} (boss in {CurrentStage.BossSpawnAfterSec}s)");
         OnStageStarted?.Invoke(CurrentStage);
     }
 
     private void SpawnBoss()
     {
-        if (CurrentStage.BossPrefab == null)
-        {
-            Debug.LogError($"[StageManager] Boss prefab missing for stage {CurrentStage.StageName}");
-            return;
-        }
+        if (CurrentStage.BossPrefab == null) return;
 
         Vector3 spawnPos = _player.position + _bossSpawnOffset;
         Quaternion spawnRot = Quaternion.LookRotation(_player.position - spawnPos);
@@ -76,14 +66,11 @@ public class StageManager : MonoBehaviour
 
         PirateLord.OnBossDeathEvent -= HandleBossDeath;
         PirateLord.OnBossDeathEvent += HandleBossDeath;
-
-        Debug.Log($"[StageManager] Boss spawned at {Elapsed:F1}s elapsed");
     }
 
     private void HandleBossDeath(Vector3 _)
     {
         PirateLord.OnBossDeathEvent -= HandleBossDeath;
-        Debug.Log($"[StageManager] Boss defeated — stage {CurrentStageIndex + 1}/{StageCount}");
 
         if (_currentBoss != null)
         {
@@ -97,7 +84,6 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("[StageManager] All stages cleared — game over");
             OnGameClear?.Invoke();
         }
     }
