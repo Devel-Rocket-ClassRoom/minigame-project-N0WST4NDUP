@@ -1,6 +1,8 @@
 public enum ParticleKind
 {
     WaterSplash,
+    HitFlash,
     Explosion,
-    MortarTelegraph
+    MortarTelegraph,
+    Die,
 }

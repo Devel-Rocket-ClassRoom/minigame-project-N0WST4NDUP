@@ -504,7 +504,7 @@ MonoBehaviour:
   _target:
     serializedVersion: 2
     m_Bits: 64
-  _startingComponent: {fileID: 2519735852428327152, guid: 0939242a3e44ae941a3423264effa613, type: 3}
+  _startingComponent: {fileID: -7171757408369763360, guid: 265dfa266153a8947b25aa6a7c03794c, type: 3}
   _mainSlotPosition: {fileID: 296390267}
   _subSlotPosition: {fileID: 0}
   _rearSlotPosition: {fileID: 1204893791}
@@ -793,8 +793,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1857326799}
+  - {fileID: 616191062}
   - {fileID: 1424692930}
   - {fileID: 1600069993}
+  - {fileID: 1537193132}
+  - {fileID: 1637761972}
   m_Father: {fileID: 1485150037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
@@ -1109,6 +1112,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560091076}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &616191061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 616191062}
+  - component: {fileID: 616191063}
+  m_Layer: 0
+  m_Name: HitFlashPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &616191062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616191061}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 365335543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &616191063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616191061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
+  _kind: 1
+  _prefab: {fileID: -2592544438399772104, guid: 03fae9c9afe18f446a4f41ea63f04b32, type: 3}
+  _defaultCapacity: 32
+  _maxSize: 200
 --- !u!1 &624717148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,7 +1995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
-  _kind: 1
+  _kind: 2
   _prefab: {fileID: 4685713079921822082, guid: 0898b572f28fb32439fbe4be9a9beb52, type: 3}
   _defaultCapacity: 32
   _maxSize: 100
@@ -2063,6 +2114,54 @@ Transform:
   - {fileID: 1204893791}
   m_Father: {fileID: 186825966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1537193131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537193132}
+  - component: {fileID: 1537193133}
+  m_Layer: 0
+  m_Name: DieEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1537193132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537193131}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 365335543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1537193133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537193131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
+  _kind: 4
+  _prefab: {fileID: 311716618160701315, guid: 024ea25718339564da47c9f94ecf347c, type: 3}
+  _defaultCapacity: 32
+  _maxSize: 200
 --- !u!4 &1562802777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4349456370377215415, guid: ad66f22518634d042b7352e3ce38bd82, type: 3}
@@ -2165,8 +2264,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
-  _kind: 2
+  _kind: 3
   _prefab: {fileID: -5415341482405796492, guid: 3247a5e44c014134b8c33c36f1aa68c2, type: 3}
+  _defaultCapacity: 16
+  _maxSize: 100
+--- !u!1 &1637761971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1637761972}
+  - component: {fileID: 1637761973}
+  m_Layer: 0
+  m_Name: HealEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1637761972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637761971}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 365335543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637761973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637761971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946a27f145c46a94bb3eda71a43c1e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlePool
+  _kind: 0
+  _prefab: {fileID: 1347608588729730467, guid: 77fa922e642988c4393ed0cd925f11b0, type: 3}
   _defaultCapacity: 16
   _maxSize: 100
 --- !u!1 &1688133557

@@ -23,7 +23,7 @@ public class CannonAttachable : MainAttachableBase
 
         _cannon = new Lv1_Cannon(_data, _stats);
         _cannon.SetBarrel(
-            _target,
+            _targetLayer,
             _firePoint,
             _arcHeight,
             _flightDuration
