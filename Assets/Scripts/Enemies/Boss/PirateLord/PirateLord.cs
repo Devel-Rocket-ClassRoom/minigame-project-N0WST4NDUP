@@ -13,11 +13,12 @@ public class PirateLord : MonoBehaviour
     [SerializeField] private ShipMovement _movement;
     [SerializeField] private BehaviorGraphAgent _agent;
 
-    public static event Action<Vector3> OnBossSpawned;
+    public static event Action<PirateLord> OnBossSpawned;
     public static event Action<Phase> OnPhaseChanged;
     public static event Action<Vector3> OnBossDeathEvent;
 
     public Phase CurrentPhase => _currentPhase;
+    public ShipBody Body => _body;
 
     private Phase _currentPhase = Phase.P1;
     private bool _decaying = false;
@@ -25,7 +26,7 @@ public class PirateLord : MonoBehaviour
     private void Start()
     {
         Debug.Log($"[PirateLord] Spawned at {transform.position} | HP {_body.CurrentHealth}/{_body.MaxHealth} | Phase {_currentPhase}");
-        OnBossSpawned?.Invoke(transform.position);
+        OnBossSpawned?.Invoke(this);
     }
 
     public void Init(Transform target)
