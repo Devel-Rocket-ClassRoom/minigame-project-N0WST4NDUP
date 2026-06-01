@@ -13,6 +13,7 @@ public class SubmarineDivingState : IEnemyState
     public void OnEnter()
     {
         _progress = 0f;
+        _submarine.LayMine();
     }
 
     public void OnExit()
@@ -23,10 +24,12 @@ public class SubmarineDivingState : IEnemyState
 
     public void OnTick()
     {
-        _progress += Time.deltaTime / _submarine.DivingDuration;
+        _submarine.FleeStep(_submarine.SubmergedSpeedMult);
+
+        _progress += Time.deltaTime / _submarine.TransitionDuration;
         if (_progress >= 1f)
         {
-            _submarine.StateMachine.ChangeState(new SubmarineFleeState(_submarine));
+            _submarine.StateMachine.ChangeState(new SubmarineSubmergedFleeState(_submarine));
             return;
         }
         _submarine.ApplyDiveT(_progress);
