@@ -99,8 +99,8 @@ MonoBehaviour:
   _transitionDuration: 1
   _submergedSpeedMult: 1.7
   _mineDamage: 10
-  _mineRadius: 2
-  _mineLifetime: 20
+  _mineRadius: 1
+  _mineLifetime: 10
   _mineArmDelay: 1
 --- !u!114 &2900586017675401174
 MonoBehaviour:
