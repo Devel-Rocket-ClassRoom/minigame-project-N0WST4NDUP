@@ -4973,7 +4973,7 @@ GameObject:
   - component: {fileID: 2296118762677937310}
   m_Layer: 6
   m_Name: SailBoat
-  m_TagString: Enemy
+  m_TagString: Common
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
