@@ -6,13 +6,15 @@ public class MineConfig
     public readonly float Damage;
     public readonly float AreaRadius;
     public readonly float Lifetime;
+    public readonly float ArmDelay;
 
-    public MineConfig(LayerMask target, float damage, float areaRadius, float lifetime)
+    public MineConfig(LayerMask target, float damage, float areaRadius, float lifetime, float armDelay = 0f)
     {
         Target = target;
         Damage = damage;
         AreaRadius = areaRadius;
         Lifetime = lifetime;
+        ArmDelay = armDelay;
     }
 }
 
@@ -23,7 +25,6 @@ public class Mine : CombatItemBase
 
     private MineConfig _config;
     private float _elapsed;
-    private bool _armed;
 
     public override void Init()
     {
@@ -32,7 +33,6 @@ public class Mine : CombatItemBase
     public override void Reset()
     {
         _config = null;
-        _armed = false;
     }
 
     public void SetConfig(MineConfig config) => _config = config;
@@ -42,13 +42,10 @@ public class Mine : CombatItemBase
         if (_config == null) return;
 
         _elapsed = 0f;
-        _armed = true;
     }
 
     private void Update()
     {
-        if (!_armed) return;
-
         _elapsed += Time.deltaTime;
         if (_elapsed >= _config.Lifetime)
         {
@@ -56,6 +53,7 @@ public class Mine : CombatItemBase
             return;
         }
 
+        if (_elapsed < _config.ArmDelay) return;
         if (Physics.CheckSphere(transform.position, _config.AreaRadius, _config.Target, QueryTriggerInteraction.Collide))
         {
             Explode(ParticleKind.Explosion);

@@ -23,10 +23,15 @@ public class SubmarineSurfacingState : IEnemyState
 
     public void OnTick()
     {
-        _progress -= Time.deltaTime / _submarine.DivingDuration;
+        _submarine.FleeStep(1f);
+
+        _progress -= Time.deltaTime / _submarine.TransitionDuration;
         if (_progress <= 0f)
         {
-            _submarine.StateMachine.ChangeState(new SubmarineIdleState(_submarine));
+            if (_submarine.Target != null)
+                _submarine.StateMachine.ChangeState(new SubmarineSurfacedFleeState(_submarine));
+            else
+                _submarine.StateMachine.ChangeState(new SubmarineIdleState(_submarine));
             return;
         }
         _submarine.ApplyDiveT(_progress);

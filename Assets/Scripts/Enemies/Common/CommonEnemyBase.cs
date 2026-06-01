@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(ShipBody))]
 public abstract class CommonEnemyBase : MonoBehaviour
 {
+    protected const float k_DeadzoneRadius = 0.001f;
     protected const int k_DetectBufferSize = 8;
 
     [Header("Default Config")]
