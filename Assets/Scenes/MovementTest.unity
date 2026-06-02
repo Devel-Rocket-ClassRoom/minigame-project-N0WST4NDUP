@@ -2546,6 +2546,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 125254962}
     m_Modifications:
+    - target: {fileID: 3810405451939674648, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
+      propertyPath: _titleText
+      value: 
+      objectReference: {fileID: 1936503641}
+    - target: {fileID: 6006256238888630931, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
+      propertyPath: m_text
+      value: Title
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006256238888630931, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
+      propertyPath: m_fontSize
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006256238888630931, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006256238888631021, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
+      propertyPath: m_Name
+      value: Title_Text
+      objectReference: {fileID: 0}
     - target: {fileID: 6006256239143114922, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2878,6 +2898,17 @@ MonoBehaviour:
   _prefab: {fileID: 1415187202445000303, guid: e2550dae06524a94bbc4bcdf375a88b9, type: 3}
   _defaultCapacity: 32
   _maxSize: 100
+--- !u!114 &1936503641 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6006256238888630931, guid: fd3484362c2814d5aac3532edc3b2c35, type: 3}
+  m_PrefabInstance: {fileID: 1775419763}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1995174424
 GameObject:
   m_ObjectHideFlags: 0

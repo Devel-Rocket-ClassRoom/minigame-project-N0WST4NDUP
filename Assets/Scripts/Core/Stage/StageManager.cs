@@ -16,12 +16,17 @@ public class StageManager : MonoBehaviour
 
     public static event Action<StageData> OnStageStarted;
     public static event Action OnGameClear;
+    public static event Action OnGameOver;
 
     private GameObject _currentBoss;
 
     private void OnDestroy()
     {
         PirateLord.OnBossDeathEvent -= HandleBossDeath;
+        if (_player != null)
+        {
+            _player.GetComponent<ShipBody>().OnDeadEvent -= HandleGameOver;
+        }
     }
 
     private void Start()
@@ -30,6 +35,11 @@ public class StageManager : MonoBehaviour
 
         StageCount = _stages.Length;
         StartStage(0);
+
+        if (_player != null)
+        {
+            _player.GetComponent<ShipBody>().OnDeadEvent += HandleGameOver;
+        }
     }
 
     private void Update()
@@ -87,5 +97,10 @@ public class StageManager : MonoBehaviour
         {
             OnGameClear?.Invoke();
         }
+    }
+
+    private void HandleGameOver()
+    {
+        OnGameOver?.Invoke();
     }
 }
