@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StageClearUI : MonoBehaviour
+public class GameResultUI : MonoBehaviour
 {
+    private const string k_homeSceneName = "EntryPoint";
+
     [SerializeField] private GameObject _panel;
     [SerializeField] private TextMeshProUGUI _titleText;
     [SerializeField] private Button _homeButton;
@@ -17,7 +19,7 @@ public class StageClearUI : MonoBehaviour
         if (_panel != null) _panel.SetActive(false);
         StageManager.OnGameClear += HandleGameClear;
         StageManager.OnGameOver += HandleGameOver;
-        if (_homeButton != null) _homeButton.onClick.AddListener(Restart);
+        if (_homeButton != null) _homeButton.onClick.AddListener(Home);
         if (_restartButton != null) _restartButton.onClick.AddListener(Restart);
     }
 
@@ -40,6 +42,12 @@ public class StageClearUI : MonoBehaviour
         if (_titleText != null) _titleText.text = "Defeat";
         if (_panel != null) _panel.SetActive(true);
         Time.timeScale = 0f;
+    }
+
+    private void Home()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(k_homeSceneName);
     }
 
     private void Restart()
