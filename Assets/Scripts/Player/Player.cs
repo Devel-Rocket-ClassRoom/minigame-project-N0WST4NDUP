@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private ShipData _data;
+    [SerializeField] private ShipData _shipData;
 
     [Header("Dependencies")]
     [SerializeField] private ShipBody _body;
@@ -19,8 +19,7 @@ public class Player : MonoBehaviour
         _throttleAction = input.actions["Throttle"];
         _turnAction = input.actions["Turn"];
 
-        // 임시
-        _body.Init(_data);
+        _body.Init(_shipData);
         _body.OnDeadEvent += PlayerDie;
     }
 
