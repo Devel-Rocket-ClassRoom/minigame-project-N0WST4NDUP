@@ -10,7 +10,6 @@ public class ShipComponent : MonoBehaviour
     [SerializeField] private LayerMask _target;
 
     [Header("Main Component")]
-    [SerializeField] private MainAttachableBase _startingComponent;
     private MainAttachableBase _mainSlot;
     [SerializeField] private Transform _mainSlotPosition;
 
@@ -32,7 +31,7 @@ public class ShipComponent : MonoBehaviour
     {
         _stats = GetComponent<ShipStats>();
 
-        _mainSlot = Instantiate(_startingComponent, _mainSlotPosition);
+        _mainSlot = Instantiate(GameManager.Instance.PlayerConfig.StartingMain, _mainSlotPosition);
     }
 
     private void Start()
