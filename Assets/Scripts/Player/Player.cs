@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     [Header("Dependencies")]
     [SerializeField] private ShipBody _body;
     [SerializeField] private ShipMovement _movement;
+    [SerializeField] private ShipComponent _component;
+
+    [Header("Fallback Config")]
+    [SerializeField] private MainAttachableBase _fallbackMainSlot;
 
     private InputAction _throttleAction;
     private InputAction _turnAction;
@@ -21,6 +25,13 @@ public class Player : MonoBehaviour
 
         _body.Init(_shipData);
         _body.OnDeadEvent += PlayerDie;
+    }
+
+    private void Start()
+    {
+        _component.Install(
+            GameManager.Instance.PlayerConfig.StartingMain ?? _fallbackMainSlot
+        );
     }
 
     private void OnDestroy()

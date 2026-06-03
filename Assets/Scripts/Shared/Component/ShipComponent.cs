@@ -10,7 +10,6 @@ public class ShipComponent : MonoBehaviour
     [SerializeField] private LayerMask _target;
 
     [Header("Main Component")]
-    [SerializeField] private MainAttachableBase _fallbackMainSlot;
     private MainAttachableBase _mainSlot;
     [SerializeField] private Transform _mainSlotPosition;
 
@@ -31,17 +30,6 @@ public class ShipComponent : MonoBehaviour
     private void Awake()
     {
         _stats = GetComponent<ShipStats>();
-
-        _mainSlot = Instantiate(
-            GameManager.Instance.PlayerConfig.StartingMain ?? _fallbackMainSlot,
-            _mainSlotPosition);
-    }
-
-    private void Start()
-    {
-        _mainSlot?.Attach(_target, _stats);
-        // _subSlot?.Attach();
-        // _rearSlot?.Attach();
     }
 
     public bool IsEmpty(IAttachable attachable) => attachable switch
@@ -73,6 +61,49 @@ public class ShipComponent : MonoBehaviour
             (_rearSlot.GetType() == rear.GetType() && _rearSlot.CanUpgrade),
         _ => false
     };
+
+    // 드롭품의 타입으로 슬롯을 지목해, 현재 그 슬롯에 장착된 장비가 강화 가능한지.
+    public bool SlotCanUpgrade(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase _ => _mainSlot != null && _mainSlot.CanUpgrade,
+        SubAttachableBase _ => _subSlot != null && _subSlot.CanUpgrade,
+        RearAttachableBase _ => _rearSlot != null && _rearSlot.CanUpgrade,
+        _ => false
+    };
+
+    // 드롭품 타입으로 슬롯을 지목해, 그 슬롯의 현재 장비를 한 단계 강화(드롭품 타입 무관).
+    public void UpgradeCurrentSlot(IAttachable attachable)
+    {
+        switch (attachable)
+        {
+            case MainAttachableBase _: _mainSlot?.Upgrade(); break;
+            case SubAttachableBase _: _subSlot?.Upgrade(); break;
+            case RearAttachableBase _: _rearSlot?.Upgrade(); break;
+        }
+    }
+
+    // 현재 슬롯 장비를 떼어내고 드롭품을 Lv1로 새로 장착(다른 타입 스왑).
+    public void Replace(IAttachable attachable)
+    {
+        switch (attachable)
+        {
+            case MainAttachableBase main:
+                _mainSlot?.Detach();
+                _mainSlot = Instantiate(main, _mainSlotPosition);
+                _mainSlot.Attach(_target, _stats);
+                break;
+            case SubAttachableBase sub:
+                _subSlot?.Detach();
+                _subSlot = Instantiate(sub, _subSlotPosition);
+                _subSlot.Attach(_target, _stats);
+                break;
+            case RearAttachableBase rear:
+                _rearSlot?.Detach();
+                _rearSlot = Instantiate(rear, _rearSlotPosition);
+                _rearSlot.Attach(_target, _stats);
+                break;
+        }
+    }
 
     public void Install(IAttachable attachable)
     {
