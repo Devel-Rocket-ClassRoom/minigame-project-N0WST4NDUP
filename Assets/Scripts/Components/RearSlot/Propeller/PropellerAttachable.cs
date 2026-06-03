@@ -14,8 +14,6 @@ public class PropellerAttachable : RearAttachableBase
 
     public override void Attach(LayerMask target, ShipStats stats)
     {
-        Debug.Log("Propeller Attached");
-
         base.Attach(target, stats);
 
         _level = 1;

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SailBoat : CommonEnemyBase
 {
+    private float timer;
+
     public override void Reset()
     {
         Target = null;
@@ -10,6 +12,12 @@ public class SailBoat : CommonEnemyBase
 
     private void Update()
     {
+        if (timer < Time.time)
+        {
+            timer = Time.time + 1f;
+            var body = GetComponent<ShipBody>();
+        }
+
         FindClosestShip();
         if (Target == null) return;
 

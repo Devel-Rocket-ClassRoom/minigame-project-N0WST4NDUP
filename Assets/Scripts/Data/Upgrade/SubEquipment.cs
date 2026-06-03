@@ -7,6 +7,8 @@ public class SubEquipment : UpgradeDefinition
 {
     [SerializeField] private SubAttachableBase _prefab;
 
+    public IAttachable Attachable => _prefab;
+
     public override bool IsAvailable(ShipComponent ship, ShipStats stats)
     {
         return ship.CanInstall(_prefab);

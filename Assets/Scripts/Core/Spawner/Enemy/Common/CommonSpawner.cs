@@ -41,7 +41,9 @@ public class CommonSpawner : MonoBehaviour
         var enemy = pool.Get();
         enemy.transform.position = spawnPoint;
         enemy.transform.rotation = Quaternion.LookRotation(_anchor.position - enemy.transform.position);
-        enemy.Init();
+        // autoSyncTransforms가 꺼져 있어, 순간이동 직후 콜라이더 물리 위치를 즉시 동기화.
+        // (안 하면 OverlapSphere 등 즉시 쿼리가 스폰 전 위치를 잡아 엉뚱한 피격 발생)
+        enemy.Init(); Physics.SyncTransforms();
         _alive.Add(enemy);
 
         _spawnTimer = Time.time + _spawnInterval;

@@ -7,6 +7,8 @@ public class RearEquipment : UpgradeDefinition
 {
     [SerializeField] private RearAttachableBase _prefab;
 
+    public IAttachable Attachable => _prefab;
+
     public override bool IsAvailable(ShipComponent ship, ShipStats stats)
     {
         return ship.CanInstall(_prefab);

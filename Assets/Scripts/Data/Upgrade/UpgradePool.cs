@@ -7,6 +7,9 @@ public class UpgradePool : ScriptableObject
     [SerializeField] private UpgradeDefinition[] _attachmentDefinitions;
     [SerializeField] private StatModifierUpgrade[] _modifierDefinitions;
 
+    public IReadOnlyList<UpgradeDefinition> AttachmentDefinitions => _attachmentDefinitions;
+    public IReadOnlyList<StatModifierUpgrade> ModifierDefinitions => _modifierDefinitions;
+
     public List<UpgradeDefinition> Pick(int count, ShipComponent ship, ShipStats stats)
     {
         var available = new List<UpgradeDefinition>();

@@ -28,6 +28,8 @@ public class XPMagnet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<XPGem>(out var gem))
+        {
             gem.OnPick(_target);
+        }
     }
 }
