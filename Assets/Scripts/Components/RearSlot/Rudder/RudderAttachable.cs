@@ -14,8 +14,6 @@ public class RudderAttachable : RearAttachableBase
 
     public override void Attach(LayerMask target, ShipStats stats)
     {
-        Debug.Log("Rudder Attached");
-
         base.Attach(target, stats);
 
         _level = 1;

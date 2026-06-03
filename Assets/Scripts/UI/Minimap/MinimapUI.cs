@@ -18,7 +18,7 @@ public class MinimapUI : MonoBehaviour
 
     [Header("Config")]
     [SerializeField] private float _worldRange = 60f;
-    [SerializeField] private LayerMask _enemyMask;      // 일반 적 레이어만 (보스/플레이어 제외)
+    [SerializeField] private LayerMask _enemyMask;
     [SerializeField] private float _sweepDegPerSec = 120f;
 
     [Header("Blip Colors")]
@@ -92,8 +92,8 @@ public class MinimapUI : MonoBehaviour
             };
             img.rectTransform.localScale = blip.Kind switch
             {
-                RadarBlipKind.Boss => Vector3.one * 1.5f,
-                RadarBlipKind.Named => Vector3.one * 1.2f,
+                RadarBlipKind.Boss => Vector3.one * 2.5f,
+                RadarBlipKind.Named => Vector3.one * 2f,
                 _ => Vector3.one,
             };
             img.rectTransform.anchoredPosition = blip.NormalizedPos * uiRadius;

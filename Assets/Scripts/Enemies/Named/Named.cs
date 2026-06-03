@@ -18,6 +18,9 @@ public class Named : MonoBehaviour
     private ShipComponent _component;
     private ShipStats _stats;
 
+    // 드롭 시 운반할 원본 정의(에셋이라 네임드 파괴 후에도 유효).
+    private readonly List<UpgradeDefinition> _equippedDefs = new();
+
     private void Awake()
     {
         _body = GetComponent<ShipBody>();
@@ -43,7 +46,6 @@ public class Named : MonoBehaviour
         _body.Init(_shipData);
     }
 
-    // Main/Sub/Rear 슬롯에 풀에서 무작위로 하나씩 장착.
     private void EquipRandomLoadout()
     {
         if (_loadoutPool == null) return;
@@ -58,6 +60,27 @@ public class Named : MonoBehaviour
         if (def == null) return;
 
         def.Apply(_component, _stats);
+        _equippedDefs.Add(def);
+    }
+
+    // 사망 시 드롭용: 장착했던 정의 중 하나를 무작위로 반환.
+    public bool TryGetRandomEquippedDefinition(out UpgradeDefinition def)
+    {
+        if (_equippedDefs.Count == 0)
+        {
+            def = null;
+            return false;
+        }
+
+        def = _equippedDefs[Random.Range(0, _equippedDefs.Count)];
+        return true;
+    }
+
+    // 다른 네임드가 드롭을 주웠을 때: 무조건 강화(빈 슬롯=장착, 최대레벨=모디파이어).
+    public void PickupComponent(UpgradeDefinition def)
+    {
+        var outcomes = PickupOutcomes.Build(def, _component, _stats, _loadoutPool);
+        if (outcomes.Count > 0) outcomes[0].Apply();
     }
 
     private T PickRandom<T>() where T : UpgradeDefinition
@@ -76,6 +99,10 @@ public class Named : MonoBehaviour
     private void HandleNamedDeath()
     {
         _body.OnDeadEvent -= HandleNamedDeath;
+
+
+
+        ParticlePoolRegistry.Get(ParticleKind.Die).Play(transform.position);
         Destroy(gameObject);
     }
 }

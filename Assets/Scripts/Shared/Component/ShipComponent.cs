@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ShipStats))]
@@ -24,8 +25,8 @@ public class ShipComponent : MonoBehaviour
     private ShipStats _stats;
 
     public MainAttachableBase MainSlot => _mainSlot;
-    // public SubAttachableBase SubSlot => _subSlot;
-    // public RearAttachableBase RearSlot => _rearSlot;
+    public SubAttachableBase SubSlot => _subSlot;
+    public RearAttachableBase RearSlot => _rearSlot;
 
     private void Awake()
     {
@@ -68,6 +69,15 @@ public class ShipComponent : MonoBehaviour
         MainAttachableBase _ => _mainSlot != null && _mainSlot.CanUpgrade,
         SubAttachableBase _ => _subSlot != null && _subSlot.CanUpgrade,
         RearAttachableBase _ => _rearSlot != null && _rearSlot.CanUpgrade,
+        _ => false
+    };
+
+    // 드롭품 타입으로 슬롯을 지목해, 현재 그 슬롯 장비가 드롭품과 같은 타입인지.
+    public bool IsSameTypeEquipped(IAttachable attachable) => attachable switch
+    {
+        MainAttachableBase _ => _mainSlot != null && _mainSlot.GetType() == attachable.GetType(),
+        SubAttachableBase _ => _subSlot != null && _subSlot.GetType() == attachable.GetType(),
+        RearAttachableBase _ => _rearSlot != null && _rearSlot.GetType() == attachable.GetType(),
         _ => false
     };
 

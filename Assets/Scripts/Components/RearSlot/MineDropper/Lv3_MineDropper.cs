@@ -8,7 +8,6 @@ public class Lv3_MineDropper : MineDropperBase
     {
         _data = data;
         _stats = stats;
-        Debug.Log("지뢰 살포 레벨 3");
     }
 
     public override int Level => 3;
