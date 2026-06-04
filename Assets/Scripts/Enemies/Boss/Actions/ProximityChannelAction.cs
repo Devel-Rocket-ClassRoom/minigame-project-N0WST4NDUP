@@ -26,9 +26,11 @@ public partial class ProximityChannelAction : Action
     protected override Status OnStart()
     {
         if (Self.Value == null || Config.Value == null) return Status.Failure;
+
         _selfTr = Self.Value.transform;
         _agent = Self.Value.GetComponent<BehaviorGraphAgent>();
         _tickTimer = Config.Value.DpsTickInterval;
+
         return Status.Running;
     }
 
@@ -46,6 +48,7 @@ public partial class ProximityChannelAction : Action
         }
 
         var config = Config.Value;
+
         _tickTimer -= Time.deltaTime;
         if (_tickTimer > 0f) return Status.Running;
         _tickTimer = config.DpsTickInterval;
@@ -55,8 +58,11 @@ public partial class ProximityChannelAction : Action
 
         for (int i = 0; i < count; i++)
         {
-            var body = _buffer[i].GetComponentInParent<ShipBody>();
-            if (body != null) body.OnDamaged(config.DpsPerTick);
+            if (_buffer[i].TryGetComponent<ShipBody>(out var body))
+            {
+                body.OnDamaged(config.DpsPerTick);
+            }
+            ParticlePoolRegistry.Get(ParticleKind.Die).Play(_buffer[i].transform.position);
         }
 
         return Status.Running;

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f3da5e6e7e1ec5418e2a528e9b793d6, type: 3}
   m_Name: ProximityChannelConfig (PirateLord)
   m_EditorClassIdentifier: Assembly-CSharp::ProximityChannelConfig
-  ZoneRadius: 12
-  DpsTickInterval: 0.5
-  DpsPerTick: 8
+  ZoneRadius: 40
+  DpsTickInterval: 0.7
+  DpsPerTick: 4
   TargetLayerMask:
     serializedVersion: 2
     m_Bits: 8

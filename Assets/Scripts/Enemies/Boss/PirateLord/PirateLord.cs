@@ -60,6 +60,8 @@ public class PirateLord : MonoBehaviour
 
     private void ApplyPhaseTransition(Phase phase)
     {
+        Debug.Log($"Phase → {phase}");
+
         _currentPhase = phase;
         _movement.SetData(_data.PhaseMovements[(int)phase]);
 
