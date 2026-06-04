@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9db5e3fb5ef64724cb5afae460d5f69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoRepairAttachable
-  _data: {fileID: 0}
+  _data: {fileID: 11400000, guid: db7433f921b60cc4ca19642ccac96c62, type: 2}
   _maxLevel: 3
   _interval: 10
   _baseHealPercent: 0.05

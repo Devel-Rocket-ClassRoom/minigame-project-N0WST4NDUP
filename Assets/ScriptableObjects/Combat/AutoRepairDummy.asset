@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb5037314ab6fc24ba4a3f0603121624, type: 3}
-  m_Name: MineDropperData
+  m_Name: AutoRepairDummy
   m_EditorClassIdentifier: Assembly-CSharp::CombatData
-  Icon: {fileID: 21300000, guid: 0d9219b3db132a348a2a7bace237f6da, type: 3}
-  Damage: 30
+  Icon: {fileID: 21300000, guid: eadfd6020d511574d96c7c4741b3abba, type: 3}
+  Damage: 0
   MinRange: 0
   MaxRange: 0
-  Cooldown: 10
-  IsAreaAttack: 1
-  AreaRadius: 2
+  Cooldown: 0
+  IsAreaAttack: 0
+  AreaRadius: 0

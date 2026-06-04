@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a194549a8d503ef49827e8acd81fc21a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RudderAttachable
-  _data: {fileID: 0}
+  _data: {fileID: 11400000, guid: 9c6e928ca5d1e8e4eb0cdedebbd52b22, type: 2}
   _maxLevel: 3
   _baseSpeedMultiplier: 0.2
   _incrementPerLevel: 0.05

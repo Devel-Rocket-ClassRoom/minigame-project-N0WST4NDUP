@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5eae00bdd908944bdd4f62f4590ffe, type: 3}
   m_Name: FireRate+15
   m_EditorClassIdentifier: Assembly-CSharp::StatModifierUpgrade
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: ea7adbcb2f93449409cd6869645b0352, type: 3}
   _displayName: Fire Rate
   _description: Fire Rate + 15%
   _modifiers:

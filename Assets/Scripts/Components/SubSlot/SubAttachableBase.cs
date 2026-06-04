@@ -11,6 +11,7 @@ public abstract class SubAttachableBase : MonoBehaviour, IAttachable
 
     public abstract int Level { get; }
     public abstract bool CanUpgrade { get; }
+    public Sprite Icon => _data != null ? _data.Icon : null;
 
     public virtual void Attach(LayerMask target, ShipStats stats)
     {

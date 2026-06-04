@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4940b4b10a55f642b56643e00a8650f, type: 3}
   m_Name: Propeller
   m_EditorClassIdentifier: Assembly-CSharp::RearEquipment
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 0ab48581eab24d946a02099c90948cc2, type: 3}
   _displayName: Propeller
   _description: Increases movement speed.
   _prefab: {fileID: 1580053826339513583, guid: 1683280acc53f7b478d94129b71ff9a1, type: 3}

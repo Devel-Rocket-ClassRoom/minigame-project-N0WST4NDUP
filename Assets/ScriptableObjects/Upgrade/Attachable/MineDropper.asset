@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4940b4b10a55f642b56643e00a8650f, type: 3}
   m_Name: MineDropper
   m_EditorClassIdentifier: Assembly-CSharp::RearEquipment
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 0d9219b3db132a348a2a7bace237f6da, type: 3}
   _displayName: MineDropper
   _description: Periodically drops mines behind your ship that explode on contact.
   _prefab: {fileID: 5456439227348518904, guid: 1024f216939f6f64b8e543664056076e, type: 3}

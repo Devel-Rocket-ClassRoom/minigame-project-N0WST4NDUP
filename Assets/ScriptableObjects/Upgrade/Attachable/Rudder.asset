@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4940b4b10a55f642b56643e00a8650f, type: 3}
   m_Name: Rudder
   m_EditorClassIdentifier: Assembly-CSharp::RearEquipment
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: f51598e56bba3ff41a6e491926c16c97, type: 3}
   _displayName: Rudder
   _description: Increases turn speed.
   _prefab: {fileID: -5460328591266837859, guid: a09cb24f51abd0f47ba450638cbc40da, type: 3}

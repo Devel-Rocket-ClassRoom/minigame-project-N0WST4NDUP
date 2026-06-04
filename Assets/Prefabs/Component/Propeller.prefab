@@ -4972,7 +4972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38857b54ead03fa4284c2a96cf1a4bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PropellerAttachable
-  _data: {fileID: 0}
+  _data: {fileID: 11400000, guid: b3f16f0988bcfa1449194d859ca2a3da, type: 2}
   _maxLevel: 3
   _baseSpeedMultiplier: 0.12
   _incrementPerLevel: 0.07
