@@ -1498,8 +1498,10 @@ MonoBehaviour:
   - {fileID: 624717150}
   - {fileID: 641816138}
   _spawnInterval: 1
-  _maxAlive: 80
-  _cullRadius: 200
+  _maxAlive: 200
+  _spawnMinDistance: 30
+  _spawnMaxDistance: 90
+  _cullRadius: 150
   _cullCheckInterval: 1
 --- !u!114 &1579365611
 MonoBehaviour:
@@ -1516,9 +1518,11 @@ MonoBehaviour:
   _anchor: {fileID: 5106147771328575528}
   _namedPrefab: {fileID: 4124491792622697444, guid: 24c773c72f3e47843b198aba12f8ac8e, type: 3}
   _spawnInterval: 5
-  _maxAlive: 3
+  _maxAlive: 10
   _spawnMinDistance: 60
   _spawnMaxDistance: 100
+  _leashRadius: 120
+  _leashCheckInterval: 1
 --- !u!1 &1600069992
 GameObject:
   m_ObjectHideFlags: 0
