@@ -41,11 +41,11 @@ public class Named : MonoBehaviour
         ModifiersApply();
     }
 
-    public void Init(ShipData shipData)
-    {
-        _shipData = shipData;
-        _body.Init(_shipData);
-    }
+    // public void Init(ShipData shipData)
+    // {
+    //     _shipData = shipData;
+    //     _body.Init(_shipData);
+    // }
 
     private void EquipRandomLoadout()
     {
