@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RearEquipment
   _icon: {fileID: 0}
   _displayName: Propeller
-  _description: Basic Propeller
+  _description: Increases movement speed.
   _prefab: {fileID: 1580053826339513583, guid: 1683280acc53f7b478d94129b71ff9a1, type: 3}

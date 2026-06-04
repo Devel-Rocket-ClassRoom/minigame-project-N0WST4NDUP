@@ -14,6 +14,7 @@ public class TripleMachineGun : MachineGunBase
     public override bool CanUpgrade => _gun.CanUpgrade;
     public override bool CanFire => _gun.CanFire;
     public override int TargetsPerShot => _gun.TargetsPerShot * 3;
+    public override Vector3? AimPoint => _gun.AimPoint;
 
     public override void TickCooldown() => _gun.TickCooldown();
 

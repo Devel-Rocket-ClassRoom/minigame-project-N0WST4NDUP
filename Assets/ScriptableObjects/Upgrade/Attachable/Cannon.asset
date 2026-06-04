@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainEquipment
   _icon: {fileID: 0}
   _displayName: Cannon
-  _description: Basic Cannon
+  _description: Basic Cannon, Random
   _prefab: {fileID: 2519735852428327152, guid: 0939242a3e44ae941a3423264effa613, type: 3}

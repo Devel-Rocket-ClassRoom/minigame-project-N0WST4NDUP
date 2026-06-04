@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SubEquipment
   _icon: {fileID: 0}
   _displayName: AutoRepair
-  _description: Auto Repair
+  _description: Slowly regenerates HP over time.
   _prefab: {fileID: -1659797439960779326, guid: 39e51917bbdb2d14e8485012218efbb3, type: 3}
