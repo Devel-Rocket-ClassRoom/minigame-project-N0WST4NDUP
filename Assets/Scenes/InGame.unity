@@ -1627,8 +1627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NamedSpawner
   _anchor: {fileID: 5106147771328575528}
   _namedPrefab: {fileID: 4124491792622697444, guid: 24c773c72f3e47843b198aba12f8ac8e, type: 3}
-  _spawnInterval: 5
-  _maxAlive: 10
+  _spawnInterval: 7
+  _maxAlive: 5
   _spawnMinDistance: 60
   _spawnMaxDistance: 100
   _leashRadius: 120

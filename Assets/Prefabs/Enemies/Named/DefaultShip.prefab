@@ -5543,6 +5543,7 @@ GameObject:
   - component: {fileID: 4960731090374751022}
   - component: {fileID: 9109371307204851526}
   - component: {fileID: 4124491792622697444}
+  - component: {fileID: -8072006411492534704}
   - component: {fileID: 8894275155930969741}
   m_Layer: 6
   m_Name: DefaultShip
@@ -5689,6 +5690,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Named
   _shipData: {fileID: 11400000, guid: 3e7c9ee3a3fffdc4a9b6244510da659b, type: 2}
   _loadoutPool: {fileID: 11400000, guid: bdf28d2839de3454992eda04dd595643, type: 2}
+--- !u!114 &-8072006411492534704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188696359550802876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df07c9522707114da08d026f77dbfd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NamedWander
+  _changeInterval: 0.7
+  _minThrottle: 0.3
 --- !u!114 &8894275155930969741
 MonoBehaviour:
   m_ObjectHideFlags: 0
