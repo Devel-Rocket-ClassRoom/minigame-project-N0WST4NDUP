@@ -10,8 +10,8 @@
 - **이름**: Pirate Lord (해적왕)
 - **장르 내 역할**: v1.0 유일 보스. 스테이지 클리어 게이트
 - **등장 트리거** ([GDD §5.6](../GDD.md))
-    - **현재 구현**: 경과시간 단일 조건 (`StageData.BossSpawnAfterSec`).
-    - **본래 사양**: `(경과시간 ≥ X분) AND (네임드 처치 수 ≥ Y)` — 네임드 시스템 미구현으로 시간 트리거만 사용. 네임드 시스템 도입 시 `StageData`에 `NamedKillsRequired` 필드 추가 예정.
+    - **현재 구현**: 경과시간 단일 조건 (`StageData.BossSpawnAfterSec`, 현재 180초).
+    - **본래 사양**: `(경과시간 ≥ X분) AND (네임드 처치 수 ≥ Y)` — 네임드 시스템은 v0.3.0에 구현됐으나(GDD §5.5) 트리거 통합 전이라 시간 단독. `StageData`에 `NamedKillsRequired` 추가 + 조건 결합은 v1.0 (`StageData.cs` TODO).
 - **이탈 불가**: leash 없음. 캐치업 추격 ([GDD §5.6](../GDD.md))
 - **컨셉**: 해적선. 페이즈 3에서 유령선으로 변신하여 무적 상태로 추격 → "도망만 쳐도 승리"하는 호러 클라이맥스
 
@@ -41,10 +41,10 @@
 | 패턴 | 페이즈 | 압박 의도 | 구현 |
 |---|---|---|---|
 | **Radial Sweep** | P1, P2 | 회전 역방향 무빙 강제 (제자리 금지) | `RadialSweepAction` (BT). 보스 주위 360° 순차 발사 — 12발 × 0.3s = 3.6s 휘두름. CannonBall 풀 재사용. |
-| **Mortar Rain** | P1, P2 | 안전지대 지속 갱신 (정지 금지) | `MortarRainAction` (BT). 플레이어 주변 8m 영역에 3발 흩뿌리기 → 1.5s 텔레그래프 → 0.6s 낙하. CannonBall(ArcHeight=0 직선 낙하) + `MortarTelegraph` 파티클. |
+| **Mortar Rain** | P1, P2 | 안전지대 지속 갱신 (정지 금지) | `MortarRainAction` (BT). 플레이어 주변 8m 영역에 3발 흩뿌리기 → 2s 텔레그래프 → 0.6s 낙하. CannonBall(ArcHeight 20 — 위에서 낙하) + `MortarTelegraph` 파티클. Cooldown 4s. |
 | **Whirlpool** | P2 | 같은 자리 못 있게 강제 (슬로우+풀링) | **주말 후속** — 미구현 |
 | **Ramming Charge** | P2 | 횡축 무빙 강제 | **주말 후속** — 미구현 |
-| **Proximity Channel** | P3 | 거리 유지 강제 | `ProximityChannelAction` (BT). `Physics.OverlapSphereNonAlloc`로 12m 반경 내 ShipBody에 0.5s마다 8 데미지(DPS 16). 본체 콜라이더와 분리. |
+| **Proximity Channel** | P3 | 거리 유지 강제 | `ProximityChannelAction` (BT). `Physics.OverlapSphereNonAlloc`로 **40m** 반경 내 ShipBody에 **0.7s마다 4** 데미지(DPS ≈5.7). 본체 콜라이더와 분리. ※ 넓은 존+약 DPS — Balancing §3.11.5 검증 대상. |
 | **Horror FX** | P3 | 시각·이동 압박 | `HorrorFXAction` (BT) + `HorrorFXController` (MonoBehaviour). URP Volume weight 0→1 페이드 + Cinemachine Perlin + 플레이어 3s마다 -25% MoveSpeed 1.5s 슬로우. |
 
 ---
@@ -57,7 +57,7 @@
 - **HP 자연 감소**: `PirateLord.Update`가 매 프레임 `_body.OnDamaged(Phase3DecayPerSecond * Time.deltaTime)` 호출. `PirateLordData.InvincibleTime=0`으로 i-frame 가드가 비활성이라 매 프레임 차감이 그대로 적용됨.
 - **부활 처리**: `_body.Repair(_body.MaxHealth)` 호출로 HP를 즉시 MaxHealth로 복원. `ShipBody.OnDamaged`의 `IsDestroyed` 조기 종료가 해제됨. 동시에 `OnDeadEvent` 핸들러를 `HandleBossDeath`로 추가 구독 (P3 진짜 사망용).
 - **모델 스왑**: `_defaultShip.SetActive(false)` + `_ghostShip.SetActive(true)`. 인스펙터에서 두 자식 GameObject를 wiring.
-- **근접 채널링**: `ProximityChannelAction`이 매 0.5s `Physics.OverlapSphereNonAlloc(transform.position, 12m, ...)` 폴링 → 자기 페이즈가 아니면 즉시 `Status.Success`로 종료(페이즈 가드).
+- **근접 채널링**: `ProximityChannelAction`이 매 0.7s `Physics.OverlapSphereNonAlloc(transform.position, 40m, ...)` 폴링 → 자기 페이즈가 아니면 즉시 `Status.Success`로 종료(페이즈 가드).
 - **공포 효과** (`HorrorFXController`)
     - URP Volume(Lens Distortion + Chromatic Aberration + Vignette 등 사용자 wiring) weight 0→1 lerp (2s)
     - `CinemachineBasicMultiChannelPerlin` amplitude 0.8 / frequency 1.0

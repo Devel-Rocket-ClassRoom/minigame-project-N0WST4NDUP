@@ -88,24 +88,27 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 
 ## 2. 향후 추가 영역 & 추가 절차
 
-현재 확정된 영역은 §3.1(선박 이동)뿐이다. 나머지 영역은 GDD에서 대부분 `❓` 상태이며,
-아래 표의 마일스톤에 도달할 때 §2.2 절차에 따라 §3에 블록으로 추가된다.
+v0.3.0 기준 §3에 다수 영역이 `구현 기본값`(다수는 인스펙터 튜닝값)으로 등재돼 있다. 아직 플레이테스트로
+검증되지 않았거나 미등재인 항목만 아래 표·본문에서 `미확정(❓)`로 표기한다.
 
-### 2.1 추가 예정 영역
+### 2.1 영역별 등재 현황
 
 | 영역 | GDD 참조 | 확정 마일스톤 | 현재 상태 |
 |---|---|---|---|
-| 자동 사격 (타입별 발사 규칙·사거리) | §5.2 | W1 | **부분 등재 (§3.6)** — 주포(캐넌) 1차 구현. 부포·어뢰 등 타 타입은 여전히 `미확정(❓)` |
-| 적 스폰·일반 몹 스탯 (HP/데미지/EXP/등장률) | §5.3.1 | 플레이테스트 | **부분 등재 (§3.2~3.5)** — 일반 몹 3종 `구현 기본값`. EXP·등장률·스폰 곡선은 여전히 `미확정(❓)` |
-| **부하 테스트 임계** (동시 적/투사체/드롭/VFX @60fps) | §5.3.2 | W1 (P0) | 미확정(❓) — W1 종료 전 도출 |
-| EXP / 레벨업 곡선 | §5.4 | W1 | **부분 등재 (§3.7)** — `PlayerXP` 선형 곡선 `구현 기본값`. 플레이테스트로 곡선 형태(선형 vs 지수) 재검토 필요. |
-| EXP 드롭·자석·젬 이동 | §5.4 | W1 | **부분 등재 (§3.8)** — 자석 반경 5m, 젬 이동 10m/s `구현 기본값`. 드롭당 EXP는 `XPDropper` 인스펙터 (현재 기본 1). |
-| ShipStats / Modifier 시스템 | §5.4 / §6.1 | — | **신규 등재 (§3.9)** — 스탯 정의·계산식. 시스템 자체는 `구현 완성`, 풀에 들어갈 모디파이어 값은 플레이테스트 미확정 |
-| 강화 카드 풀 (3택 레벨업) | §5.4 | W1~W2 | **부분 등재 (§3.10)** — 카드 4종 SO 작성, 풀에 스탯 모디파이어 3종만 연결. 컴포넌트 카드(Cannon/Double/Triple)는 SO 존재하나 풀 미연결. |
-| 네임드 (드롭 타이머·흡수 우선순위·leash 반경) | §5.5 | W1 / 플레이테스트 | 미확정(❓) |
-| 보스 (트리거·캐치업 속도·패턴 단계) | §5.6 | 플레이테스트 / W2 | **부분 등재 (§3.11)** — Pirate Lord 1체의 HP·페이즈 임계·decay·P1/P2 사격 패턴 2종·P3 채널링+FX `구현 기본값`. P2 콤보(Whirlpool/Ramming)는 **주말 후속**, 보스 등장 트리거 X분/Y킬은 네임드 시스템 미구현으로 시간 단일 조건만. |
-| 컴포넌트 슬롯 (카테고리·개수·Lv 상한·레벨업 효과) | §6.1 | W1 / W2 | 미확정(❓) — Main/Sub/Rear 골격만 구현. 카테고리 확정/슬롯 Lv 상한 미정. |
-| 피해 / 사망 (i-frame 무적시간) | §5.7 | W1 | 미확정(❓) |
+| 자동 사격 (주포 발사 규칙·사거리) | §5.2 | W1 | **등재 (§3.6, §3.12)** — Main 캐넌·머신건 2종 + 데코레이터. 데미지/타게팅 일부 `미확정(❓)` |
+| 부포·후방 패시브 (AutoRepair/Propeller/Rudder) | §5.2 | — | **신규 등재 (§3.13)** — 레벨식 `구현 기본값` |
+| 후방 기뢰 (MineDropper) | §5.2 | — | **신규 등재 (§3.14)** |
+| 적 스폰·일반 몹 스탯 (HP/데미지/이동/감지) | §5.3.1 | 플레이테스트 | **등재 (§3.2~3.5, §3.16)** — 일반 몹 3종(잠수함 기뢰 포함) + 스포너 씬값 `구현 기본값`. EXP·등장률 일부 `미확정(❓)` |
+| **부하 테스트 임계** (동시 적/투사체/드롭/VFX @60fps) | §5.3.2 | W1 (P0) | 미확정(❓) — CommonSpawner `_maxAlive 200`(§3.16)이 검증 대상 |
+| EXP / 레벨업 곡선 | §5.4 | W1 | **등재 (§3.7)** — `PlayerXP` 선형 곡선 `구현 기본값`. 곡선 형태 재검토 필요 |
+| EXP 드롭·자석·젬 이동 | §5.4 | W1 | **등재 (§3.8)** — 자석 반경 10m(인스펙터), 젬 10m/s `구현 기본값` |
+| ShipStats / Modifier 시스템 | §5.4 / §6.1 | — | **등재 (§3.9)** — 시스템 `구현 완성` |
+| 강화 카드 풀 (3택 레벨업) | §5.4 | W1~W2 | **등재 (§3.10)** — 스탯 8종 + 컴포넌트 8종 **전부 풀 연결**. 누적 상한 `미확정(❓)` |
+| 네임드 + 드롭 경쟁 (타이머·흡수·leash) | §5.5 | 플레이테스트 | **신규 등재 (§3.15)** — 구현 완료. 임시 AI·종 1종·흡수 의지는 v1.0/`미확정(❓)` |
+| 미니맵 레이더 | §6.2 | W1 | **신규 등재 (§3.17)** — 프로토타입 `구현 기본값` |
+| 보스 (트리거·캐치업·패턴) | §5.6 | 플레이테스트 / W2 | **등재 (§3.11)** — Pirate Lord 1체 HP·페이즈·decay·패턴 `구현 기본값`(인스펙터 재확인 반영). P2 콤보(Whirlpool/Ramming) **주말 후속**, 트리거 시간 단일(네임드 처치 수 미통합) |
+| 컴포넌트 슬롯 (카테고리·Lv 상한) | §6.1 | W1 / W2 | **등재 (§3.6, §3.12~3.14)** — Main/Sub/Rear 각 1슬롯 + 어태처블 레벨식(Lv 상한 3) |
+| 피해 / 사망 (i-frame 무적시간) | §5.7 | W1 | **부분** — 적별 `InvincibleTime`(§3.3~3.5) 등재. 플레이어 i-frame 값 `미확정(❓)` |
 
 > **부하 테스트 임계**(§5.3.2)는 스폰 매니저 상한·풀 사이즈의 기준이 되는 P0 항목이다. 우선 확정한다.
 
@@ -125,8 +128,8 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 
 ### 3.0.1 인플레이 카메라 (`CinemachineCamera` + `CinemachineFollow`)
 
-소스: [Assets/Scenes/MovementTest.unity](../Assets/Scenes/MovementTest.unity) `InPlay Camera` 게임오브젝트
-(Cinemachine 컴포넌트 직배치). Main Camera에는 `CinemachineBrain` 부착.
+소스: [Assets/Scenes/InGame.unity](../Assets/Scenes/InGame.unity) `InPlay Camera` 게임오브젝트
+(Cinemachine 컴포넌트 직배치). Main Camera에는 `CinemachineBrain` 부착. (v0.2.0의 `MovementTest.unity`에서 이전.)
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
@@ -143,8 +146,9 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 
 ### 3.1 선박 이동 (`ShipMovementData`)
 
-소스: [Assets/Scripts/Data/Ship/ShipMovementData.cs](../Assets/Scripts/Data/Ship/ShipMovementData.cs),
-에셋 `Assets/ScriptableObjects/DefaultShip.asset`.
+소스: `ShipMovementData`,
+에셋 [DefaultShip_Movement.asset](../Assets/ScriptableObjects/Movement/DefaultShip/DefaultShip_Movement.asset)
+(플레이어·네임드 공용).
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
@@ -163,22 +167,22 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 ### 3.2 일반 몹 공통 감지·이동 (`CommonEnemyBase`)
 
 소스: [Assets/Scripts/Enemies/Common/CommonEnemyBase.cs](../Assets/Scripts/Enemies/Common/CommonEnemyBase.cs).
-`[SerializeField]` 필드라 프리팹/인스턴스마다 인스펙터에서 오버라이드 가능. 아래는 **클래스 기본값**이며,
-실제 적용값은 각 적 프리팹에서 인스펙터로 확인한다.
+`[SerializeField]` 필드라 적 프리팹마다 인스펙터에서 오버라이드된다. **실제 적용값은 프리팹 인스펙터 값**(아래 표)이며,
+클래스 기본값(`_detectRange 10 / _detectInterval 2.5 / _moveSpeed 6`)은 출발점일 뿐 실제와 다르다.
 
-| 수치 | 값 | 단위 | 설명 |
-|---|---|---|---|
-| `_shipLayerMask` | (인스펙터 지정) | LayerMask | 감지 대상 — 플레이어 함선 레이어 |
-| `_detectRange` | 10 | m | 감지 반경 (OverlapSphere) |
-| `_detectInterval` | 2.5 | s | 감지 갱신 주기 (스로틀) |
-| `_moveSpeed` | 6 | m/s | 이동 속도 |
-| `k_DetectBufferSize` | 8 | — | `OverlapSphereNonAlloc` 결과 버퍼 크기 (`const`, 풀링 시에도 GC-free) |
+| 적 (프리팹) | `_moveSpeed` | `_detectRange` | `_detectInterval` | 비고 |
+|---|---|---|---|---|
+| 나룻배 `SailBoat.prefab` | 3 | 20 | 3 | — |
+| 소형 함선 `GunBoat.prefab` | 3 | 17 | 2 | + `_idlingInterval 3`, `_patrolPointRadius 20`, 패트롤 포인트 8개(`k_patrolPointRadius` const 배열) |
+| 잠수함 `Submarine.prefab` | 2 | 13 | 2.5 | 잠수 중 `_submergedSpeedMult 1.7`배 가속 |
 
-- **근거**: §0.2 "1런 10분"과 §0.3 "다층 루프의 30초 리듬"을 만족하기 위한 출발점.
-  감지 반경 10m는 카메라 가시 영역(`FarClipPlane` 70m, §3.0.1)보다 작아 "적이 시야 안에서 행동을 시작하는"
-  체감 확보. 이동 속도 6m/s는 플레이어 `MaxSpeed` 10m/s(§3.1)보다 느려 도주 여지를 남기되 압박은 유지.
-  감지 간격 2.5s는 매 프레임 `Physics.OverlapSphere` 호출을 피해 §5.3.2 부하 테스트 임계 부담을 줄인다.
-- **상태**: `구현 기본값` — W1 부하 테스트 + 플레이테스트 후 적별 오버라이드 확정 예정.
+(`k_DetectBufferSize 8` = `OverlapSphereNonAlloc` 결과 버퍼, `const`, 풀링 시에도 GC-free.)
+
+- **근거**: §0.2 "1런 10분"과 §0.3 "다층 루프의 30초 리듬" 출발점. 세 적 모두 플레이어 `MaxSpeed 10`(§3.1)보다
+  느린 2~3 m/s라 도주 여지를 남기되, 감지 반경(13~20m)을 이동속도보다 크게 잡아 "시야 안에서 다가오는 위협"을
+  만든다. 잠수함만 가장 느리되(2) 잠수 시 1.7배 가속해 출수 타이밍 압박을 준다. 감지 간격 2~3s는 매 프레임
+  `Physics.OverlapSphere` 호출을 피해 §5.3.2 부하 부담을 줄인다.
+- **상태**: `구현 기본값` — 인스펙터 튜닝 반영값. W1 부하/플레이테스트 후 `확정` 승격 예정.
 
 ### 3.3 일반 몹 — 나룻배 (`SailBoat` / `SailBoat_Data`)
 
@@ -204,62 +208,68 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 
 소스: [Assets/Scripts/Enemies/Common/GunBoat/](../Assets/Scripts/Enemies/Common/GunBoat/) 일괄,
 에셋 [GunBoat_Data.asset](../Assets/ScriptableObjects/Ship/Common/GunBoat_Data.asset),
-[CombatData.asset](../Assets/ScriptableObjects/Combat/CombatData.asset).
-**GDD §5.3.1 #2** 매핑. FSM 4상태: `Idle → Patrol → Chase → Attack`.
+[GunBoatData.asset](../Assets/ScriptableObjects/Combat/GunBoatData.asset) (전투 `CombatData`).
+**GDD §5.3.1 #2** 매핑. FSM 4상태: `Idle → Patrol → Chase → Attack`. 이동·감지값은 §3.2 표.
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
-| `Health` | 15 | HP | 나룻배보다 약간 단단 |
+| `Health` (`GunBoat_Data`) | 15 | HP | 나룻배보다 약간 단단 |
 | `InvincibleTime` | 1 | s | 피격 i-frame |
 | `_idlingInterval` | 3 | s | Idle 대기 시간 — 끝나면 Patrol로 |
-| `_patrolPointCount` | 7 | 개 | 스폰 위치 주변 패트롤 포인트 수 |
-| `_patrolPointRadius` | 5 | m | 패트롤 포인트 분포 반경 (insideUnitCircle) |
-| `CombatData.Damage` | 10 | HP | 즉발 데미지 |
-| `CombatData.MinRange` | 1 | m | (GunBoat 미사용) — 캐넌 랜덤 발사 거리 하한용 필드. 클래스 기본값. |
-| `CombatData.MaxRange` | 10 | m | Chase→Attack 전이 거리. **`_detectRange`(10) 이하여야 함**. 클래스 기본값. |
-| `CombatData.Cooldown` | 1 | s | Attack 재발사 쿨다운 |
-| `CombatData.IsAreaAttack` | false | — | 광역 공격 여부 |
-| `CombatData.AreaRadius` | 1 | m | 광역 공격 반경 (현재 사용 안 함) |
+| 패트롤 포인트 수 | 8 | 개 | `k_patrolPointRadius` const 배열 크기 |
+| `_patrolPointRadius` (프리팹) | 20 | m | 패트롤 포인트 분포 반경 (insideUnitCircle) |
+| `GunBoatData.Damage` | 7 | HP | 즉발 데미지 (`OnFire`에서 `IDamageable.OnDamaged`) |
+| `GunBoatData.MinRange` | 1 | m | (GunBoat 미사용) |
+| `GunBoatData.MaxRange` | 7 | m | Chase→Attack 전이 거리. `_detectRange`(17) 이하 |
+| `GunBoatData.Cooldown` | 3 | s | Attack 재발사 쿨다운 |
+| `GunBoatData.IsAreaAttack` | false | — | 광역 공격 여부 |
+| `GunBoatData.AreaRadius` | 1 | m | 광역 공격 반경 (사용 안 함) |
 
 - **근거**: GDD §5.3.1 #2 "사거리 유지가 회피의 핵심, 거리 의사결정 유도".
-  §0.2 "궤적 예측" — MaxRange 10m와 MoveSpeed 6m/s 조합으로 플레이어가 "다가오는 사거리"를 예측하고
-  피할 수 있는 출발점. 패트롤은 GDD 표 본문에 없는 코드 측 추가로, "정찰 중인 적" 느낌을 주어
-  스폰 직후 어색함을 줄이는 보조 행동.
-- **상태**: `구현 기본값`.
-- **⚠️ 자산 마이그레이션 잔재**: `CombatData.asset` YAML에는 구 필드 `Range: 9`가 남아있으나, 코드
-  필드명이 `MinRange`/`MaxRange`로 분리되며(`[FormerlySerializedAs]` 미부여) 해당 값은 직렬화에서
-  끊겨 클래스 기본값(`MaxRange = 10`)이 적용된다. 즉 Chase→Attack 전이 거리는 사실상 1m 증가(9 → 10).
-  W1 부하/플레이테스트 시 자산을 재저장하면 표기/실제가 다시 일치할 예정.
-- **✅ GDD 갱신 반영**: 일반 몹은 Rigidbody 미사용·`transform` 직접 조작 방식으로 통일됨에 따라 물리 기반
-  자연 감속이 불가능하다. GDD §5.3.1 #2 본문도 "추격 → 사거리 진입 시 **정지** → 공격"으로 의식적으로
-  갱신되어 코드와 정렬됨 (CLAUDE.md §3 SSoT 원칙).
+  §0.2 "궤적 예측" — MaxRange 7m와 MoveSpeed 3m/s(§3.2) 조합으로 플레이어가 "다가오는 사거리"를 예측하고
+  피할 수 있다. Cooldown 3s는 즉발 데미지 7이 연사로 누적돼 과해지지 않게 텀을 둔 값. 패트롤은 GDD 표 본문에
+  없는 코드 측 추가로, "정찰 중인 적" 느낌을 주어 스폰 직후 어색함을 줄이는 보조 행동.
+- **상태**: `구현 기본값` (인스펙터 튜닝 반영).
+- **✅ 마이그레이션 완료**: `CombatData`는 구 단일 `Range` 필드를 `MinRange`/`MaxRange`로 분리 완료 —
+  클래스·전체 에셋에 구 `Range` 잔재 없음. (이전 빌드의 `Range 9` 잔재 문제 해소.)
+- **✅ GDD 정렬**: 일반 몹은 Rigidbody 미사용·`transform` 직접 조작이라 물리 기반 자연 감속이 없다.
+  GDD §5.3.1 #2 본문도 "추격 → 사거리 진입 시 **정지** → 공격"으로 정렬됨 (CLAUDE.md §3 SSoT).
 
-### 3.5 일반 몹 — 잠수함 (`Submarine` / `Submarine_Data`) — 부분 구현
+### 3.5 일반 몹 — 잠수함 (`Submarine` / `Submarine_Data` / `Mine`)
 
 소스: [Assets/Scripts/Enemies/Common/Submarine/](../Assets/Scripts/Enemies/Common/Submarine/) 일괄,
+[Mine.cs](../Assets/Scripts/Combat/Mine/Mine.cs),
 에셋 [Submarine_Data.asset](../Assets/ScriptableObjects/Ship/Common/Submarine_Data.asset).
-**GDD §5.3.1 #3** 매핑. FSM 4상태: `Idle → Diving → Flee → Surfacing`.
+**GDD §5.3.1 #3** 매핑. FSM 5상태: `Idle → Diving → SubmergedFlee → Surfacing → SurfacedFlee`. 이동·감지값은 §3.2.
 
-| 수치 | 값 | 단위 | 설명 |
+| 수치 | 값 (출처) | 단위 | 설명 |
 |---|---|---|---|
-| `Health` | 50 | HP | 다른 일반 몹 대비 가장 단단 (잠수 무적 시간 고려) |
+| `Health` (`Submarine_Data`) | 50 | HP | 일반 몹 중 가장 단단 — 잠수 무적 윈도우 보정 |
 | `InvincibleTime` | 1 | s | 피격 i-frame (수면 노출 시) |
-| `_divingOffset` | (인스펙터) | m | 자식 모델이 잠수 시 내려갈 오프셋 (기본 `Vector3.down`) |
-| `_divingDuration` | 1 | s | 잠수/부상 보간 시간 (smoothstep ease-in-out) |
-| 공격 데미지 | — | — | **🚧 미구현** (`SetMine()` 메서드만 존재, 호출처 없음) |
+| `_submergedSpeedMult` (프리팹) | 1.7 | × | 잠수 중 이동 속도 배율 (코드 기본 1.3 → 인스펙터 1.7) |
+| `_surfacedHoldDuration` | 2 | s | 출수 후 수면 체류(공격 윈도우) 시간 |
+| `_submergedHoldDuration` | 3 | s | 잠수 도주 지속 시간 |
+| `_transitionDuration` | 1 | s | 잠수/부상 보간 시간 (smoothstep) |
+| `_divingOffset` | (0, −1, 0) | m | 잠수 시 자식 모델 하강 오프셋 |
 
-- **근거**: GDD §5.3.1 #3 "잠수 → 이동 → 출수 → 1회 공격 → 재잠수". HP 50은 잠수 중 콜라이더 비활성(무적)을
-  감안한 보정 — 수면 노출 시간이 짧기에 그 짧은 윈도우에 처치 가능한 수준.
-- **상태**: `구현 기본값` (HP/보간) · `🚧 부분 구현` (공격 사이클 전체 미구현).
-- **🚧 디자인 미확정 — 추후 구현 예정**:
-  - **지뢰(Mine) 공격 사이클**: 지뢰 프리팹/디자인이 아직 확정되지 않아 의식적으로 보류 중. 잠수함 밸런싱
-    (잠수 주기·부상 주기·지뢰 설치 타이밍 등)이 결정된 시점에 `SetMine()` 트리거와 함께 일괄 구현 예정.
-    현재는 `Flee` 상태에서 타겟 잃을 때까지 잠수만 하는 골격 상태로, GDD §5.3.1 #3의 "잠수 → 이동 → 출수
-    → 1회 공격 → 재잠수" 사이클은 아직 충족하지 않는다.
-  - **잠수 중 시인성 보조**: GDD §5.3.1 #3 비고 + §11 리스크 — 그림자/물결/미니맵 마커 중 1개 W1에
-    프로토 후 채택 필요. 현재 잠수 시 시각 단서 없음.
-  - **잠수 중 무적**: 잠수 진입 시 `SetCollider(false)` 호출은 되어 있으나, 프리팹의 `_collider` 인스펙터
-    참조 연결 검증 필요.
+**기뢰(`Mine`) — 출수 시 살포** (`SubmarineSurfacedFleeState.OnEnter` → `Submarine.LayMine()`, 출수마다 1발):
+
+| 수치 (프리팹) | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `_mineDamage` | 10 | HP | 폭발 시 반경 내 모든 ShipBody에 적용 (스플래시) |
+| `_mineRadius` | 1 | m | 무장 후 `CheckSphere` 접촉 감지 + 폭발 반경 (코드 기본 2 → 인스펙터 1) |
+| `_mineLifetime` | 10 | s | 미접촉 시 자연 소멸(`WaterSplash`) (코드 기본 20 → 인스펙터 10) |
+| `_mineArmDelay` | 1 | s | 설치 후 무장까지 지연 (이 시간 전엔 폭발 안 함) |
+
+- **근거**: GDD §5.3.1 #3 "잠수 → 이동 → 출수 → 공격 → 재잠수" 사이클 충족. HP 50은 잠수 중 콜라이더
+  비활성(무적)을 감안한 보정 — 출수 윈도우(`_surfacedHoldDuration 2s`)가 짧아 그 사이에 처치해야 한다.
+  기뢰는 GDD §5.3 "정적 트랩 예외" — 풀링(`CombatPool`) + 수명 10s + 무장 지연 1s로 동시 수를 구조적으로
+  제어해 60fps 방어(§5.3.2). `_mineRadius 1`·수명 10s로 인스펙터 튜닝되어 초기값(반경 2·수명 20)보다
+  봉쇄 강도를 낮춤 — §0.2 "궤적 예측"이 가혹해지지 않게.
+- **상태**: `구현 기본값` (인스펙터 튜닝 반영). 기뢰 공격 사이클 **구현 완료**.
+- **🚧 추후**:
+  - **잠수 중 시인성 보조**: GDD §5.3.1 #3 비고 + §11 — 그림자/물결/미니맵 마커 중 채택 필요. 현재 잠수 시 시각 단서 미흡.
+  - **기뢰 아군/적 시각 구분**: 플레이어 `MineDropper` 기뢰(§3.14)와 색/아이콘 차별화 미적용 (GDD §11).
 
 ### 3.6 주포 — 캐넌 (`CannonBase` 계열 / `CannonData` / `CannonBall`)
 
@@ -268,32 +278,35 @@ GDD 마일스톤(§10)과 1:1로 대응한다.
 에셋 [CannonData.asset](../Assets/ScriptableObjects/Combat/CannonData.asset).
 **GDD §5.2 자동 사격 / §6.1 슬롯 & 컴포넌트** 매핑 — 주포 슬롯 1차 구현.
 
-#### CannonData (SO)
+#### CannonData (SO) — `CannonData.asset`
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
-| `Damage` | 50 | HP | 피격 대상 데미지 (적용 로직은 충돌 처리 미구현) |
-| `MinRange` | 1 | m | 랜덤 발사 거리 하한. 클래스 기본값 (자산 YAML은 구 `Range`만 잔존). |
-| `MaxRange` | 10 | m | 랜덤 발사 거리 상한. 클래스 기본값. |
-| `Cooldown` | 2 | s | 발사 간격 |
-| `IsAreaAttack` | true | — | 광역 공격 여부 (적용 로직 미구현) |
-| `AreaRadius` | 1 | m | 광역 반경 (사용 안 함) |
+| `Damage` | 50 | HP | `CannonBall` 폭발 시 `AreaRadius` 내 타겟 레이어에 적용 |
+| `MinRange` | 1 | m | 랜덤 발사 거리 하한 |
+| `MaxRange` | 10 | m | 랜덤 발사 거리 상한 (`Effective(Range, MaxRange)`로 스탯 보정) |
+| `Cooldown` | 2 | s | 발사 간격 — `_cooldownTimer = Cooldown / Effective(FireRate)` (**하드코딩 없음**) |
+| `IsAreaAttack` | true | — | 광역 공격 여부 |
+| `AreaRadius` | 1.6 | m | 광역 폭발 반경 |
 
-#### 캐넌 본체 — 발사 파라미터
+#### 캐넌 본체 — 발사 파라미터 (`CannonAttachable`)
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
-| `Lv1_Cannon.Upward` | 5 | — | 수직 임펄스 크기 (`const`, Lv1 전용). 수평 = 랜덤 단위벡터 × Range, 합성하여 포물선 궤적. |
-| 발사 방향 | XZ 평면 랜덤 360° | — | `Random.Range(0, 2π)`로 수평 방향 결정 (타게팅 미구현, 무지향). |
+| `_arcHeight` | 5 | m | 베지어 포물선 호 높이 (SerializeField) |
+| `_flightDuration` | 0.7 | s | 발사~착탄 비행 시간 (SerializeField) |
+| 발사 위치 | yaw 랜덤 360° × `Random(MinRange, MaxRange)` | — | 거리·방향 모두 랜덤 (타게팅 무지향) |
+| `BallScale` (레벨별) | Lv1 1.0 / Lv2 1.2 / Lv3 1.4 | × | **시각 크기만** — 전투 수치 무관 |
 
-#### 업그레이드 사슬 (데코레이터 패턴)
+#### 업그레이드 사슬 (클래스 체인 + 데코레이터)
 
 | 단계 | 클래스 | 역할 |
 |---|---|---|
-| 1 | `Lv1_Cannon` | 단일 발사 (수직 5 임펄스) |
-| 2 | `Lv2_Cannon` | 단일 발사, Lv1 대체 (스탯 강화 자리표) |
-| 3 | `DoubleCannon` | 데코레이터 — 내부 캐넌의 `FireProcess`를 1 Tick에 2회 실행 |
-| 4 | `TripleCannon` | 데코레이터 — 1 Tick에 3회 실행 |
+| Lv1 | `Lv1_Cannon` | 단일 발사 (BallScale 1.0, CanUpgrade) |
+| Lv2 | `Lv2_Cannon` | 단일 발사 (BallScale 1.2, CanUpgrade) |
+| Lv3 | `Lv3_Cannon` | 단일 발사 (BallScale 1.4, **CanUpgrade=false** 최종) |
+| ×2 | `DoubleCannon` | 데코레이터 — 내부 캐넌의 `FireProcess`를 1 Tick에 2회 실행 |
+| ×3 | `TripleCannon` | 데코레이터 — 1 Tick에 3회 실행 |
 
 **데코레이터 cooldown 위임 규약 (중요)**: `DoubleCannon`/`TripleCannon`은 `CannonBase`를 상속하지만
 자기 자신의 `_cooldownTimer`를 **절대 세팅하지 않는다**. 대신 `CanFire`와 `TickCooldown`을 `override`해
@@ -303,31 +316,27 @@ inner `_cannon`으로 위임 — 가장 안쪽 leaf cannon(Lv1/Lv2)의 타이머
 버그가 있었으며, [CannonBase.cs:9, :60](../Assets/Scripts/Components/MainSlot/Cannon/CannonBase.cs)의
 `virtual` 승격 + 두 데코레이터의 위임 override로 수정됨.
 
-업그레이드 트리거는 현재 두 경로:
-- **레벨업 카드** (`UpgradeUI` → `UpgradePool.Pick`) — 정상 경로. 단, 현재 `UpgradePool.asset`에는 캐넌 계열
-  SO(`Cannon.asset / MainDoubleWrapper.asset / MainTripleWrapper.asset`)가 **풀에 미연결**이라 카드로 등장하지 않음.
-- 테스트용 키 입력은 `CannonAttachable`에서 제거됨 (이전 `Alpha1` 핫키 → 카드 시스템으로 일원화).
+업그레이드 트리거: **레벨업 카드** (`UpgradeUI` → `UpgradePool.Pick`). `UpgradePool.asset`에 캐넌 계열
+SO(`Cannon` / `MainDoubleWrapper` / `MainTripleWrapper`)가 **모두 연결됨**(§3.10) — 카드로 등장.
+테스트용 키 입력은 제거되어 카드 시스템으로 일원화.
 
 #### CannonBall (포탄, `CombatItemBase` 풀링 대상)
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
-| `SplashDuration` | 3.5 | s | 수면 닿은 뒤 splash 표시 유지 시간. `const`. |
-| 수면 충돌 처리 | `y < 0` 시 `isKinematic = true` + y → 0 스냅 | — | 가라앉음 방지. Splash 종료 시 `ReturnToPool()`. |
+| 궤적 | 2차 베지어 (`ArcHeight` 정점, `_duration = max(0.01, FlightDuration)`) | — | `_p0/_p1/_p2` 보간 |
+| 착탄 | 베지어 t≥1 → `WaterSplash` / 타겟 레이어 트리거 진입 → `Explosion` | — | 둘 다 `AreaRadius` 스플래시 데미지 |
+| `k_hitBufferSize` | 32 | — | `OverlapSphere` 충돌 버퍼 (`const`) |
 
-- **근거**: GDD §5.2 "슬롯에 장착된 컴포넌트가 각자의 쿨다운/타게팅 규칙으로 자동 발사" 충족을 위한
-  첫 슬롯 구현. §0.3 "자동 사격(Vampire Survivors)" 결합의 출발점. Damage 50은 GunBoat HP 15(§3.4)·
-  나룻배 HP 10(§3.3) 기준 1~2발 처치 — §0.3 30초 루프의 즉시 체감 확보. Cooldown 2s는 발사가 시각적으로
-  드물어 보이지 않는 출발점이며 더블/트리플 데코레이터로 체감 DPS를 키우는 설계 여지를 남긴다.
-  데미지·궤적·랜덤 방향 모두 **타게팅 미구현**으로, 적 명중을 전제로 한 밸런싱은 W1 부하/플레이테스트 후
-  본격 등재한다.
-- **상태**: `구현 기본값` — W1 게이트에서 타게팅·데미지 적용 로직 추가 후 재평가.
-- **🚧 미구현 / 추후**:
-  - **타게팅**: 현재 무지향(랜덤). GDD §5.2 "타입별 발사 규칙"의 주포=전방 규약은 미적용.
-  - **데미지 적용**: `Damage 50`은 SO에 박혀 있으나 충돌 시 `IDamageable` 호출 경로 없음.
-  - **광역 공격**: `IsAreaAttack=true`이지만 실제 splash 반경 데미지 처리 없음.
-  - **수명/맥스 라이프**: 수평 발사로 수면을 못 만나면 영구 부유 가능. 타이머 컷오프 미구현.
-  - **`CannonData.asset` 마이그레이션**: `Range: 10` 잔존 → 인스펙터 재저장 시 `MinRange`/`MaxRange`로 YAML 갱신 예정.
+- **근거**: GDD §5.2 "슬롯 컴포넌트가 각자 쿨다운/타게팅 규칙으로 자동 발사" 충족의 첫 슬롯 구현.
+  §0.3 "자동 사격(Vampire Survivors)" 결합 출발점. Damage 50은 GunBoat HP 15(§3.4)·나룻배 HP 10(§3.3)
+  기준 1~2발 처치 — §0.3 30초 루프 즉시 체감. Cooldown 2s는 더블/트리플 데코레이터로 체감 DPS를 키우는
+  여지를 남긴 출발점. 베지어 착탄 시 `AreaRadius 1.6` 스플래시로 데미지가 적용되며, 무지향 랜덤 살포라
+  "면으로 맞히는" 주포 설계.
+- **상태**: `구현 기본값` — 데미지·광역·착탄 구현 완료. W1 부하/플레이테스트로 타게팅 방식·수치 재평가.
+- **🚧 추후**:
+  - **타게팅**: 현재 무지향(yaw 랜덤). GDD §5.2 "주포=전방" 규약은 미적용 — 랜덤 살포 유지 여부 플레이테스트 판단.
+  - **데미지/광역 적용**: 구현됨(`Explosion` → `AreaRadius` 스플래시). 초기 빌드의 미적용 이슈 해소.
 
 ### 3.7 EXP 곡선 (`PlayerXP`)
 
@@ -361,21 +370,21 @@ inner `_cannon`으로 위임 — 가장 안쪽 leaf cannon(Lv1/Lv2)의 타이머
 |---|---|---|---|
 | `XPDropper._xp` | 1 | XP | 적 사망 시 젬 1개에 부여되는 XP량. 인스펙터 오버라이드. |
 | `XPDropper._active` | (인스펙터) | bool | false면 드롭 무시. 적별로 ON/OFF 가능. |
-| `XPMagnet._radius` | 5 | m | 자석 흡인 반경. `SphereCollider isTrigger=true`로 진입 감지 → `OnPick(target)` 호출. |
+| `XPMagnet._radius` (플레이어/네임드 프리팹) | 10 | m | 자석 흡인 반경 (코드 기본 5 → 인스펙터 10). `SphereCollider isTrigger=true` 진입 감지 → `OnPick(target)`. |
 | `XPGem._moveSpeed` | 10 | m/s | 흡인 시작 후 타겟을 향한 직선 이동 속도. |
 | 흡인 동작 | 직선 추적 (관성·곡선 없음) | — | `dir = (target - pos).normalized; pos += dir × speed × dt` |
 | 흡수 조건 | 트리거 충돌 + `gameObject.layer == _targetLayer` | — | 자석 진입 시 캐싱한 레이어와 일치해야 `PlayerXP.AddXp` 호출 후 풀로 반환 |
 
-- **근거**: §0.3 "30초 루프 즉시 체감" — 자석 반경 5m는 플레이어 시야(카메라 가시 영역 §3.0.1) 안에서
+- **근거**: §0.3 "30초 루프 즉시 체감" — 자석 반경 10m는 플레이어 시야(카메라 가시 영역 §3.0.1) 안에서
   처치 직후 흡인이 시작되는 거리. 젬 속도 10m/s는 플레이어 `MaxSpeed`(§3.1)와 동일해 정지 상태일 때
-  ≈0.5초 안에 도달해 도파민 루프 유지, 이동 중에는 따라잡는 텐션도 발생.
+  ≈1초 안에 도달해 도파민 루프 유지, 이동 중에는 따라잡는 텐션도 발생.
   드롭당 1 XP는 §3.7 곡선과 직결 — Lv2 진입에 10마리 처치 필요.
-- **상태**: `구현 기본값` — W1 부하/플레이테스트로 자석 반경·젬 속도 튜닝.
+- **상태**: `구현 기본값` (인스펙터 튜닝 반영) — W1 부하/플레이테스트로 자석 반경·젬 속도 재튜닝.
 - **⚠️ 코드 품질 노트**: `XPMagenet.cs` 파일/클래스명에 typo (`Magenet` → 정확히는 `Magnet`).
   리네이밍은 별도 chore 이슈로 분리 권장.
-- **🚧 미구현 / 추후**:
-  - **드롭 타이머·소멸 연출**: EXP 젬은 시간 만료 없이 영구 상주 (GDD §5.5 네임드 드롭과 달리 일반 EXP 젬은 타이머 불필요로 보임 — 디자인 확정 필요).
-  - **드롭 경쟁** (GDD §2·§5.5): 네임드 시스템 자체가 미구현이라 적의 EXP 흡수 흐름 없음.
+- **🚧 추후**:
+  - **드롭 타이머·소멸 연출**: EXP 젬은 시간 만료 없이 영구 상주 (네임드 컴포넌트 드롭 §3.15와 달리 EXP 젬은 타이머 불필요로 보임 — 디자인 확정 필요).
+  - **EXP는 플레이어 전용**: 드롭 경쟁(GDD §2·§5.5)은 **컴포넌트 드롭**(§3.15)에만 적용 — EXP 젬은 네임드가 흡수하지 않는다.
 
 ### 3.9 ShipStats / Modifier 시스템 (`ShipStats` / `Modifier` / `StatType`)
 
@@ -432,30 +441,41 @@ UI [Assets/Scripts/UI/UpgradeCard/UpgradeUI.cs](../Assets/Scripts/UI/UpgradeCard
 | `SubEquipment` | 동일 (`SubAttachable`) | 동일 | 동일 |
 | `StatModifierUpgrade` | `true` (**무제한**) | `0` | 보유 모디파이어 배열을 `stats.AddModifier(m)` 순차 등록 |
 
-#### 풀에 등록된 카드 SO (`UpgradePool.asset`)
+#### 풀에 등록된 카드 SO (`UpgradePool.asset`) — **전부 연결됨**
 
-| 파일 | 종류 | 효과 | 표시명 / 설명 |
+**`_modifierDefinitions` (8종, `StatModifierUpgrade`)**
+
+| 파일 | Stat | Op | Value | 표시명 |
+|---|---|---|---|---|
+| `Modifier/Damage+1` | Damage | Add | +1 | Damage + 1 |
+| `Modifier/Damage+3` | Damage | Add | +3 | Damage + 3 |
+| `Modifier/Damage+5` | Damage | Add | +5 | Damage + 5 |
+| `Modifier/FireRate+10` | FireRate | PercentAdd | +0.10 | Fire Rate + 10% |
+| `Modifier/FireRate+15` | FireRate | PercentAdd | +0.15 | Fire Rate + 15% |
+| `Modifier/FireRate+20` | FireRate | PercentAdd | +0.20 | Fire Rate + 20% |
+| `Modifier/Range+3` | Range | Add | +3 | Range + 3 |
+| `Modifier/Range+5` | Range | Add | +5 | Range + 5 |
+
+**`_attachmentDefinitions` (8종, 컴포넌트 장착/진화)**
+
+| 파일 | 슬롯 / 종류 | 표시명 | 효과 |
 |---|---|---|---|
-| `Modifier/Damage+1.asset` | StatModifier | `Damage` `Add` `+1` | "Damage" / "Damage + 1" |
-| `Modifier/FireRate+30.asset` | StatModifier | `FireRate` `PercentAdd` `+0.3` (= +30%) | "Fire Rate" / "Fire Rate + 0.3" (⚠️ 표시 텍스트는 +30% 의미로 정정 권장) |
-| `Modifier/Range+5.asset` | StatModifier | `Range` `Add` `+5` | "Range" / "Range + 5" |
+| `Attachable/Cannon` | Main (MainEquipment) | Cannon | 캐넌 장착/레벨업 (§3.6) |
+| `Attachable/MachineGun` | Main (MainEquipment) | Machine Gun | 머신건 장착/레벨업 (§3.12) |
+| `Attachable/MainDoubleWrapper` | Main 데코레이터 | x2 | 주포 동시 발사/타격 ×2 |
+| `Attachable/MainTripleWrapper` | Main 데코레이터 | x3 | 주포 동시 발사/타격 ×3 |
+| `Attachable/AutoRepair` | Sub (SubEquipment) | AutoRepair | 주기 HP 회복 (§3.13) |
+| `Attachable/Propeller` | Rear (RearEquipment) | Propeller | 이동속도 +% (§3.13) |
+| `Attachable/Rudder` | Rear (RearEquipment) | Rudder | 선회속도 +% (§3.13) |
+| `Attachable/MineDropper` | Rear (RearEquipment) | MineDropper | 후방 기뢰 살포 (§3.14) |
 
-#### 작성됐으나 풀 미연결 SO
-
-| 파일 | 종류 | 비고 |
-|---|---|---|
-| `Attachable/Cannon.asset` | MainEquipment | Lv1 캐넌 신규 장착 카드. |
-| `Attachable/MainDoubleWrapper.asset` | MainEquipment | DoubleCannon 데코레이터 래핑 카드. |
-| `Attachable/MainTripleWrapper.asset` | MainEquipment | TripleCannon 데코레이터 래핑 카드. |
-
-- **근거**: §0.3 "다층 루프의 5분 의사결정" — 레벨업 3택은 뱀서식 빌드 의사결정의 핵심.
-  현재 풀은 스탯 모디파이어 3종만 활성화 — 의식적으로 컴포넌트 카드를 풀 미연결 상태로 두어
-  **W1 부하/스탯 모디파이어 단독 밸런싱**을 먼저 검증한 뒤 컴포넌트 카드를 풀에 추가할 예정.
-- **상태**: 시스템 `구현 완성`, 카드 풀 구성·값 `구현 기본값`.
-- **🚧 미구현 / 추후**:
-  - **스탯 모디파이어 누적 상한** (GDD §5.4): `IsAvailable=true`로 무제한 스택 — 카드 코멘트로 "일정 개수? false로 밸런싱" 플래그됨.
-  - **풀에 컴포넌트 카드 연결**: Cannon/Double/Triple SO를 `UpgradePool.asset` `_definitions` 배열에 추가하면 즉시 등장 가능.
-  - **드롭 접촉 시 일시정지 + 교체 UI** (GDD §6.1): 현재는 레벨업 시점에만 카드 등장. 드롭 접촉 분기 미구현.
+- **근거**: §0.3 "다층 루프의 5분 의사결정" — 레벨업 3택은 뱀서식 빌드 의사결정의 핵심. v0.2.0의 "스탯 3종만
+  연결" 단계를 넘어 **스탯 8종 + 컴포넌트 8종 전부 풀에 연결**되어 빌드 선택지가 확장됨. (다만 결과 보고서상
+  체감 다양성은 아직 부족 — 슬롯별 종수 추가는 v1.0 과제.)
+- **상태**: 시스템 `구현 완성`, 카드 풀 구성 `구현 기본값`.
+- **🚧 추후**:
+  - **스탯 모디파이어 누적 상한** (GDD §5.4): `StatModifierUpgrade.IsAvailable=true`로 무제한 스택 — 카드 코멘트로 "일정 개수? false로 밸런싱" 플래그됨.
+  - **드롭 접촉 교체 UI** (GDD §6.1): 네임드 드롭 픽업은 구현됨(`UpgradeUI.OpenComponentPickup`, §3.15). 슬롯 풀 시 현재 vs 신규 비교 UI 정교화는 추후.
 
 ### 3.11 보스 — Pirate Lord (`PirateLordData` + 4종 Pattern Config + 3종 Phase Movement)
 
@@ -528,20 +548,19 @@ v1.0 유일 보스로 1 스테이지 클리어 게이트.
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
 | `ShellCount` | 3 | 발 | 한 사이클 동시 낙하 셸 수 |
-| `Cooldown` | 8 | s | 사이클 간 대기 |
-| `TelegraphDuration` | 1.5 | s | 원형 텔레그래프 표시 시간 — 회피 윈도우 |
+| `Cooldown` | 4 | s | 사이클 간 대기 |
+| `TelegraphDuration` | 2 | s | 원형 텔레그래프 표시 시간 — 회피 윈도우 |
 | `AreaRadius` | 8 | m | 플레이어 주변 셸 위치 산포 반경 |
 | `ScatterRadius` | 3 | m | 개별 폭발 광역 반경 |
 | `Damage` | 18 | HP | 3발이라 약간 낮춤. 직격 시 18%, 중복 적중 시 큰 타격 |
 | `ArcHeight` | 20 | m | 위에서 떨어지는 시작 높이 |
 | `FlightDuration` | 0.6 | s | 텔레그래프 후 낙하 시간 — 짧게(예측 시간은 텔레그래프가 담당) |
-| `TargetLayerMask` | Player | — | 폭발 적용 대상 레이어 |
+| `TargetLayerMask` | Player (m_Bits 8 = Layer 3) | — | 폭발 적용 대상 레이어 |
 
 - **근거**: §0.2 "정지 금지, 안전지대 지속 갱신" — `AreaRadius 8m`는 플레이어 위치 중심 셸 산포라 정지하면
-  3발 중 1발이 직격할 확률 높음. `TelegraphDuration 1.5s` + `FlightDuration 0.6s`로 회피 윈도우는 충분히
-  주되 순간 반응이 아닌 사전 회피 의사결정 유도. Radial Sweep(쿨다운 7s)과 엇갈리는 Cooldown 8s로
-  두 패턴이 P1/P2 동안 교차 사이클 형성.
-- **상태**: `구현 기본값`.
+  3발 중 1발이 직격할 확률 높음. `TelegraphDuration 2s` + `FlightDuration 0.6s`로 회피 윈도우는 충분히
+  주되 순간 반응이 아닌 사전 회피 의사결정 유도. Cooldown 4s로 사이클이 자주 돌아 정지 페널티를 지속 부과.
+- **상태**: `구현 기본값` (에셋 실제값 — Cooldown 4 / Telegraph 2).
 
 #### 3.11.5 Proximity Channel (`ProximityChannelConfig`) — P3
 
@@ -550,15 +569,17 @@ v1.0 유일 보스로 1 스테이지 클리어 게이트.
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
-| `ZoneRadius` | 12 | m | 보스 본체 반경(5m) + 안전 거리(7m). 플레이어가 이 반경 안에 있으면 데미지 |
-| `DpsTickInterval` | 0.5 | s | 데미지 틱 간격 |
-| `DpsPerTick` | 8 | HP | 0.5s × 8 = DPS 16. 안에 계속 머물면 ≈6초 사망 |
-| `TargetLayerMask` | Player | — | 데미지 적용 대상 레이어 |
+| `ZoneRadius` | 40 | m | 이 반경 안에 플레이어가 있으면 DoT. 본체 콜라이더와 분리 |
+| `DpsTickInterval` | 0.7 | s | 데미지 틱 간격 |
+| `DpsPerTick` | 4 | HP | 4 / 0.7s ≈ **DPS 5.7**. 플레이어 100HP 기준 계속 머물면 ≈17초 사망 |
+| `TargetLayerMask` | Player (m_Bits 8 = Layer 3) | — | 데미지 적용 대상 레이어 |
 
-- **근거**: GDD §5.6 P3 "도망만 쳐도 승리" 사양 충족. 보스 P3 MaxSpeed 14 vs 플레이어 10 → 거리 좁혀지는
-  속도는 4m/s. ZoneRadius 12m라 ≈3초 안에 따라잡힘 — 그 동안 플레이어는 방향 전환으로 거리 유지 가능.
-  DPS 16은 안에 계속 머물면 즉사하는 수준이라 §0.2 "궤적 예측"의 위협 회피 학습 강제.
-- **상태**: `구현 기본값`.
+- **근거 / ⚠️ 검증 필요**: GDD §5.6 P3 "도망만 쳐도 승리" 사양. 보스 P3 MaxSpeed 14 vs 플레이어 10 →
+  접근 속도 4m/s. **ZoneRadius 40m는 카메라 가시(70m)의 절반 이상으로 매우 넓어** P3 내내 거리 유지를
+  강제하는 광역 압박존으로 작동한다. 다만 DPS 5.7은 즉사가 아닌 누적 압박(≈17초) 수준이라, 원 설계 의도
+  (좁은 12m 존 + 즉사급 DPS 16)와 체감이 다르다. "넓은 존 + 약한 DPS"가 의도인지 미스튜닝인지는
+  **플레이테스트로 확정** — P3 자연감소 40초(§3.11.1) 동안 "닿으면 조금씩 깎이되 도망이 정답"인 균형이 핵심.
+- **상태**: `구현 기본값` (에셋 실제값 — Zone 40 / Interval 0.7 / DpsPerTick 4). 원 설계와 차이 커 플레이테스트 우선 검증.
 
 #### 3.11.6 Horror FX (`HorrorFXConfig`) — P3
 
@@ -589,13 +610,154 @@ v1.0 유일 보스로 1 스테이지 클리어 게이트.
 
 | 수치 | 값 | 단위 | 설명 |
 |---|---|---|---|
-| `BossSpawnAfterSec` | (스테이지별, SO 인스펙터) | s | 스테이지 시작 후 보스 활성화까지 경과 시간 |
-| `_bossSpawnOffset` | (씬 인스펙터) | m | 플레이어 기준 월드 offset — 카메라 쿼터뷰 고정이라 항상 화면 위쪽에서 등장하도록 설정 |
+| `BossSpawnAfterSec` (`StageData.asset`) | 180 | s | 스테이지 시작 후 보스 활성화까지 경과 시간 |
+| `_bossSpawnOffset` | (씬 인스펙터) | m | 플레이어 기준 월드 offset — 카메라 쿼터뷰 고정이라 항상 화면 위쪽에서 등장 |
 | 보스 회전 | `LookRotation(player - spawnPos)` | — | 스폰 시 보스 forward가 플레이어를 향함 |
 
-- **근거**: GDD §5.6 본래 사양 `(경과시간 ≥ X분) AND (네임드 처치 수 ≥ Y)`에서 네임드 시스템 미구현으로
-  시간 단일 조건만 사용. v1.0 1런 10분 중 보스전 4~5분(§3.11.1)이 적정 비중이라 `BossSpawnAfterSec`은
-  300~360s 범위에서 플레이테스트 튜닝 예정.
-- **상태**: `구현 기본값` (네임드 시스템 미구현, 시간 단일 트리거).
-- **🚧 미구현 / 추후**:
-  - **네임드 처치 수 조건**: 네임드 시스템 도입 시 `StageData`에 `NamedKillsRequired` 필드 추가 예정.
+- **근거**: GDD §5.6 본래 사양 `(경과시간 ≥ X분) AND (네임드 처치 수 ≥ Y)` 중 **시간 조건만** 사용.
+  네임드 시스템은 v0.3.0에 구현됐으나(§3.15) `StageData`에 `NamedKillsRequired`가 아직 없어 트리거 통합은
+  미완. 현재 180s(3분)는 1런 10분 중 보스전 4~5분(§3.11.1) 비중에 맞춘 출발점 — 플레이테스트 튜닝 예정.
+- **상태**: `구현 기본값` (시간 단일 트리거 — 네임드 처치 수 조건 미통합).
+- **🚧 추후**:
+  - **네임드 처치 수 조건**: `StageData.cs`에 TODO 주석만 존재(`NamedKillsRequired`). 필드 추가 + `StageManager` 조건 결합 필요 — v1.0 과제.
+
+### 3.12 주포 — 머신건 (`MachineGunBase` 계열 / `MachineGunData`)
+
+소스: [Assets/Scripts/Components/MainSlot/MachineGun/](../Assets/Scripts/Components/MainSlot/MachineGun/),
+에셋 [MachineGunData.asset](../Assets/ScriptableObjects/Combat/MachineGunData.asset). **GDD §5.2 주포** 매핑 — 캐넌과 양자택일 주포.
+
+#### MachineGunData (SO)
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `Damage` | 2.3 | HP | 발당 데미지 — `Effective(Damage, 2.3) × DamageMultiplier` |
+| `MaxRange` | 10 | m | 타게팅 `OverlapSphere` 반경 (`MinRange` 미사용) |
+| `Cooldown` | 1 | s | 발사 간격 — `Cooldown / Effective(FireRate)` (하드코딩 없음) |
+| `IsAreaAttack` / `AreaRadius` | false / 1 | — | 단일 타겟 즉발(히트스캔), 광역 아님 |
+
+#### 머신건 본체
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| 타게팅 | 최근접 정렬, 동일 ShipBody dedupe | — | 즉발(히트스캔), 투사체 없음 |
+| `TargetsPerShot` (Lv1) | 1 | 명 | 발당 동시 타격 수 |
+| `_turnSpeed` (터렛 조준) | 720 | deg/s | 연출용 터렛 회전 (히트스캔이라 명중과 무관) |
+| `k_targetBufferSize` | 32 | — | `OverlapSphereNonAlloc` 버퍼 (`const`) |
+| `DamageMultiplier` (레벨별) | Lv1 1.0 / Lv2 1.2 / Lv3 1.4 | × | Lv3 `CanUpgrade=false` 최종 |
+| `DoubleMachineGun` / `TripleMachineGun` | TargetsPerShot ×2 / ×3 | — | 데코레이터 — 동시 타격 대상 수 곱셈 |
+
+- **근거**: §0.3 "자동 사격" — 캐넌(랜덤 살포 광역)과 대비되는 **즉발 단일 타겟 정밀** 주포. Damage 2.3 ×
+  Cooldown 1s ≈ DPS 2.3은 캐넌(50/2s=25)보다 훨씬 낮지만, 최근접 자동 조준 + 데코레이터로 다수 동시 타격
+  (×2/×3)해 군집 처리에 강한 결을 만든다. §0.3 "빌드 다양성" — 두 주포가 다른 플레이 결을 제공.
+- **상태**: `구현 기본값` — 데미지 2.3은 매우 낮아 플레이테스트 재조정 가능성 높음.
+
+### 3.13 부포·후방 패시브 (`AutoRepair` / `Propeller` / `Rudder`)
+
+소스: [SubSlot/AutoRepair/](../Assets/Scripts/Components/SubSlot/AutoRepair/),
+[RearSlot/Propeller/](../Assets/Scripts/Components/RearSlot/Propeller/), [RearSlot/Rudder/](../Assets/Scripts/Components/RearSlot/Rudder/).
+**GDD §5.2 부포(Sub)·후방(Rear)** 매핑. 수치는 코드 SerializeField(레벨식). 데이터 SO(`AutoRepairDummy`/`PropellerDummy`/`RudderDummy`)는 전 필드 0 — 마커/아이콘 용도이며 실제 수치는 어태처블 코드가 보유.
+
+| 컴포넌트 | 슬롯 | 효과 | Lv1 | Lv2 | Lv3 | 비고 |
+|---|---|---|---|---|---|---|
+| `AutoRepair` | Sub | MaxHealth 비례 회복 (3s 주기) | +5% | +12% | +19% | `MaxHealth × (0.05 + 0.07×(lv−1))`, 풀피 아닐 때만 |
+| `Propeller` | Rear | `MoveSpeed` PercentAdd | +12% | +19% | +26% | `0.12 + 0.07×(lv−1)` |
+| `Rudder` | Rear | `TurnSpeed` PercentAdd | +20% | +25% | +30% | `0.20 + 0.05×(lv−1)` |
+
+- **근거**: §0.3 "빌드 다양성" — 공격(주포) 외 **생존(AutoRepair)·기동(Propeller/Rudder)** 축을 추가해
+  3택 카드 의사결정을 풍부하게. AutoRepair 회복은 MaxHealth 비례라 후반 스케일링에 자연 대응. 기동 강화는
+  §0.2 "궤적 예측" 조작감을 직접 끌어올린다.
+- **상태**: `구현 기본값` (`_maxLevel 3`).
+
+### 3.14 후방 — 기뢰 투척기 (`MineDropperBase` 계열 / `MineDropperData`)
+
+소스: [RearSlot/MineDropper/](../Assets/Scripts/Components/RearSlot/MineDropper/),
+에셋 [MineDropperData.asset](../Assets/ScriptableObjects/Combat/MineDropperData.asset). 플레이어 후방 기뢰 — 잠수함 기뢰(§3.5)와 별개 시스템(동일 `Mine` 사용).
+
+| 수치 | 값 (출처) | 단위 | 설명 |
+|---|---|---|---|
+| `MineDropperData.Damage` | 30 | HP | 폭발 반경 내 ShipBody에 적용 |
+| `MineDropperData.Cooldown` | 10 | s | 설치 주기 — `Cooldown × CooldownMultiplier` |
+| `MineDropperData.AreaRadius` | 2 | m | 폭발/접촉 반경 |
+| `_mineLifetime` (`MineDropperAttachable`) | 30 | s | 미접촉 시 자연 소멸 |
+| ArmDelay | 0 | s | 즉시 무장 (잠수함 기뢰는 1s) |
+| `CooldownMultiplier` (레벨별) | Lv1 1.0 (10s) / Lv2 0.9 (9s) / Lv3 0.7 (7s) | — | 레벨업 시 설치 주기 단축 (데미지/반경/수명은 레벨 무관) |
+
+- **근거**: §0.3 "빌드 다양성" — 후방에 깔아두는 지역 거부(area-denial) 무기로 추격 잡몹 견제. 플레이어
+  기뢰는 데미지 30·반경 2로 잠수함 기뢰(10·1, §3.5)보다 강하게 차등 — 능동 설치 vs 적의 함정의 역할 구분.
+  GDD §5.3 "정적 트랩 예외" — `CombatPool` + 수명 30s로 동시 수 제어.
+- **상태**: `구현 기본값`.
+- **🚧 추후**: 플레이어 기뢰 vs 잠수함 기뢰 **아군/적 시각 구분** 미적용 (GDD §11).
+
+### 3.15 네임드 + 드롭 경쟁 (`Named` / `NamedWander` / `AttachableWrapper`) — 핵심 차별화
+
+소스: [Enemies/Named/](../Assets/Scripts/Enemies/Named/), [Shared/ItemDrop/](../Assets/Scripts/Shared/ItemDrop/).
+프리팹 `Assets/Prefabs/Enemies/Named/DefaultShip.prefab`. **GDD §5.5** 매핑 — v0.3.0 신규 구현.
+
+#### 네임드 본체
+
+| 수치 | 값 (출처) | 단위 | 설명 |
+|---|---|---|---|
+| `_shipData` | `DefaultShip_Data` (Health 100) | HP | 플레이어와 동일 함체 데이터 |
+| `ShipMovement._data` | `DefaultShip_Movement` (MaxSpeed 10 등) | — | 플레이어와 동일 이동 성능 |
+| `ScaleFactor` | 1.5 | × | 런타임 스케일 (코드 const) |
+| 로드아웃 | `UpgradePool`에서 Main/Sub/Rear 랜덤 1개씩 | — | 스폰 시 무작위 장착 |
+| 스테이지 강화 | `StageManager.CurrentStageIndex + 1` 회 모디파이어 적용 | — | 스테이지 진행마다 누적 강화 |
+| `XPMagnet._radius` | 10 | m | (네임드도 흡인 반경 보유) |
+
+#### 임시 이동 AI (`NamedWander`) — 추적 AI 전 placeholder
+
+| 수치 (프리팹) | 값 | 단위 | 설명 |
+|---|---|---|---|
+| `_changeInterval` | 0.7 | s | 무작위 throttle/turn 재추첨 주기 (코드 기본 2.5 → 인스펙터 0.7로 더 자주) |
+| `_minThrottle` | 0.3 | — | throttle = `Random(0.3, 1)`, turn = `Random(−1, 1)` |
+
+#### 드롭 + 흡수 경쟁 (`AttachableDropper` → `AttachableWrapper`)
+
+| 수치 | 값 | 단위 | 설명 |
+|---|---|---|---|
+| 드롭 | 사망 시 장착 어태처블 1개를 필드에 생성 | — | `TryGetRandomEquippedDefinition` |
+| `AttachableWrapper._lifetime` | 30 | s | 경과 시 `Destroy` (풀링 미적용 — 주석 "추후") |
+| 경쟁 흡수 | 선착순 1인 — `Consume()`로 중복 방지 | — | Player 접촉 → `UpgradeUI.OpenComponentPickup`(픽업 UI) / Named 접촉 → `PickupComponent`(자동 강화) |
+| leash 디스폰 | 드롭 없음 | — | leash 이탈은 `OnDeadEvent`를 안 거침(= 회피 성공) |
+
+- **근거**: GDD §2·§5.5 핵심 차별점 "드롭 경쟁". 네임드가 플레이어와 동일 함체/이동(Health 100·MaxSpeed 10)에
+  스케일 1.5로 위압감을 주고, 드롭 수명 30s 안에 플레이어가 선점하지 못하면 다른 네임드가 흡수해 강해진다 —
+  §0.3 "시간/공간/우선순위 경쟁" 긴장. **단 임시 `NamedWander`는 추격·흡수 의지가 없어** 경쟁 긴장이
+  설계만큼 살지 않음(결과 보고서 §1) → v1.0 추적 AI로 교체 예정.
+- **상태**: 시스템 `구현 기본값` · AI는 **임시(placeholder)**. 네임드 종 1종, 다형화 v1.0.
+
+### 3.16 스폰 (`CommonSpawner` / `NamedSpawner`) — 씬 인스펙터
+
+소스 [Core/Spawner/Enemy/](../Assets/Scripts/Core/Spawner/Enemy/), 값은 [InGame.unity](../Assets/Scenes/InGame.unity) 인스턴스 오버라이드(코드 기본값과 다름). **GDD §5.3** 매핑.
+
+| 필드 | CommonSpawner | NamedSpawner | 단위 |
+|---|---|---|---|
+| `_spawnInterval` | 1 | 7 | s |
+| `_maxAlive` | 200 | 5 | 마리 |
+| `_spawnMinDistance` | 30 | 60 | m |
+| `_spawnMaxDistance` | 90 | 100 | m |
+| 이탈 처리 | `_cullRadius 150` (풀 반환) | `_leashRadius 120` (디스폰) | m |
+| 체크 간격 | `_cullCheckInterval 1` | `_leashCheckInterval 1` | s |
+
+- **근거**: GDD §5.3 "시간 기반 일반 몹 + 주기 네임드". 일반 몹은 1s마다 최대 200마리까지 — **§5.3.2 부하 테스트
+  임계 후보값**(60fps 검증 대상). 네임드는 더 멀리(60~100m)·드물게(7s, 최대 5) 등장해 "이벤트성" 위협.
+  `_leashRadius 120` > 미니맵 범위 40(§3.17)이라 GDD §5.5 "미니맵 밖에서도 한동안 추격" 충족.
+- **상태**: `구현 기본값` (씬 튜닝값). `_maxAlive 200`은 부하 테스트로 검증 필요.
+- **⚠️ 관찰**: NamedSpawner `_spawnMinDistance 60` > 미니맵 범위 40 → 네임드는 **미니맵 밖에서 스폰**해 접근 시
+  레이더에 잡힌다. 의도(원거리 접근 위협)인지 가시성 문제인지 플레이테스트 확인 권장.
+
+### 3.17 미니맵 레이더 (`MinimapUI` / `RadarModel`)
+
+소스 [UI/Minimap/](../Assets/Scripts/UI/Minimap/), 값은 [InGame.unity](../Assets/Scenes/InGame.unity). **GDD §6.2** 매핑 — v0.3.0 신규(프로토타입).
+
+| 수치 | 값 (출처) | 단위 | 설명 |
+|---|---|---|---|
+| `_worldRange` | 40 | m | 레이더가 커버하는 월드 반경 (씬 오버라이드, 코드 기본 60) |
+| `_sweepDegPerSec` | 120 | deg/s | 스윕 라인 회전 속도 |
+| 블립 — 보스 | 빨강 × 2.5 | — | 범위 밖이면 가장자리 클램프 표시 |
+| 블립 — 네임드 | 흰색 × 2 | — | 부위는 표시 안 함 (GDD §5.5 — 부위는 화면뷰로) |
+| 블립 — 일반 적 | 흰색 × 1 | — | `OverlapSphere`로 범위 내 검출, 태그 분류 |
+
+- **근거**: GDD §6.2 "배틀쉽 레이더". 보스만 가장자리 클램프 + 빨강·대형으로 leash-less 추격(§3.11.2) 방향을
+  항상 알려준다. 네임드(흰색 대형)는 부위 미표시로 §5.5 "부위는 화면뷰 판단" 규칙 유지.
+- **상태**: `구현 기본값` (프로토타입). 위치/줌·드롭 아이콘·뷰포트 표시는 추후(GDD §6.2 `❓`).
