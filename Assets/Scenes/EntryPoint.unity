@@ -1087,6 +1087,7 @@ MonoBehaviour:
   _selectableMainAttachables:
   - {fileID: -7171757408369763360, guid: 265dfa266153a8947b25aa6a7c03794c, type: 3}
   - {fileID: 2519735852428327152, guid: 0939242a3e44ae941a3423264effa613, type: 3}
+  - {fileID: 6462237541938295616, guid: 35655d0dc817e864aac2c6de59eee65c, type: 3}
 --- !u!1 &676700727
 GameObject:
   m_ObjectHideFlags: 0
