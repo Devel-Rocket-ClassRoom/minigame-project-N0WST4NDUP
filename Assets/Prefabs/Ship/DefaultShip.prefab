@@ -354,7 +354,6 @@ MonoBehaviour:
   _target:
     serializedVersion: 2
     m_Bits: 64
-  _fallbackMainSlot: {fileID: 0}
   _mainSlotPosition: {fileID: 8103083306853388414}
   _subSlotPosition: {fileID: 1829379147215443670}
   _rearSlotPosition: {fileID: 738153403742530347}
