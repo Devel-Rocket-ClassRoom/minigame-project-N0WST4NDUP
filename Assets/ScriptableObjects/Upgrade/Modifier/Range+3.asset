@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5eae00bdd908944bdd4f62f4590ffe, type: 3}
   m_Name: Range+3
   m_EditorClassIdentifier: Assembly-CSharp::StatModifierUpgrade
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 774952db0322bb545944129cc7413c53, type: 3}
   _displayName: Range
   _description: Range + 3
   _modifiers:

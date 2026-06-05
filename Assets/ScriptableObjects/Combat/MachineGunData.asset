@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5037314ab6fc24ba4a3f0603121624, type: 3}
   m_Name: MachineGunData
   m_EditorClassIdentifier: Assembly-CSharp::CombatData
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 22538f218b9ed4744a4256ee1746186e, type: 3}
   Damage: 2.3
   MinRange: 0
   MaxRange: 10

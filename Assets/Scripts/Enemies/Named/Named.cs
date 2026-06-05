@@ -38,13 +38,14 @@ public class Named : MonoBehaviour
         transform.localScale = Vector3.one * ScaleFactor;
 
         EquipRandomLoadout();
+        ModifiersApply();
     }
 
-    public void Init(ShipData shipData)
-    {
-        _shipData = shipData;
-        _body.Init(_shipData);
-    }
+    // public void Init(ShipData shipData)
+    // {
+    //     _shipData = shipData;
+    //     _body.Init(_shipData);
+    // }
 
     private void EquipRandomLoadout()
     {
@@ -53,6 +54,21 @@ public class Named : MonoBehaviour
         Equip(PickRandom<MainEquipment>());
         Equip(PickRandom<SubEquipment>());
         Equip(PickRandom<RearEquipment>());
+    }
+
+    private void ModifiersApply()
+    {
+        if (_loadoutPool == null) return;
+
+        var num = StageManager.CurrentStageIndex + 1;
+        for (int i = 0; i < num; i++)
+        {
+            var mods = _loadoutPool.ModifierDefinitions;
+            if (mods == null || mods.Count == 0) return;
+
+            var mod = mods[UnityEngine.Random.Range(0, mods.Count)];
+            mod.Apply(_component, _stats);
+        }
     }
 
     private void Equip(UpgradeDefinition def)
@@ -99,8 +115,6 @@ public class Named : MonoBehaviour
     private void HandleNamedDeath()
     {
         _body.OnDeadEvent -= HandleNamedDeath;
-
-
 
         ParticlePoolRegistry.Get(ParticleKind.Die).Play(transform.position);
         Destroy(gameObject);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +28,9 @@ public class ShipComponent : MonoBehaviour
     public MainAttachableBase MainSlot => _mainSlot;
     public SubAttachableBase SubSlot => _subSlot;
     public RearAttachableBase RearSlot => _rearSlot;
+
+    // 슬롯 장착/강화/교체 시 발생 — UI 등 구독자가 다시 읽도록.
+    public event Action OnSlotsChanged;
 
     private void Awake()
     {
@@ -90,6 +94,8 @@ public class ShipComponent : MonoBehaviour
             case SubAttachableBase _: _subSlot?.Upgrade(); break;
             case RearAttachableBase _: _rearSlot?.Upgrade(); break;
         }
+
+        OnSlotsChanged?.Invoke();
     }
 
     // 현재 슬롯 장비를 떼어내고 드롭품을 Lv1로 새로 장착(다른 타입 스왑).
@@ -113,6 +119,8 @@ public class ShipComponent : MonoBehaviour
                 _rearSlot.Attach(_target, _stats);
                 break;
         }
+
+        OnSlotsChanged?.Invoke();
     }
 
     public void Install(IAttachable attachable)
@@ -155,5 +163,7 @@ public class ShipComponent : MonoBehaviour
                 }
                 break;
         }
+
+        OnSlotsChanged?.Invoke();
     }
 }

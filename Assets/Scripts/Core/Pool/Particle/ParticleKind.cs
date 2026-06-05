@@ -6,4 +6,5 @@ public enum ParticleKind
     MortarTelegraph,
     Die,
     Heal,
+    FireFlash,
 }

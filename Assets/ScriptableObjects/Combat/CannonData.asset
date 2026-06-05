@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5037314ab6fc24ba4a3f0603121624, type: 3}
   m_Name: CannonData
   m_EditorClassIdentifier: Assembly-CSharp::CombatData
+  Icon: {fileID: 21300000, guid: 867159bacdfb9cf4d80c82eb1e77eafc, type: 3}
   Damage: 50
   MinRange: 1
   MaxRange: 10

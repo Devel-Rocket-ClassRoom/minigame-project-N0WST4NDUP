@@ -5,7 +5,7 @@ public abstract class MachineGunBase : IComponent, IUpgradable<MachineGunBase>
 {
     private const int k_targetBufferSize = 32;
     private static readonly Collider[] _targetBuffer = new Collider[k_targetBufferSize];
-    private static readonly List<(int priority, float sqr, ShipBody body)> _sortBuffer = new(k_targetBufferSize);
+    private static readonly List<(float sqr, ShipBody body)> _sortBuffer = new(k_targetBufferSize);
     private static readonly HashSet<ShipBody> _seenBodies = new(k_targetBufferSize);
 
     protected CombatData _data;
@@ -16,6 +16,11 @@ public abstract class MachineGunBase : IComponent, IUpgradable<MachineGunBase>
 
     public LayerMask Target { get; private set; }
     public Transform FirePoint { get; private set; }
+
+    // 연출용 조준점 — 마지막 사격의 primary 타겟 위치(우선순위·최근접). 래퍼는 내부 gun 값을 forward.
+    protected Vector3? _aimPoint;
+    public virtual Vector3? AimPoint => _aimPoint;
+
     public abstract int Level { get; }
     public abstract bool CanUpgrade { get; }
 
@@ -56,39 +61,32 @@ public abstract class MachineGunBase : IComponent, IUpgradable<MachineGunBase>
             var body = collider.GetComponentInParent<ShipBody>();
             if (body == null) continue;
             if (!_seenBodies.Add(body)) continue; // 동일 ShipBody 다중 콜라이더 dedupe
-            int priority = GetTagPriority(body);
             float sqr = (body.transform.position - FirePoint.position).sqrMagnitude;
-            _sortBuffer.Add((priority, sqr, body));
+            _sortBuffer.Add((sqr, body));
         }
 
         if (_sortBuffer.Count > 0)
         {
-            // Boss(0) → Named(1) → Common(2) → Other(3) 순, 우선순위 같으면 가까운 순
-            _sortBuffer.Sort((a, b) =>
-            {
-                int p = a.priority.CompareTo(b.priority);
-                return p != 0 ? p : a.sqr.CompareTo(b.sqr);
-            });
+            // 무조건 가까운 순
+            _sortBuffer.Sort((a, b) => a.sqr.CompareTo(b.sqr));
+
+            var closest = _sortBuffer[0].body.transform;
+            _aimPoint = closest.position;
+
+            var fireRot = Quaternion.LookRotation(closest.position - FirePoint.position);
+            ParticlePoolRegistry.Get(ParticleKind.FireFlash).Play(FirePoint.position, fireRot);
 
             float damage = Effective(StatType.Damage, _data.Damage) * DamageMultiplier;
             int hits = Mathf.Min(targetCount, _sortBuffer.Count);
             for (int i = 0; i < hits; i++)
             {
-                var (_, _, body) = _sortBuffer[i];
+                var (_, body) = _sortBuffer[i];
                 body.OnDamaged(damage);
                 ParticlePoolRegistry.Get(ParticleKind.HitFlash).Play(body.transform.position);
             }
         }
 
         _cooldownTimer = _data.Cooldown / Effective(StatType.FireRate, 1f);
-    }
-
-    private static int GetTagPriority(ShipBody body)
-    {
-        if (body.CompareTag("Boss")) return 0;
-        if (body.CompareTag("Named")) return 1;
-        if (body.CompareTag("Common")) return 2;
-        return 3;
     }
 
     public virtual void TickCooldown() => _cooldownTimer -= Time.deltaTime;

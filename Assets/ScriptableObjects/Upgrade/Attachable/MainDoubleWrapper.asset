@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ed34fd0079b184b839a301d4294d2d, type: 3}
   m_Name: MainDoubleWrapper
   m_EditorClassIdentifier: Assembly-CSharp::MainDoubleWrapper
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 5886e62c26a79904a986354dfa1216a2, type: 3}
   _displayName: x2
   _description: Main * 2

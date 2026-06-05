@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd39d4f31e63db4cab1ecba761d961a, type: 3}
   m_Name: AutoRepair
   m_EditorClassIdentifier: Assembly-CSharp::SubEquipment
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: eadfd6020d511574d96c7c4741b3abba, type: 3}
   _displayName: AutoRepair
-  _description: Auto Repair
+  _description: Slowly regenerates HP over time.
   _prefab: {fileID: -1659797439960779326, guid: 39e51917bbdb2d14e8485012218efbb3, type: 3}

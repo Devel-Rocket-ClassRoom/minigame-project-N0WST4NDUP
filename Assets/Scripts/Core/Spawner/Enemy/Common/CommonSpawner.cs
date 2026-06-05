@@ -10,6 +10,8 @@ public class CommonSpawner : MonoBehaviour
     [Header("Spawn Config")]
     [SerializeField] private float _spawnInterval = 1f;
     [SerializeField] private int _maxAlive = 100;
+    [SerializeField] private float _spawnMinDistance = 20f;
+    [SerializeField] private float _spawnMaxDistance = 40f;
 
     [Header("Cull Config")]
     [SerializeField] private float _cullRadius = 60f;
@@ -34,7 +36,7 @@ public class CommonSpawner : MonoBehaviour
         if (_alive.Count >= _maxAlive) return;
 
         var dir = Random.insideUnitCircle.normalized;
-        var distance = Random.Range(20f, 40f); // TODO: 나중에 min, max 따로 빼서 작업
+        var distance = Random.Range(_spawnMinDistance, _spawnMaxDistance);
         var spawnPoint = _anchor.position + new Vector3(dir.x, 0f, dir.y) * distance;
 
         var pool = _pools[Random.Range(0, _pools.Length)]; // TODO: 밸런싱 단계에서 가중치 추가

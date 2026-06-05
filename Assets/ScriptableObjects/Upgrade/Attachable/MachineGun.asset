@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6445a2162162774f91dffcb8dcbbb08, type: 3}
   m_Name: MachineGun
   m_EditorClassIdentifier: Assembly-CSharp::MainEquipment
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 22538f218b9ed4744a4256ee1746186e, type: 3}
   _displayName: Machine Gun
   _description: Basic Machine Gun
   _prefab: {fileID: -7171757408369763360, guid: 265dfa266153a8947b25aa6a7c03794c, type: 3}
