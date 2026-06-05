@@ -161,7 +161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5438280895541684832}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 16991965284903255}
   - component: {fileID: 2883470287946288900}
   - component: {fileID: 8881325778203467155}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: BoatWakeParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5401,7 +5401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7588401861291874614}
   - component: {fileID: 3797355795755586388}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Magnet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
