@@ -85,6 +85,9 @@ public class PirateLord : MonoBehaviour
     private void HandleBossDeath()
     {
         _body.OnDeadEvent -= HandleBossDeath;
+
+        GameManager.Instance.AddScore(_data.ScoreReward);
+
         OnBossDeathEvent?.Invoke(transform.position);
     }
 }

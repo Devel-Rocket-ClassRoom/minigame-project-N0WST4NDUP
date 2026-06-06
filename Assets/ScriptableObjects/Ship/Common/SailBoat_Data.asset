@@ -16,4 +16,4 @@ MonoBehaviour:
   Description: "\uC5B4\uBD80\uC778\uAC00?"
   Health: 10
   InvincibleTime: 1
-  Damage: 0
+  ScoreReward: 10

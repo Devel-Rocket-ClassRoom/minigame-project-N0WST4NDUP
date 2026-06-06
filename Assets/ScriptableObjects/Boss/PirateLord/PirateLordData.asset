@@ -16,6 +16,7 @@ MonoBehaviour:
   Description: The King of Pirates.
   Health: 1000
   InvincibleTime: 0
+  ScoreReward: 1000
   Phase1ToPhase2HpThreshold: 0.5
   Phase3DecayPerSecond: 25
   PhaseMovements:

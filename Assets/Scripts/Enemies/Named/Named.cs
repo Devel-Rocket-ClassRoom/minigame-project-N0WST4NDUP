@@ -116,6 +116,8 @@ public class Named : MonoBehaviour
     {
         _body.OnDeadEvent -= HandleNamedDeath;
 
+        GameManager.Instance.AddScore(_shipData.ScoreReward);
+
         ParticlePoolRegistry.Get(ParticleKind.Die).Play(transform.position);
         Destroy(gameObject);
     }

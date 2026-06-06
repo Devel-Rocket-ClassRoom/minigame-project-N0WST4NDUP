@@ -16,4 +16,4 @@ MonoBehaviour:
   Description: 123
   Health: 15
   InvincibleTime: 1
-  Damage: 10
+  ScoreReward: 13
