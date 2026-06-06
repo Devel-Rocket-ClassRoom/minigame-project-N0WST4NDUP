@@ -25,12 +25,18 @@ public abstract class CommonEnemyBase : MonoBehaviour
     private void Awake()
     {
         _body = GetComponent<ShipBody>();
-        _body.OnDeadEvent += OnDead;
+        _body.OnDeadEvent += HandleDead;
     }
 
     private void OnDestroy()
     {
-        if (_body != null) _body.OnDeadEvent -= OnDead;
+        if (_body != null) _body.OnDeadEvent -= HandleDead;
+    }
+
+    private void HandleDead()
+    {
+        GameManager.Instance.AddScore(_data.ScoreReward);
+        OnDead();
     }
 
     public void SetPool(CommonPool pool) => _pool = pool;

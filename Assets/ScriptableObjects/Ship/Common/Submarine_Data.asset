@@ -16,3 +16,4 @@ MonoBehaviour:
   Description: "\uC9C0\uB8B0\uB97C \uC124\uCE58\uD569\uB2C8\uB2E4."
   Health: 50
   InvincibleTime: 1
+  ScoreReward: 15

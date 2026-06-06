@@ -20,4 +20,7 @@ public class ShipData : ScriptableObject
 
     [Tooltip("무적 시간(초)")]
     public float InvincibleTime = 1f;
+
+    [Tooltip("처치 시 획득 점수")]
+    public int ScoreReward = 0;
 }
