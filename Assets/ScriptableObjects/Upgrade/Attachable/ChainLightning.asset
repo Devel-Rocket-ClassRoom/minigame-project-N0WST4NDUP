@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6445a2162162774f91dffcb8dcbbb08, type: 3}
+  m_Name: ChainLightning
+  m_EditorClassIdentifier: Assembly-CSharp::MainEquipment
+  _icon: {fileID: 21300000, guid: befda76e22125944b93385a1daed8bfc, type: 3}
+  _displayName: Lightning
+  _description: Chained Lightning
+  _prefab: {fileID: 5123128369191654905, guid: 3c2622831034bf048843dd56d28e2d18, type: 3}
