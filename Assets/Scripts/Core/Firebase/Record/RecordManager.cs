@@ -123,7 +123,9 @@ public class RecordManager : MonoBehaviour
             {
                 await _recordsRef.Child(userId).Child("best").SetValueAsync(ms);
                 _cachedBestMs = ms;
-                // TODO(리더보드 단계): leaderboard/{uid} 에도 best 반영
+
+                // 신기록을 전체 리더보드에도 반영
+                await LeaderboardManager.Instance.SaveToLeaderboardAsync(ms);
             }
 
             Debug.Log($"[Record] 저장 성공 (신기록: {isNewBest}, best: {_cachedBestMs}ms)");
@@ -154,7 +156,8 @@ public class RecordManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError($"[Record] 베스트 로드 실패: {ex.Message}");
+            // 내부 예외까지 출력 — "Permission denied"(규칙) / DB URL·지역 문제 등 실제 원인 확인용
+            Debug.LogError($"[Record] 베스트 로드 실패: {ex.Message} | inner: {ex.InnerException?.Message}\n{ex}");
             return -1;
         }
     }
