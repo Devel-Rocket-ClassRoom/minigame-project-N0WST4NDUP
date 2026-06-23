@@ -24,7 +24,7 @@ public class SelectUI : MonoBehaviour
     {
         if (_nextButton != null) _nextButton.onClick.AddListener(NextItem);
         if (_previousButton != null) _previousButton.onClick.AddListener(PreviousItem);
-        if (_exitButton != null) _exitButton.onClick.AddListener(_panelSwap.PreviousPanel);
+        if (_exitButton != null) _exitButton.onClick.AddListener(_panelSwap.SwitchToTitle);
         if (_confirmButton != null) _confirmButton.onClick.AddListener(ConfirmSelection);
 
         _mainPreviews = new GameObject[_selectableMainAttachables.Length];
@@ -80,6 +80,6 @@ public class SelectUI : MonoBehaviour
         var selectedMain = _selectableMainAttachables[_currentSelectionIndex];
         GameManager.Instance.PlayerConfig.SetStartingMain(selectedMain);
 
-        _panelSwap.NextPanel();
+        _panelSwap.EnterGame();
     }
 }
