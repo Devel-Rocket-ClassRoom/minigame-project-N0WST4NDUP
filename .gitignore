@@ -23,8 +23,10 @@
 **/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
 # Android 스트리밍 에셋 자동 생성
-**/[Aa]ssets/[Ss]treamingAssets/aa.meta
-**/[Aa]ssets/[Ss]treamingAssets/aa/*
+**/[Aa]ssets/[Ss]treamingAssets/
+**/[Aa]ssets/[Ss]treamingAssets.meta
+# **/[Aa]ssets/[Ss]treamingAssets/aa.meta
+# **/[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # 크래시 리포트
 sysinfo.txt
@@ -154,3 +156,7 @@ AI Toolkit.meta
 
 # MCP 설정
 **.mcp.**
+
+
+**/[Aa]ssets/[Rr]esources/FirebaseConfig.asset
+**/[Aa]ssets/[Rr]esources/FirebaseConfig.asset.meta
