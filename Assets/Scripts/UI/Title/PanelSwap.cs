@@ -8,42 +8,35 @@ public class PanelSwap : MonoBehaviour
     private const string k_GameSceneName = "InGame";
 
     [SerializeField] private GameObject _camera;
-    [SerializeField] private GameObject[] _panels;
-
-    private int _currentPanelIndex = 0;
+    [SerializeField] private GameObject _titlePanel;
+    [SerializeField] private GameObject _selectPanel;
+    [SerializeField] private GameObject _loginPanels;
 
     private void Awake()
     {
-        for (int i = 0; i < _panels.Length; i++)
-        {
-            _panels[i].SetActive(i == _currentPanelIndex);
-        }
+        SwitchToTitle();
 
         Time.timeScale = 1f;
         _camera.SetActive(false);
     }
 
-    public void NextPanel()
+    // --- 패널 전환 API (다른 UI 스크립트가 호출) ------------------------------
+    public void SwitchToTitle() => ShowOnly(_titlePanel);
+    public void SwitchToSelect() => ShowOnly(_selectPanel);
+    public void SwitchToLogin() => ShowOnly(_loginPanels);
+
+    private void ShowOnly(GameObject target)
     {
-        if (_currentPanelIndex < _panels.Length - 1)
-        {
-            _panels[_currentPanelIndex++].SetActive(false);
-            _panels[_currentPanelIndex].SetActive(true);
-        }
-        else
-        {
-            _panels[_currentPanelIndex].SetActive(false);
-            StartCoroutine(LoadGameSceneAsync());
-        }
+        if (_titlePanel != null) _titlePanel.SetActive(target == _titlePanel);
+        if (_selectPanel != null) _selectPanel.SetActive(target == _selectPanel);
+        if (_loginPanels != null) _loginPanels.SetActive(target == _loginPanels);
     }
 
-    public void PreviousPanel()
+    // 선택 완료 → 인게임 씬 로드
+    public void EnterGame()
     {
-        if (_currentPanelIndex > 0)
-        {
-            _panels[_currentPanelIndex--].SetActive(false);
-            _panels[_currentPanelIndex].SetActive(true);
-        }
+        ShowOnly(null);
+        StartCoroutine(LoadGameSceneAsync());
     }
 
     private IEnumerator LoadGameSceneAsync()
