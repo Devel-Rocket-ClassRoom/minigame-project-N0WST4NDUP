@@ -34,6 +34,7 @@ public class StageManager : MonoBehaviour
         if (_stages == null || _stages.Length == 0) return;
 
         GameManager.Instance.ResetScore();
+        GameManager.Instance.StartClearTimer();
 
         StageCount = _stages.Length;
         StartStage(0);
