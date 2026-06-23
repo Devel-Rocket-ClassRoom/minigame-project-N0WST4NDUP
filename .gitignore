@@ -160,3 +160,19 @@ AI Toolkit.meta
 
 **/[Aa]ssets/[Rr]esources/FirebaseConfig.asset
 **/[Aa]ssets/[Rr]esources/FirebaseConfig.asset.meta
+
+####################
+# Firebase Unity SDK / EDM4U
+####################
+# LFS 예산 절약 위해 SDK 바이너리는 git 비추적. (재임포트로 복원 가능)
+# 클론 후: Firebase Unity SDK 13.12.0 + External Dependency Manager unitypackage를 재임포트할 것.
+/[Aa]ssets/Firebase/
+/[Aa]ssets/Firebase.meta
+/[Aa]ssets/ExternalDependencyManager/
+/[Aa]ssets/ExternalDependencyManager.meta
+/[Aa]ssets/Editor Default Resources/
+/[Aa]ssets/Editor Default Resources.meta
+/[Aa]ssets/Plugins/iOS/
+/[Aa]ssets/Plugins/iOS.meta
+/[Aa]ssets/Plugins/tvOS/
+/[Aa]ssets/Plugins/tvOS.meta
